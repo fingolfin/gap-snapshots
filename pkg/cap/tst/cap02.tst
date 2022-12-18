@@ -10,7 +10,7 @@
 #
 gap> START_TEST("cap02.tst");
 
-# doc/_Chapter_Examples_and_Tests.xml:32-40
+# doc/_Chapter_Examples_and_Tests.xml:41-49
 gap> field := HomalgFieldOfRationals( );;
 gap> vec := LeftPresentations( field );;
 gap> F := CapFunctor( "CohomForVec", [ vec, [ vec, true ] ], vec );;

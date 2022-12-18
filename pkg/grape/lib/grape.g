@@ -1,8 +1,8 @@
 ##############################################################################
 ##
-##  grape.g (Version 4.8.5)    GRAPE Library     Leonard Soicher
+##  grape.g (Version 4.9.0)    GRAPE Library     Leonard Soicher
 ##
-##  Copyright (C) 1992-2021 Leonard Soicher, School of Mathematical Sciences, 
+##  Copyright (C) 1992-2022 Leonard Soicher, School of Mathematical Sciences, 
 ##                      Queen Mary University of London, London E1 4NS, U.K.
 ##
 # This version includes code by Jerry James (debugged by LS) 
@@ -20,7 +20,7 @@
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program; if not, see http://www.gnu.org/licenses/gpl.html
+# along with this program; if not, see https://www.gnu.org/licenses/gpl.html
 #
 
 GRAPE_RANDOM := false; # Determines if certain random methods are to be used
@@ -42,7 +42,7 @@ GRAPE_NRANGENS := 18;  # The number of random generators taken for a subgroup
 GRAPE_NAUTY := true;   # Use nauty when true, else use bliss.
 
 GRAPE_DREADNAUT_EXE := 
-   ExternalFilename(DirectoriesPackagePrograms("grape"),"dreadnautB"); 
+   ExternalFilename(DirectoriesPackagePrograms("grape"),"dreadnaut"); 
    # filename of dreadnaut or dreadnautB executable
 
 GRAPE_BLISS_EXE := ExternalFilename(DirectoriesSystemPrograms(),"bliss"); 
@@ -515,7 +515,7 @@ for i in [1..d] do
 od; 
 return count=1;
 end;
-# Now contruct and return the Hamming graph.
+# Now construct and return the Hamming graph.
 return Graph(W,Tuples([1..q],d),act,rel,true);
 end); 
 
@@ -940,22 +940,47 @@ od;
 return gamma;
 end);
 
-BindGlobal("GeneralizedOrbitalGraphs",function(G)
+BindGlobal("GeneralizedOrbitalGraphs",function(arg)
 #
-# The input to this function is a non-trivial permutation group G,
-# acting transitively on [1..n] (where n:=LargestMovedPoint(G)).
+# Let  G=arg[1]. Then  G  must be a non-trivial permutation group,
+# acting transitively on  [1..n],  where n:=LargestMovedPoint(G).
 #
-# Then this function returns a list of all the non-null generalized orbital
-# graphs for G (that is, the non-null simple graphs with vertex set [1..n]
-# and edge-set a union of orbitals of G).
+# The optional second parameter  k=arg[2]  (default: false)  must
+# be true or false or a non-negative integer. 
 #
-local comb,n,H,result,reps,i,L,M,mm;
-if not IsPermGroup(G) then
-   Error("usage: GeneralizedOrbitalGraphs( <PermGroup> )");
+# Then this function returns a list of distinct generalized orbital
+# graphs for  G  (where a *generalized orbital graph* for  G  is a 
+# (simple) graph with vertex set [1..n] and edge-set a union of 
+# zero or more G-orbits of 2-subsets of  [1..n]).
+#
+# If  k=true  then *all*  the generalized orbital graphs 
+# for  G  are in the list,  if  k=false  (the default)  then all
+# the non-null generalized orbital graphs for  G  are in the list,
+# and if  k  is a non-negative integer then the list consists of
+# all the generalized orbital graphs for  G  whose edge-set is the
+# union of exactly  k  G-orbits of 2-subsets of  [1..n].
+#
+# The group associated with each returned graph in the list is  G. 
+#
+local G,k,comb,combinations,n,H,result,reps,i,L,M,mm;
+if not (Length(arg) in [1,2]) then
+   Error("must have 1 or 2 arguments");
+fi;
+G:=arg[1];
+if IsBound(arg[2]) then
+   k:=arg[2];
+else
+   k:=false;
+fi;
+if not (IsPermGroup(G) and (IsBool(k) or IsInt(k))) then
+   Error("usage: GeneralizedOrbitalGraphs( <PermGroup> [, <Bool> or <Int> ] )");
 fi;
 n:=LargestMovedPoint(G);
 if n=0 or not IsTransitive(G,[1..n]) then
-   Error("<G> must be a non-trivial transitive group on [1..LargestMovedPoint( <G> )");
+   Error("<G> must be a non-trivial transitive group on [1..LargestMovedPoint( <G> )]");
+fi;
+if not ((k in [false,true]) or (IsInt(k) and k>=0)) then 
+   Error("<k> must be in  [false,true]  or be a non-negative integer");
 fi;
 H:=Stabilizer(G,1);
 reps:=Set(List(OrbitsDomain(H,[2..n]),Minimum));
@@ -977,8 +1002,14 @@ for i in [1..Length(reps)] do
    fi;
 od;
 result:=[];
-for comb in Combinations(M) do
-   if comb<>[] then
+if k in [false,true] then
+   combinations:=Combinations(M);
+else  
+   # k is a non-negative integer
+   combinations:=Combinations(M,k);
+fi;
+for comb in combinations do
+   if k<>false or comb<>[] then
       Add(result,EdgeOrbitsGraph(G,Concatenation(comb)));
    fi;
 od;
@@ -1048,10 +1079,10 @@ od;
 return A;
 end);
 
-BindGlobal("OrbitalGraphColadjMats",function(arg)
+BindGlobal("OrbitalDigraphColadjMats",function(arg)
 #
 # This function returns a sequence of collapsed adjacency 
-# matrices for the the orbital graphs of the (assumed) transitive  
+# matrices for the the orbital digraphs of the (assumed) transitive  
 # G=arg[1].  The matrices are collapsed w.r.t.  Stabilizer(G,1),  so
 # that these are collapsed adjacency matrices in the sense of 
 # Praeger and Soicher, "Low Rank Representations and Graphs for 
@@ -1061,10 +1092,10 @@ BindGlobal("OrbitalGraphColadjMats",function(arg)
 #
 # If  arg[2]  is bound, then it is assumed to be  Stabilizer(G,1).
 #
-local G,H,orbs,deg,i,j,k,n,intmats,A,orbnum,reps,gamma;
+local G,H,orbs,deg,i,j,k,n,coladjmats,A,orbnum,reps,gamma;
 G:=arg[1];
 if not IsPermGroup(G) or (IsBound(arg[2]) and not IsPermGroup(arg[2])) then
-   Error("usage: OrbitalGraphColadjMats( <PermGroup> [, <PermGroup> ] )");
+   Error("usage: OrbitalDigraphColadjMats( <PermGroup> [, <PermGroup> ] )");
 fi;
 if IsBound(arg[2]) then
    H:=arg[2];
@@ -1086,7 +1117,7 @@ if reps[1]<>1 then # this cannot happen!
    Error("internal error");
 fi;
 n:=Length(reps);
-intmats:=[];
+coladjmats:=[];
 for i in [1..n] do
    AddEdgeOrbit(gamma,[1,reps[i]],H);
    A:=NullMat(n,n);
@@ -1095,13 +1126,16 @@ for i in [1..n] do
 	 A[j][orbnum[k]]:=A[j][orbnum[k]]+1;
       od;
    od;
-   intmats[i]:=A;
+   coladjmats[i]:=A;
    if i < n then
       RemoveEdgeOrbit(gamma,[1,reps[i]],H);
    fi;
 od;
-return intmats;
+return coladjmats;
 end);
+
+BindGlobal("OrbitalGraphColadjMats",OrbitalDigraphColadjMats);
+# for backward compatibility
 
 BindGlobal("LocalInfo",function(arg)
 #
@@ -1393,7 +1427,7 @@ BindGlobal("InducedSubgraph",function(arg)
 # with the returned induced subgraph. 
 # If  arg[3]  is bound, this function assumes that  G=arg[3]   fixes  
 # V  setwise, and is a group of automorphisms of the induced subgraph 
-# when restriced to  V.  In this case, the image of  G  acting on  V  is 
+# when restricted to  V.  In this case, the image of  G  acting on  V  is 
 # the group associated with the returned induced subgraph. 
 #
 # The i-th vertex of the induced subgraph corresponds to vertex V[i] of
@@ -2801,7 +2835,7 @@ BindGlobal("CompleteSubgraphsMain",function(gamma,kvector,allsubs,allmaxes,
 # of  [1..d].  There is no harm (except perhaps for efficiency) in
 # giving  dovector  the value  [1..d].
 #
-local IsFixedPoint,HasLargerEntry,k,smallorder,weights,weighted,
+local IsFixedPoint,HasLargerEntry,k,smallorder,smallorder1,weights,weighted,
       originalG,originalgamma,includingallmaximalreps, 
       CompleteSubgraphsSearch,K,clique,cliquenumber,chromaticnumber;
 
@@ -2836,9 +2870,10 @@ CompleteSubgraphsSearch := function(gamma,kvector,sofar,forbidden)
 # This function returns a dense list of distinct complete subgraphs of
 # gamma,  each of which is given as a dense list of distinct vertex-names.
 #
-# The variables  smallorder,  originalG,  allsubs,  allmaxes,  weights, 
-# weightvectors,  weighted,  partialcolour,  dovector,  IsFixedPoint,  and  
-# HasLargerEntry  are global.  (originalG  is the group of automorphisms 
+# The variables  smallorder,  smallorder1,  originalG,  
+# allsubs,  allmaxes,  weights,  weightvectors,  weighted,  
+# partialcolour,  dovector,  IsFixedPoint,  and  HasLargerEntry  
+# are global.  (originalG  is the group of automorphisms 
 # associated with the original graph.)  
 #
 # If  allsubs=2  then the returned complete subgraphs will be 
@@ -2898,8 +2933,9 @@ local k,n,i,j,delta,adj,rep,a,b,ans,ans1,ans2,names,W,H,HH,newsofar,
 
 CompleteSubgraphsSearch1 := function(mask,kvector,forbidmask)
 #
-# This function does the work of  CompleteSubgraphsSearch  
-# when the group associated with the graph is trivial.  
+# This function does the work of  CompleteSubgraphsSearch,   
+# but assuming the group associated to the graph is trivial.
+#
 # The parameters  mask  and  forbidmask  are boolean lists of length  n,  
 # and the global variable  A  has value an  n x n  adjacency matrix 
 # for a graph  gamma  (given as a length  n  list of boolean lists).  
@@ -3228,9 +3264,9 @@ if HasLargerEntry(kvector,nactivevector) then
 fi;
 # now k<0 or nactive >= k > 0.
 G:=gamma.group;
-if IsTrivial(G) then
-   # The group will be trivial from here on, and we will use the 
-   # specialized function  CompleteSubgraphsSearch1. 
+if IsTrivial(G) or ((not weighted) and Size(G)<=smallorder1) then
+   # Use the specialized function  CompleteSubgraphsSearch1, 
+   # which works as if the group associated to the graph is trivial. 
    if (not allmaxes) and forbidden<>[] then 
       # strip out the forbidden vertices.
       gamma:=InducedSubgraph(gamma,active,G);
@@ -3238,11 +3274,30 @@ if IsTrivial(G) then
       names:=gamma.names;
       active:=[1..n];
    fi;
-   # now A := adjacency matrix of gamma.
-   A:=List([1..n],i->BlistList([1..n],gamma.adjacencies[i]));
-   return CompleteSubgraphsSearch1(BlistList([1..n],[1..n]), kvector,
+   A:=List([1..n],i->BlistList([1..n],Adjacency(gamma,i)));
+   # So now  A  is the bit-adjacency-matrix of  gamma.
+   ans1:=CompleteSubgraphsSearch1(BlistList([1..n],[1..n]), kvector,
             BlistList([1..n],Difference([1..n],active)));
+   Unbind(A); # A is no longer needed
+   if Length(ans1)<=1 or IsTrivial(gamma.group) then
+      # no isomorph rejection is required
+      return ans1;
+   fi;
+   # Otherwise, perform isomorph rejection using explicit orbits
+   # (even if  allsubs=1).
+   # First, set up a translation vector  W  from vertex-names 
+   # to vertices of  gamma.
+   W:=[];
+   for i in [1..Length(names)] do 
+      W[names[i]]:=i; 
+   od;
+   ans1:=List(ans1,x->Set(W{x}));
+   ans1:=List(Orbits(gamma.group,ans1,OnSets),x->names{x[1]});
+   return ans1;
 fi;
+#
+# Now handle the general case.
+#
 J:=Filtered([1..Length(gamma.representatives)],
             x->gamma.representatives[x] in active);
 IsSSortedList(J);
@@ -3516,9 +3571,17 @@ fi;
 if not IsSimpleGraph(gamma) then
    Error("<gamma> must be a simple graph");
 fi;
-smallorder:=8; # Any group with order <= smallorder is considered small,
-               # and we calculate orbits on cliques explicitly for these
-               # groups when  allsubs=2.
+smallorder:=8; # to try to optimize isomorph rejection. 
+# If allsubs=2, we perform isomorph rejection via explicit orbits 
+# on cliques when the group associated with the graph under 
+# consideration has  order<=smallorder. 
+smallorder1:=8; # to try to optimise when  CompleteSubgraphsSearch1  
+# is used for unweighted graphs. 
+# In  CompleteSubgraphsSearch,  if the graph under consideration 
+# is unweighted, and the group associated with that graph 
+# has  order <= smallorder1,  then we use  CompleteSubgraphsSearch1
+# and perform isomorph rejection via explicit orbits on cliques.
+#
 originalgamma:=gamma;
 originalG:=gamma.group;
 gamma:=ShallowCopy(gamma);
@@ -3561,6 +3624,12 @@ if not weighted and k>=0 then
          # gamma has no clique of size k.
          return [];
       fi; 
+   fi;
+   if allsubs=0 and IsBound(gamma.autGroup) and
+      not IsCompleteGraph(gamma) and not IsNullGraph(gamma) and
+      Size(gamma.group)<Size(gamma.autGroup) then
+      # Make use of the full automorphism group of  gamma.
+      gamma:=NewGroupGraph(gamma.autGroup,gamma);
    fi;
 fi;
 K:=CompleteSubgraphsSearch(gamma,kvector,[],[]);
@@ -3835,13 +3904,13 @@ end);
 BindGlobal("VertexTransitiveDRGs",function(gpin)
 #
 # If  gpin  is a permutation group G, then it must be transitive 
-# and non-trivial, and we set coladjmats:=OrbitalGraphColadjMats(gpin).
+# and non-trivial, and we set coladjmats:=OrbitalDigraphColadjMats(gpin).
 #
 # Otherwise, we take  coladjmats:=gpin,  which must be a list of collapsed
 # adjacency matrices for the orbital digraphs of a non-trivial 
 # transitive permutation group  G  (on a set V say), collapsed 
-# w.r.t. a point stabilizer (such as the list of matrices produced by  
-# OrbitalGraphColadjMats ).
+# w.r.t. a fixed point-stabilizer (such as the list of matrices produced
+# by  OrbitalDigraphColadjMats ).
 #
 # In either case, this function returns a record (called  result),
 # which gives information on  G.
@@ -3871,12 +3940,12 @@ if not IsList(gpin) and not IsPermGroup(gpin) then
    Error("usage: VertexTransitiveDRGs( <List> or <PermGroup> )");
 fi;
 if IsPermGroup(gpin) then
-   # Remark: OrbitalGraphColadjMats will check if  gpin  is transitive,
+   # Remark: OrbitalDigraphColadjMats will check if  gpin  is transitive,
    # so we do not do this here.
    if IsTrivial(gpin) then
       Error("Input group must must be non-trivial,");
    fi;
-   coladjmats := OrbitalGraphColadjMats(gpin);
+   coladjmats := OrbitalDigraphColadjMats(gpin);
 else
    coladjmats := gpin;
 fi;
@@ -4204,8 +4273,8 @@ if not IsBound(m) then
    m:=CliqueNumber(delta);
 fi;
 # 
-smallorder:=24; # To optimise when exact cover is used. 
-# smallorder can be given any positive integer value, but a value
+smallorder:=24; # To try to optimise when exact cover is used. 
+# smallorder  can be given any positive integer value, but a value
 # in the range 8 to 120 seems to work well. 
 #
 exhaustive_search:=false;
@@ -4996,7 +5065,7 @@ BindGlobal("AutGroupGraph",function(arg)
 #
 # Let  gr:=arg[1]  be a graph or a graph with colour-classes.
 #
-# If arg[2] is unbound (the ususal case) then this function returns 
+# If arg[2] is unbound (the usual case) then this function returns 
 # the automorphism group of  gr  (making use of B.McKay's 
 # dreadnaut, nauty  programs).
 # 

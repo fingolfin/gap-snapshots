@@ -3,18 +3,19 @@
 \makelabel{cap:Table of Contents}{}{X8537FEB07AF2BEC8}
 \makelabel{cap:CAP Categories}{1}{X7C99ABCB7DEEDE2A}
 \makelabel{cap:Categories}{1.1}{X7CC6903E78F24167}
-\makelabel{cap:Constructor}{1.2}{X7ABF649E831D4D8E}
-\makelabel{cap:Internal Attributes}{1.3}{X79CE135F7E6EBFEE}
-\makelabel{cap:Logic switcher}{1.4}{X8305A19E86EC7B67}
-\makelabel{cap:Tool functions}{1.5}{X7A15CCB67FBCF3E3}
-\makelabel{cap:Well-Definedness of Cells}{1.6}{X7DB3D2BD8792ABBC}
-\makelabel{cap:Unpacking data structures}{1.7}{X7D2E74CE87255099}
-\makelabel{cap:Caching}{1.8}{X79DB9EE785F723D1}
-\makelabel{cap:Sanity checks}{1.9}{X7EC631BC7CFCF5DB}
-\makelabel{cap:Timing statistics}{1.10}{X7984C0E986CF0986}
-\makelabel{cap:Enable automatic calls of Add}{1.11}{X81A1CDD77D375231}
-\makelabel{cap:Performance tweaks}{1.12}{X7876FF1F831F58B0}
-\makelabel{cap:LaTeX}{1.13}{X7B6A66AA7D212DDC}
+\makelabel{cap:Categorical properties}{1.2}{X7A853C6D8096E14B}
+\makelabel{cap:Constructor}{1.3}{X7ABF649E831D4D8E}
+\makelabel{cap:Internal Attributes}{1.4}{X79CE135F7E6EBFEE}
+\makelabel{cap:Logic switcher}{1.5}{X8305A19E86EC7B67}
+\makelabel{cap:Tool functions}{1.6}{X7A15CCB67FBCF3E3}
+\makelabel{cap:Well-Definedness of Cells}{1.7}{X7DB3D2BD8792ABBC}
+\makelabel{cap:Unpacking data structures}{1.8}{X7D2E74CE87255099}
+\makelabel{cap:Caching}{1.9}{X79DB9EE785F723D1}
+\makelabel{cap:Sanity checks}{1.10}{X7EC631BC7CFCF5DB}
+\makelabel{cap:Timing statistics}{1.11}{X7984C0E986CF0986}
+\makelabel{cap:Enable automatic calls of Add}{1.12}{X81A1CDD77D375231}
+\makelabel{cap:Performance tweaks}{1.13}{X7876FF1F831F58B0}
+\makelabel{cap:LaTeX}{1.14}{X7B6A66AA7D212DDC}
 \makelabel{cap:Objects}{2}{X78497E777FB3E402}
 \makelabel{cap:Attributes for the Type of Objects}{2.1}{X7ABD8E5A8408A301}
 \makelabel{cap:Equality for Objects}{2.2}{X7B4B807A848111AA}
@@ -72,14 +73,14 @@
 \makelabel{cap:Image}{6.13}{X87F4D35A826599C6}
 \makelabel{cap:Coimage}{6.14}{X7EB02EC487B586E5}
 \makelabel{cap:Homology objects}{6.15}{X87F38F8284D3137C}
+\makelabel{cap:Projective covers and injective envelopes}{6.16}{X81E4AE0B7876230B}
 \makelabel{cap:Add Functions}{7}{X87A9DB228112DF45}
 \makelabel{cap:Functions Installed by Add}{7.1}{X85EC14607B6F66FE}
 \makelabel{cap:Add Method}{7.2}{X85E3D9E07B8BC960}
 \makelabel{cap:InstallAdd Function}{7.3}{X7D83FC527EA66166}
 \makelabel{cap:Enhancing the method name record}{7.4}{X844CF4D187364721}
-\makelabel{cap:Install All Adds}{7.5}{X78B69C307CF0DE53}
-\makelabel{cap:Prepare functions}{7.6}{X7AFA0108870EE97C}
-\makelabel{cap:Available Add functions}{7.7}{X829CEC0B8319A503}
+\makelabel{cap:Prepare functions}{7.5}{X7AFA0108870EE97C}
+\makelabel{cap:Available Add functions}{7.6}{X829CEC0B8319A503}
 \makelabel{cap:Managing Derived Methods}{8}{X8397FA067BFF4850}
 \makelabel{cap:Info Class}{8.1}{X7EBFC26F83EB9F72}
 \makelabel{cap:Derivation Objects}{8.2}{X85225AB582EE9B06}
@@ -88,7 +89,7 @@
 \makelabel{cap:Min Heaps for Strings}{8.5}{X85B1CCCC81C1A631}
 \makelabel{cap:Technical Details}{9}{X87A9EC0A7DF04931}
 \makelabel{cap:The Category Cat}{9.1}{X7A8C280B85B50DE0}
-\makelabel{cap:Install Functions for IsWellDefined}{9.2}{X84802DD67AA9E628}
+\makelabel{cap:Tools}{9.2}{X8508AEF8845565A1}
 \makelabel{cap:Limits and Colimits}{10}{X857CF4D487158F26}
 \makelabel{cap:Specification of Limits and Colimits}{10.1}{X8588E7B080530988}
 \makelabel{cap:Enhancing Limit Specifications}{10.2}{X82DEA53C869D2324}
@@ -114,68 +115,94 @@
 \makelabel{cap:Monoidal Categories}{14.8}{X808DC49C7ED99B52}
 \makelabel{cap:MorphismFromSourceToPushout and MorphismFromFiberProductToSink}{14.9}{X8218390A785F1EDB}
 \makelabel{cap:Opposite category}{14.10}{X84410C637B3C1D0E}
-\makelabel{cap:Generalized Morphisms Category}{14.11}{X86FB477C7908A3A6}
-\makelabel{cap:IsWellDefined}{14.12}{X7E8AFE5085FF7E15}
-\makelabel{cap:Kernel}{14.13}{X7DCD99628504B810}
-\makelabel{cap:FiberProduct}{14.14}{X7DE20941803BFBD9}
+\makelabel{cap:Terminal category}{14.11}{X7EA29B7D7BA60F42}
+\makelabel{cap:Generalized Morphisms Category}{14.12}{X86FB477C7908A3A6}
+\makelabel{cap:IsWellDefined}{14.13}{X7E8AFE5085FF7E15}
+\makelabel{cap:Kernel}{14.14}{X7DCD99628504B810}
+\makelabel{cap:FiberProduct}{14.15}{X7DE20941803BFBD9}
+\makelabel{cap:Terminal category}{15}{X7EA29B7D7BA60F42}
+\makelabel{cap:GAP Categories}{15.1}{X7D03633A7D98026B}
+\makelabel{cap:Constructors}{15.2}{X86EC0F0A78ECBC10}
+\makelabel{cap:Attributes}{15.3}{X7C701DBF7BAE649A}
 \makelabel{cap:Index}{Ind}{X83A0356F839C696F}
-\makelabel{cap:IsCapCategory for IsObject}{1.1.1}{X852A10417EEF5D0E}
+\makelabel{cap:IsCapCategory for IsAttributeStoringRep}{1.1.1}{X80E47D0E86A9F916}
 \makelabel{cap:IsCapCategoryCell for IsAttributeStoringRep}{1.1.2}{X7E2CFDC482566454}
 \makelabel{cap:IsCapCategoryObject for IsCapCategoryCell}{1.1.3}{X7DAEF54180094D1E}
 \makelabel{cap:IsCapCategoryMorphism for IsCapCategoryCell}{1.1.4}{X84413C4978765A3F}
 \makelabel{cap:IsCapCategoryTwoCell for IsCapCategoryCell}{1.1.5}{X7F3B964286D98710}
-\makelabel{cap:AddCategoricalProperty}{1.1.6}{X7D6EA1307DFCCE46}
-\makelabel{cap:CreateCapCategory}{1.2.1}{X86EDB84D7E3F0194}
-\makelabel{cap:CreateCapCategory for IsString}{1.2.2}{X854CC42E828C120D}
-\makelabel{cap:CategoryFilter for IsCapCategory}{1.3.1}{X7C7B1EAF7D786508}
-\makelabel{cap:CellFilter for IsCapCategory}{1.3.2}{X7E88D5D3860AF854}
-\makelabel{cap:ObjectFilter for IsCapCategory}{1.3.3}{X7BD6E2B887F86E9C}
-\makelabel{cap:MorphismFilter for IsCapCategory}{1.3.4}{X7F62E0C47C778CBB}
-\makelabel{cap:TwoCellFilter for IsCapCategory}{1.3.5}{X850D0E978090D0C0}
-\makelabel{cap:CommutativeRingOfLinearCategory for IsCapCategory}{1.3.6}{X78D0C0057817DBC3}
-\makelabel{cap:RangeCategoryOfHomomorphismStructure for IsCapCategory}{1.3.7}{X80AF18E4797A5BB4}
-\makelabel{cap:AdditiveGenerators for IsCapCategory}{1.3.8}{X7CF2F93F8258DAD5}
-\makelabel{cap:CapCategorySwitchLogicPropagationForObjectsOn}{1.4.1}{X82C32E8C790EAB42}
-\makelabel{cap:CapCategorySwitchLogicPropagationForObjectsOff}{1.4.2}{X7FEF6F218491CD45}
-\makelabel{cap:CapCategorySwitchLogicPropagationForMorphismsOn}{1.4.3}{X80C98B547A76705D}
-\makelabel{cap:CapCategorySwitchLogicPropagationForMorphismsOff}{1.4.4}{X86469EBF8261E1D4}
-\makelabel{cap:CapCategorySwitchLogicPropagationOn}{1.4.5}{X7C06E84F78D82C0D}
-\makelabel{cap:CapCategorySwitchLogicPropagationOff}{1.4.6}{X84F114757E964E1E}
-\makelabel{cap:CapCategorySwitchLogicOn}{1.4.7}{X84824AC3793D872B}
-\makelabel{cap:CapCategorySwitchLogicOff}{1.4.8}{X84A995A687D031B7}
-\makelabel{cap:CanCompute for IsCapCategory, IsString}{1.5.1}{X851D0435816DDB40}
-\makelabel{cap:CanCompute for IsCapCategory, IsFunction}{1.5.1}{X851D0435816DDB40}
-\makelabel{cap:CheckConstructivenessOfCategory for IsCapCategory, IsString}{1.5.2}{X7ACB9FFA84476BA0}
-\makelabel{cap:IsWellDefined for IsCapCategoryCell}{1.6.1}{X839EA4D7805D4F97}
-\makelabel{cap:Down for IsObject}{1.7.1}{X8790DC5F7A2BD22E}
-\makelabel{cap:DownOnlyMorphismData for IsCapCategoryMorphism}{1.7.2}{X858B64487B2DA04E}
-\makelabel{cap:DownToBottom for IsObject}{1.7.3}{X7BABD65A821C138F}
-\makelabel{cap:SetCachingOfCategory}{1.8.1}{X7DB820A686B4059F}
-\makelabel{cap:SetCachingOfCategoryWeak}{1.8.2}{X87AA14F27892F14F}
-\makelabel{cap:SetCachingOfCategoryCrisp}{1.8.2}{X87AA14F27892F14F}
-\makelabel{cap:DeactivateCachingOfCategory}{1.8.2}{X87AA14F27892F14F}
-\makelabel{cap:SetDefaultCaching}{1.8.3}{X844903657E52E6D1}
-\makelabel{cap:SetDefaultCachingWeak}{1.8.3}{X844903657E52E6D1}
-\makelabel{cap:SetDefaultCachingCrisp}{1.8.3}{X844903657E52E6D1}
-\makelabel{cap:DeactivateDefaultCaching}{1.8.3}{X844903657E52E6D1}
-\makelabel{cap:DisableInputSanityChecks}{1.9.1}{X7BB84C7B83FE3D80}
-\makelabel{cap:DisableOutputSanityChecks}{1.9.1}{X7BB84C7B83FE3D80}
-\makelabel{cap:EnablePartialInputSanityChecks}{1.9.1}{X7BB84C7B83FE3D80}
-\makelabel{cap:EnablePartialOutputSanityChecks}{1.9.1}{X7BB84C7B83FE3D80}
-\makelabel{cap:EnableFullInputSanityChecks}{1.9.1}{X7BB84C7B83FE3D80}
-\makelabel{cap:EnableFullOutputSanityChecks}{1.9.1}{X7BB84C7B83FE3D80}
-\makelabel{cap:DisableSanityChecks}{1.9.1}{X7BB84C7B83FE3D80}
-\makelabel{cap:EnablePartialSanityChecks}{1.9.1}{X7BB84C7B83FE3D80}
-\makelabel{cap:EnableFullSanityChecks}{1.9.1}{X7BB84C7B83FE3D80}
-\makelabel{cap:EnableTimingStatistics}{1.10.1}{X86C6F8828628B070}
-\makelabel{cap:DisableTimingStatistics}{1.10.1}{X86C6F8828628B070}
-\makelabel{cap:ResetTimingStatistics}{1.10.1}{X86C6F8828628B070}
-\makelabel{cap:DisplayTimingStatistics}{1.10.1}{X86C6F8828628B070}
-\makelabel{cap:BrowseTimingStatistics}{1.10.1}{X86C6F8828628B070}
-\makelabel{cap:EnableAddForCategoricalOperations}{1.11.1}{X7C01E3727D08D219}
-\makelabel{cap:DisableAddForCategoricalOperations}{1.11.1}{X7C01E3727D08D219}
-\makelabel{cap:LaTeXOutput for IsCapCategoryCell}{1.13.1}{X831B157D7CC3DDA3}
-\makelabel{cap:LaTeXOutput for IsCapCategory}{1.13.2}{X7B34A09D7AF0F683}
+\makelabel{cap:AddCategoricalProperty}{1.2.1}{X7D6EA1307DFCCE46}
+\makelabel{cap:IsEquippedWithHomomorphismStructure for IsCapCategory}{1.2.2}{X83F78D2C7AAC115D}
+\makelabel{cap:IsCategoryWithDecidableLifts for IsCapCategory}{1.2.3}{X829DB5497D58C7E5}
+\makelabel{cap:IsCategoryWithDecidableColifts for IsCapCategory}{1.2.4}{X7C22FA787967E694}
+\makelabel{cap:IsEnrichedOverCommutativeRegularSemigroup for IsCapCategory}{1.2.5}{X82C2B6D37DA78465}
+\makelabel{cap:IsSkeletalCategory for IsCapCategory}{1.2.6}{X7DBCD7237CF9100A}
+\makelabel{cap:IsAbCategory for IsCapCategory}{1.2.7}{X79295B4680B0F22B}
+\makelabel{cap:IsLinearCategoryOverCommutativeRing for IsCapCategory}{1.2.8}{X861DBAC181A15E1F}
+\makelabel{cap:IsAdditiveCategory for IsCapCategory}{1.2.9}{X87C4C37D7F75E681}
+\makelabel{cap:IsPreAbelianCategory for IsCapCategory}{1.2.10}{X7A64E2B978685471}
+\makelabel{cap:IsAbelianCategory for IsCapCategory}{1.2.11}{X79DB288F84457967}
+\makelabel{cap:IsAbelianCategoryWithEnoughProjectives for IsCapCategory}{1.2.12}{X83EDCC4886FEE4B1}
+\makelabel{cap:IsAbelianCategoryWithEnoughInjectives for IsCapCategory}{1.2.13}{X860EB7977F78EE3F}
+\makelabel{cap:IsLocallyOfFiniteProjectiveDimension for IsCapCategory}{1.2.14}{X87AA6D6282FD1C02}
+\makelabel{cap:IsLocallyOfFiniteInjectiveDimension for IsCapCategory}{1.2.15}{X7EDD2B4386ABE96E}
+\makelabel{cap:CreateCapCategory}{1.3.1}{X86EDB84D7E3F0194}
+\makelabel{cap:CreateCapCategory for IsString}{1.3.2}{X854CC42E828C120D}
+\makelabel{cap:CreateCapCategory for IsString, IsFunction, IsFunction, IsFunction, IsFunction}{1.3.3}{X7A1D562178FC3DDF}
+\makelabel{cap:CreateCapCategoryWithDataTypes}{1.3.4}{X8090078F7C5EF5E9}
+\makelabel{cap:Name for IsCapCategory}{1.4.1}{X79251D5C85B0F3D3}
+\makelabel{cap:CategoryFilter for IsCapCategory}{1.4.2}{X7C7B1EAF7D786508}
+\makelabel{cap:ObjectFilter for IsCapCategory}{1.4.3}{X7BD6E2B887F86E9C}
+\makelabel{cap:MorphismFilter for IsCapCategory}{1.4.4}{X7F62E0C47C778CBB}
+\makelabel{cap:TwoCellFilter for IsCapCategory}{1.4.5}{X850D0E978090D0C0}
+\makelabel{cap:ObjectDatumType for IsCapCategory}{1.4.6}{X834BBE4085A42FAC}
+\makelabel{cap:MorphismDatumType for IsCapCategory}{1.4.7}{X8090D81F78B1F25A}
+\makelabel{cap:TwoCellDatumType for IsCapCategory}{1.4.8}{X850E7C0C807F3402}
+\makelabel{cap:CommutativeRingOfLinearCategory for IsCapCategory}{1.4.9}{X78D0C0057817DBC3}
+\makelabel{cap:RangeCategoryOfHomomorphismStructure for IsCapCategory}{1.4.10}{X80AF18E4797A5BB4}
+\makelabel{cap:AdditiveGenerators for IsCapCategory}{1.4.11}{X7CF2F93F8258DAD5}
+\makelabel{cap:IndecomposableProjectiveObjects for IsCapCategory}{1.4.12}{X7E094E2680348C88}
+\makelabel{cap:IndecomposableInjectiveObjects for IsCapCategory}{1.4.13}{X85E6A5AF7DDA4F2C}
+\makelabel{cap:CapCategorySwitchLogicPropagationForObjectsOn}{1.5.1}{X82C32E8C790EAB42}
+\makelabel{cap:CapCategorySwitchLogicPropagationForObjectsOff}{1.5.2}{X7FEF6F218491CD45}
+\makelabel{cap:CapCategorySwitchLogicPropagationForMorphismsOn}{1.5.3}{X80C98B547A76705D}
+\makelabel{cap:CapCategorySwitchLogicPropagationForMorphismsOff}{1.5.4}{X86469EBF8261E1D4}
+\makelabel{cap:CapCategorySwitchLogicPropagationOn}{1.5.5}{X7C06E84F78D82C0D}
+\makelabel{cap:CapCategorySwitchLogicPropagationOff}{1.5.6}{X84F114757E964E1E}
+\makelabel{cap:CapCategorySwitchLogicOn}{1.5.7}{X84824AC3793D872B}
+\makelabel{cap:CapCategorySwitchLogicOff}{1.5.8}{X84A995A687D031B7}
+\makelabel{cap:CanCompute for IsCapCategory, IsString}{1.6.1}{X851D0435816DDB40}
+\makelabel{cap:CanCompute for IsCapCategory, IsFunction}{1.6.1}{X851D0435816DDB40}
+\makelabel{cap:CheckConstructivenessOfCategory for IsCapCategory, IsString}{1.6.2}{X7ACB9FFA84476BA0}
+\makelabel{cap:IsWellDefined for IsCapCategoryCell}{1.7.1}{X839EA4D7805D4F97}
+\makelabel{cap:Down for IsObject}{1.8.1}{X8790DC5F7A2BD22E}
+\makelabel{cap:DownOnlyMorphismData for IsCapCategoryMorphism}{1.8.2}{X858B64487B2DA04E}
+\makelabel{cap:DownToBottom for IsObject}{1.8.3}{X7BABD65A821C138F}
+\makelabel{cap:SetCachingOfCategory}{1.9.1}{X7DB820A686B4059F}
+\makelabel{cap:SetCachingOfCategoryWeak}{1.9.2}{X87AA14F27892F14F}
+\makelabel{cap:SetCachingOfCategoryCrisp}{1.9.2}{X87AA14F27892F14F}
+\makelabel{cap:DeactivateCachingOfCategory}{1.9.2}{X87AA14F27892F14F}
+\makelabel{cap:SetDefaultCaching}{1.9.3}{X844903657E52E6D1}
+\makelabel{cap:SetDefaultCachingWeak}{1.9.3}{X844903657E52E6D1}
+\makelabel{cap:SetDefaultCachingCrisp}{1.9.3}{X844903657E52E6D1}
+\makelabel{cap:DeactivateDefaultCaching}{1.9.3}{X844903657E52E6D1}
+\makelabel{cap:DisableInputSanityChecks}{1.10.1}{X7BB84C7B83FE3D80}
+\makelabel{cap:DisableOutputSanityChecks}{1.10.1}{X7BB84C7B83FE3D80}
+\makelabel{cap:EnablePartialInputSanityChecks}{1.10.1}{X7BB84C7B83FE3D80}
+\makelabel{cap:EnablePartialOutputSanityChecks}{1.10.1}{X7BB84C7B83FE3D80}
+\makelabel{cap:EnableFullInputSanityChecks}{1.10.1}{X7BB84C7B83FE3D80}
+\makelabel{cap:EnableFullOutputSanityChecks}{1.10.1}{X7BB84C7B83FE3D80}
+\makelabel{cap:DisableSanityChecks}{1.10.1}{X7BB84C7B83FE3D80}
+\makelabel{cap:EnablePartialSanityChecks}{1.10.1}{X7BB84C7B83FE3D80}
+\makelabel{cap:EnableFullSanityChecks}{1.10.1}{X7BB84C7B83FE3D80}
+\makelabel{cap:EnableTimingStatistics}{1.11.1}{X86C6F8828628B070}
+\makelabel{cap:DisableTimingStatistics}{1.11.1}{X86C6F8828628B070}
+\makelabel{cap:ResetTimingStatistics}{1.11.1}{X86C6F8828628B070}
+\makelabel{cap:DisplayTimingStatistics}{1.11.1}{X86C6F8828628B070}
+\makelabel{cap:BrowseTimingStatistics}{1.11.1}{X86C6F8828628B070}
+\makelabel{cap:EnableAddForCategoricalOperations}{1.12.1}{X7C01E3727D08D219}
+\makelabel{cap:DisableAddForCategoricalOperations}{1.12.1}{X7C01E3727D08D219}
+\makelabel{cap:LaTeXOutput for IsCapCategoryCell}{1.14.1}{X831B157D7CC3DDA3}
+\makelabel{cap:LaTeXOutput for IsCapCategory}{1.14.2}{X7B34A09D7AF0F683}
 \makelabel{cap:CapCategory for IsCapCategoryObject}{2.1.1}{X7C3B8C3D865002C8}
 \makelabel{cap:IsEqualForObjects for IsCapCategoryObject, IsCapCategoryObject}{2.2.1}{X8337569D81C0BBEC}
 \makelabel{cap:IsBijectiveObject for IsCapCategoryObject}{2.3.1}{X854468CF79122D57}
@@ -271,6 +298,7 @@
 \makelabel{cap:PostCompose for IsCapCategoryMorphism, IsCapCategoryMorphism}{3.10.5}{X84293B8381256A08}
 \makelabel{cap:PostCompose for IsList}{3.10.6}{X81222A1084A4F637}
 \makelabel{cap:PostComposeList for IsList}{3.10.7}{X8107D27F7B62D023}
+\makelabel{cap:SumOfMorphisms for IsCapCategoryObject, IsList, IsCapCategoryObject}{3.10.8}{X7D50F754822C30D7}
 \makelabel{cap:IsWellDefinedForMorphisms for IsCapCategoryMorphism}{3.11.1}{X7968A871832877B8}
 \makelabel{cap:LiftAlongMonomorphism for IsCapCategoryMorphism, IsCapCategoryMorphism}{3.12.1}{X83CDF65582CD9921}
 \makelabel{cap:ColiftAlongEpimorphism for IsCapCategoryMorphism, IsCapCategoryMorphism}{3.12.2}{X79AA9F638487EE32}
@@ -283,6 +311,8 @@
 \makelabel{cap:ColiftOrFail for IsCapCategoryMorphism, IsCapCategoryMorphism}{3.12.9}{X79FFE43E7962CFBA}
 \makelabel{cap:IsColiftable for IsCapCategoryMorphism, IsCapCategoryMorphism}{3.12.10}{X8685B04087B1E52A}
 \makelabel{cap:InverseForMorphisms for IsCapCategoryMorphism}{3.13.1}{X8371BF227B4C32EF}
+\makelabel{cap:PreInverseForMorphisms for IsCapCategoryMorphism}{3.13.2}{X83E4A87F7B2290F1}
+\makelabel{cap:PostInverseForMorphisms for IsCapCategoryMorphism}{3.13.3}{X800447917F75989A}
 \makelabel{cap:IsEqualForCacheForMorphisms for IsCapCategoryMorphism, IsCapCategoryMorphism}{3.14.1}{X83F87AE07ED534ED}
 \makelabel{cap:IsHomSetInhabited for IsCapCategoryObject, IsCapCategoryObject}{3.15.1}{X81DB15B87D1A946D}
 \makelabel{cap:HomomorphismStructureOnObjects for IsCapCategoryObject, IsCapCategoryObject}{3.16.1}{X81BC29A679416C45}
@@ -522,6 +552,8 @@
 \makelabel{cap:CoastrictionToImageWithGivenImageObject for IsCapCategoryMorphism, IsCapCategoryObject}{6.13.7}{X78BE36EA83BEF493}
 \makelabel{cap:UniversalMorphismFromImage for IsCapCategoryMorphism, IsList}{6.13.8}{X7989B1FB811D2033}
 \makelabel{cap:UniversalMorphismFromImageWithGivenImageObject for IsCapCategoryMorphism, IsList, IsCapCategoryObject}{6.13.9}{X86E557097CFB4430}
+\makelabel{cap:ImageObjectFunctorial for IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism}{6.13.10}{X7A46647F7AA9C398}
+\makelabel{cap:ImageObjectFunctorialWithGivenImageObjects for IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject}{6.13.11}{X85F174A07A09B04C}
 \makelabel{cap:MorphismFromCoimageToImage for IsCapCategoryMorphism}{6.14.1}{X7F7BD6A18581671E}
 \makelabel{cap:MorphismFromCoimageToImageWithGivenObjects for IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryObject}{6.14.2}{X8025749B78E12A2B}
 \makelabel{cap:InverseMorphismFromCoimageToImage for IsCapCategoryMorphism}{6.14.3}{X7D0C9B067F3E15B4}
@@ -537,281 +569,304 @@
 \makelabel{cap:UniversalMorphismIntoCoimageWithGivenCoimageObject for IsCapCategoryMorphism, IsList, IsCapCategoryObject}{6.14.13}{X87AACC0083B6D49F}
 \makelabel{cap:CanonicalIdentificationFromImageObjectToCoimage for IsCapCategoryMorphism}{6.14.14}{X7D1114D97D8179BD}
 \makelabel{cap:CanonicalIdentificationFromCoimageToImageObject for IsCapCategoryMorphism}{6.14.15}{X8471140B7DF55646}
+\makelabel{cap:CoimageObjectFunctorial for IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism}{6.14.16}{X852EFBA87E7F6831}
+\makelabel{cap:CoimageObjectFunctorialWithGivenCoimageObjects for IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject}{6.14.17}{X7FB58F087D65DB38}
 \makelabel{cap:HomologyObject for IsCapCategoryMorphism, IsCapCategoryMorphism}{6.15.1}{X8713652D7B7E1418}
 \makelabel{cap:HomologyObjectFunctorial for IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism}{6.15.2}{X8647C62283C9B921}
 \makelabel{cap:HomologyObjectFunctorialWithGivenHomologyObjects for IsCapCategoryObject, IsList, IsCapCategoryObject}{6.15.3}{X81012CC0845DE717}
 \makelabel{cap:IsomorphismFromHomologyObjectToItsConstructionAsAnImageObject for IsCapCategoryMorphism, IsCapCategoryMorphism}{6.15.4}{X8799E88E79EFE007}
 \makelabel{cap:IsomorphismFromItsConstructionAsAnImageObjectToHomologyObject for IsCapCategoryMorphism, IsCapCategoryMorphism}{6.15.5}{X828E94BA7CF6FB71}
+\makelabel{cap:ProjectiveCoverObject for IsCapCategoryObject}{6.16.1}{X790C931979343CFF}
+\makelabel{cap:EpimorphismFromProjectiveCoverObject for IsCapCategoryObject}{6.16.2}{X851836CC829092D9}
+\makelabel{cap:EpimorphismFromProjectiveCoverObjectWithGivenProjectiveCoverObject for IsCapCategoryObject, IsCapCategoryObject}{6.16.3}{X7C9F2CC480C7DA1D}
+\makelabel{cap:InjectiveEnvelopeObject for IsCapCategoryObject}{6.16.4}{X791CA23A8401BF2F}
+\makelabel{cap:MonomorphismIntoInjectiveEnvelopeObject for IsCapCategoryObject}{6.16.5}{X879A01DD7DC8AB13}
+\makelabel{cap:MonomorphismIntoInjectiveEnvelopeObjectWithGivenInjectiveEnvelopeObject for IsCapCategoryObject, IsCapCategoryObject}{6.16.6}{X781E3ED78574B379}
 \makelabel{cap:CapInternalInstallAdd}{7.3.1}{X7AFC15FE81D083CB}
-\makelabel{cap:CAPOperationPrepareFunction}{7.6.1}{X84409FF87D35BE99}
-\makelabel{cap:CAPAddPrepareFunction}{7.6.2}{X7843089F86F47D3B}
-\makelabel{cap:ListCAPPrepareFunctions}{7.6.3}{X82AEE9507F0B48BC}
-\makelabel{cap:AddAdditionForMorphisms for IsCapCategory, IsFunction}{7.7.1}{X811BB502781CFBB9}
-\makelabel{cap:AddAdditiveGenerators for IsCapCategory, IsFunction}{7.7.2}{X7BE108F1785F069A}
-\makelabel{cap:AddAdditiveInverseForMorphisms for IsCapCategory, IsFunction}{7.7.3}{X7AB78A707BF08401}
-\makelabel{cap:AddAstrictionToCoimage for IsCapCategory, IsFunction}{7.7.4}{X786682798320D413}
-\makelabel{cap:AddAstrictionToCoimageWithGivenCoimageObject for IsCapCategory, IsFunction}{7.7.5}{X7A3941A6808F122B}
-\makelabel{cap:AddBasisOfExternalHom for IsCapCategory, IsFunction}{7.7.6}{X7E995205864340BD}
-\makelabel{cap:AddCanonicalIdentificationFromCoimageToImageObject for IsCapCategory, IsFunction}{7.7.7}{X7FCB65A17DB481CA}
-\makelabel{cap:AddCanonicalIdentificationFromImageObjectToCoimage for IsCapCategory, IsFunction}{7.7.8}{X87BCB4F28116D43C}
-\makelabel{cap:AddCoastrictionToImage for IsCapCategory, IsFunction}{7.7.9}{X78C7D6E582FD41E9}
-\makelabel{cap:AddCoastrictionToImageWithGivenImageObject for IsCapCategory, IsFunction}{7.7.10}{X8077FB7485FCD5E6}
-\makelabel{cap:AddCoefficientsOfMorphismWithGivenBasisOfExternalHom for IsCapCategory, IsFunction}{7.7.11}{X7AEFCC3687207A4C}
-\makelabel{cap:AddCoequalizer for IsCapCategory, IsFunction}{7.7.12}{X854D668E7F7AE192}
-\makelabel{cap:AddCoequalizerFunctorial for IsCapCategory, IsFunction}{7.7.13}{X85D135A186E19749}
-\makelabel{cap:AddCoequalizerFunctorialWithGivenCoequalizers for IsCapCategory, IsFunction}{7.7.14}{X784EE97C7CBD86AE}
-\makelabel{cap:AddCoimageObject for IsCapCategory, IsFunction}{7.7.15}{X87747A0B87DA7CF9}
-\makelabel{cap:AddCoimageProjection for IsCapCategory, IsFunction}{7.7.16}{X85B54DD47C3E9682}
-\makelabel{cap:AddCoimageProjectionWithGivenCoimageObject for IsCapCategory, IsFunction}{7.7.17}{X819E76B4798EA44C}
-\makelabel{cap:AddCokernelColift for IsCapCategory, IsFunction}{7.7.18}{X7988858A83DAFF4B}
-\makelabel{cap:AddCokernelColiftWithGivenCokernelObject for IsCapCategory, IsFunction}{7.7.19}{X7991C43079F444CC}
-\makelabel{cap:AddCokernelObject for IsCapCategory, IsFunction}{7.7.20}{X7827637D7B8E7E60}
-\makelabel{cap:AddCokernelObjectFunctorial for IsCapCategory, IsFunction}{7.7.21}{X7E982C787FDA03DC}
-\makelabel{cap:AddCokernelObjectFunctorialWithGivenCokernelObjects for IsCapCategory, IsFunction}{7.7.22}{X7B162B6E7D60FFE7}
-\makelabel{cap:AddCokernelProjection for IsCapCategory, IsFunction}{7.7.23}{X7D9723AA7E4EAC2A}
-\makelabel{cap:AddCokernelProjectionWithGivenCokernelObject for IsCapCategory, IsFunction}{7.7.24}{X793803DC816CBA27}
-\makelabel{cap:AddColift for IsCapCategory, IsFunction}{7.7.25}{X84A7986F82ED769E}
-\makelabel{cap:AddColiftAlongEpimorphism for IsCapCategory, IsFunction}{7.7.26}{X7BBEF7C479E612ED}
-\makelabel{cap:AddColiftOrFail for IsCapCategory, IsFunction}{7.7.27}{X7F066CBC7ADD9201}
-\makelabel{cap:AddComponentOfMorphismFromDirectSum for IsCapCategory, IsFunction}{7.7.28}{X7ABE523F82B2DB7C}
-\makelabel{cap:AddComponentOfMorphismIntoDirectSum for IsCapCategory, IsFunction}{7.7.29}{X82B3F4A87CDF6F87}
-\makelabel{cap:AddCoproduct for IsCapCategory, IsFunction}{7.7.30}{X790C5EE180471583}
-\makelabel{cap:AddCoproductFunctorial for IsCapCategory, IsFunction}{7.7.31}{X79F685258336C4B4}
-\makelabel{cap:AddCoproductFunctorialWithGivenCoproducts for IsCapCategory, IsFunction}{7.7.32}{X7B23923D84D6FC9F}
-\makelabel{cap:AddDirectProduct for IsCapCategory, IsFunction}{7.7.33}{X7FE84F89844B8352}
-\makelabel{cap:AddDirectProductFunctorial for IsCapCategory, IsFunction}{7.7.34}{X78F2B05A7DC3F890}
-\makelabel{cap:AddDirectProductFunctorialWithGivenDirectProducts for IsCapCategory, IsFunction}{7.7.35}{X789E69C583A0E118}
-\makelabel{cap:AddDirectSum for IsCapCategory, IsFunction}{7.7.36}{X7CE460A37D8D468F}
-\makelabel{cap:AddDirectSumCodiagonalDifference for IsCapCategory, IsFunction}{7.7.37}{X84CF535682E444B6}
-\makelabel{cap:AddDirectSumDiagonalDifference for IsCapCategory, IsFunction}{7.7.38}{X842E4433870BE980}
-\makelabel{cap:AddDirectSumFunctorial for IsCapCategory, IsFunction}{7.7.39}{X80778A107EFC97B8}
-\makelabel{cap:AddDirectSumFunctorialWithGivenDirectSums for IsCapCategory, IsFunction}{7.7.40}{X829D88B6845FA373}
-\makelabel{cap:AddDirectSumProjectionInPushout for IsCapCategory, IsFunction}{7.7.41}{X84852B0980DF02AE}
-\makelabel{cap:AddDistinguishedObjectOfHomomorphismStructure for IsCapCategory, IsFunction}{7.7.42}{X7D7A07CC7C9541DB}
-\makelabel{cap:AddEmbeddingOfEqualizer for IsCapCategory, IsFunction}{7.7.43}{X86275A2F7EF2A472}
-\makelabel{cap:AddEmbeddingOfEqualizerWithGivenEqualizer for IsCapCategory, IsFunction}{7.7.44}{X8346BE927EB0C95B}
-\makelabel{cap:AddEpimorphismFromSomeProjectiveObject for IsCapCategory, IsFunction}{7.7.45}{X85B76EA67A35B7B2}
-\makelabel{cap:AddEpimorphismFromSomeProjectiveObjectWithGivenSomeProjectiveObject for IsCapCategory, IsFunction}{7.7.46}{X7B7B27468506DA04}
-\makelabel{cap:AddEqualizer for IsCapCategory, IsFunction}{7.7.47}{X8708C28287172ED7}
-\makelabel{cap:AddEqualizerFunctorial for IsCapCategory, IsFunction}{7.7.48}{X8042AA538466FFE0}
-\makelabel{cap:AddEqualizerFunctorialWithGivenEqualizers for IsCapCategory, IsFunction}{7.7.49}{X819700097DE622A4}
-\makelabel{cap:AddFiberProduct for IsCapCategory, IsFunction}{7.7.50}{X86B7F8B983B9B184}
-\makelabel{cap:AddFiberProductEmbeddingInDirectSum for IsCapCategory, IsFunction}{7.7.51}{X8718265481B0270E}
-\makelabel{cap:AddFiberProductFunctorial for IsCapCategory, IsFunction}{7.7.52}{X7BFDD60786E07890}
-\makelabel{cap:AddFiberProductFunctorialWithGivenFiberProducts for IsCapCategory, IsFunction}{7.7.53}{X85CCD05C7D3D6B7C}
-\makelabel{cap:AddHomologyObject for IsCapCategory, IsFunction}{7.7.54}{X7B175A717B8D152B}
-\makelabel{cap:AddHomologyObjectFunctorialWithGivenHomologyObjects for IsCapCategory, IsFunction}{7.7.55}{X78E7DBF47DBDFB55}
-\makelabel{cap:AddHomomorphismStructureOnMorphisms for IsCapCategory, IsFunction}{7.7.56}{X80ADD34F7833A668}
-\makelabel{cap:AddHomomorphismStructureOnMorphismsWithGivenObjects for IsCapCategory, IsFunction}{7.7.57}{X7F6B67487C55B055}
-\makelabel{cap:AddHomomorphismStructureOnObjects for IsCapCategory, IsFunction}{7.7.58}{X7833851F7DD2D0F1}
-\makelabel{cap:AddHorizontalPostCompose for IsCapCategory, IsFunction}{7.7.59}{X80B2FA2F7C2E2BDA}
-\makelabel{cap:AddHorizontalPreCompose for IsCapCategory, IsFunction}{7.7.60}{X7C759D3A7CB3FA3A}
-\makelabel{cap:AddIdentityMorphism for IsCapCategory, IsFunction}{7.7.61}{X878F4D2481E94EB6}
-\makelabel{cap:AddIdentityTwoCell for IsCapCategory, IsFunction}{7.7.62}{X85B4A2607CDFC0D2}
-\makelabel{cap:AddImageEmbedding for IsCapCategory, IsFunction}{7.7.63}{X796EDCCD7A729E12}
-\makelabel{cap:AddImageEmbeddingWithGivenImageObject for IsCapCategory, IsFunction}{7.7.64}{X785393EB7C27451E}
-\makelabel{cap:AddImageObject for IsCapCategory, IsFunction}{7.7.65}{X7CA61123868B51B2}
-\makelabel{cap:AddInitialObject for IsCapCategory, IsFunction}{7.7.66}{X78D5E19E781D696A}
-\makelabel{cap:AddInitialObjectFunctorial for IsCapCategory, IsFunction}{7.7.67}{X80950253819512A8}
-\makelabel{cap:AddInitialObjectFunctorialWithGivenInitialObjects for IsCapCategory, IsFunction}{7.7.68}{X85493AEC80972B68}
-\makelabel{cap:AddInjectionOfCofactorOfCoproduct for IsCapCategory, IsFunction}{7.7.69}{X81B68CB6783FAFE0}
-\makelabel{cap:AddInjectionOfCofactorOfCoproductWithGivenCoproduct for IsCapCategory, IsFunction}{7.7.70}{X7DC2E9CD78A8622C}
-\makelabel{cap:AddInjectionOfCofactorOfDirectSum for IsCapCategory, IsFunction}{7.7.71}{X845EB2F47C8FE49C}
-\makelabel{cap:AddInjectionOfCofactorOfDirectSumWithGivenDirectSum for IsCapCategory, IsFunction}{7.7.72}{X86A78CC2859E4382}
-\makelabel{cap:AddInjectionOfCofactorOfPushout for IsCapCategory, IsFunction}{7.7.73}{X87ED0E87850C6D96}
-\makelabel{cap:AddInjectionOfCofactorOfPushoutWithGivenPushout for IsCapCategory, IsFunction}{7.7.74}{X8352461A796F9214}
-\makelabel{cap:AddInjectiveColift for IsCapCategory, IsFunction}{7.7.75}{X7CE0C54080533C0E}
-\makelabel{cap:AddInjectiveDimension for IsCapCategory, IsFunction}{7.7.76}{X7E7B72EC7B2FB537}
-\makelabel{cap:AddInterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure for IsCapCategory, IsFunction}{7.7.77}{X805AC6057B80880D}
-\makelabel{cap:AddInterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructureWithGivenObjects for IsCapCategory, IsFunction}{7.7.78}{X79A927B187FE594C}
-\makelabel{cap:AddInterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism for IsCapCategory, IsFunction}{7.7.79}{X87DD6A387E32DD37}
-\makelabel{cap:AddInverseForMorphisms for IsCapCategory, IsFunction}{7.7.80}{X865C7A1781F3AEF7}
-\makelabel{cap:AddInverseMorphismFromCoimageToImageWithGivenObjects for IsCapCategory, IsFunction}{7.7.81}{X7E25930683F94127}
-\makelabel{cap:AddIsAutomorphism for IsCapCategory, IsFunction}{7.7.82}{X7FA3BD6D79D99498}
-\makelabel{cap:AddIsBijectiveObject for IsCapCategory, IsFunction}{7.7.83}{X78D83890795EAAF2}
-\makelabel{cap:AddIsCodominating for IsCapCategory, IsFunction}{7.7.84}{X78E046E387674019}
-\makelabel{cap:AddIsColiftable for IsCapCategory, IsFunction}{7.7.85}{X7A41C14B8169E993}
-\makelabel{cap:AddIsColiftableAlongEpimorphism for IsCapCategory, IsFunction}{7.7.86}{X86BF34667D329168}
-\makelabel{cap:AddIsCongruentForMorphisms for IsCapCategory, IsFunction}{7.7.87}{X861A83B3802D0FBD}
-\makelabel{cap:AddIsDominating for IsCapCategory, IsFunction}{7.7.88}{X834AC612831DDD11}
-\makelabel{cap:AddIsEndomorphism for IsCapCategory, IsFunction}{7.7.89}{X87B1905481F6AF28}
-\makelabel{cap:AddIsEpimorphism for IsCapCategory, IsFunction}{7.7.90}{X8523850C827FE182}
-\makelabel{cap:AddIsEqualAsFactorobjects for IsCapCategory, IsFunction}{7.7.91}{X82DE9AE387425307}
-\makelabel{cap:AddIsEqualAsSubobjects for IsCapCategory, IsFunction}{7.7.92}{X7A97D3C3869323D1}
-\makelabel{cap:AddIsEqualForCacheForMorphisms for IsCapCategory, IsFunction}{7.7.93}{X833165B27AA74580}
-\makelabel{cap:AddIsEqualForCacheForObjects for IsCapCategory, IsFunction}{7.7.94}{X7887D32C7973F4A0}
-\makelabel{cap:AddIsEqualForMorphisms for IsCapCategory, IsFunction}{7.7.95}{X83F60F5F7E57F3C8}
-\makelabel{cap:AddIsEqualForMorphismsOnMor for IsCapCategory, IsFunction}{7.7.96}{X84AB81547A770D36}
-\makelabel{cap:AddIsEqualForObjects for IsCapCategory, IsFunction}{7.7.97}{X787F654B82150781}
-\makelabel{cap:AddIsEqualToIdentityMorphism for IsCapCategory, IsFunction}{7.7.98}{X79F9BCED7C82AEAC}
-\makelabel{cap:AddIsEqualToZeroMorphism for IsCapCategory, IsFunction}{7.7.99}{X849B7E507B01ABE7}
-\makelabel{cap:AddIsHomSetInhabited for IsCapCategory, IsFunction}{7.7.100}{X85D7E2DE7D45CF70}
-\makelabel{cap:AddIsIdempotent for IsCapCategory, IsFunction}{7.7.101}{X85701DBE7A5F90A1}
-\makelabel{cap:AddIsInitial for IsCapCategory, IsFunction}{7.7.102}{X7E6EDA9484F3E6F6}
-\makelabel{cap:AddIsInjective for IsCapCategory, IsFunction}{7.7.103}{X7F7F309F7C67D6CE}
-\makelabel{cap:AddIsIsomorphism for IsCapCategory, IsFunction}{7.7.104}{X7B0818ED7A7BBCB4}
-\makelabel{cap:AddIsLiftable for IsCapCategory, IsFunction}{7.7.105}{X79AC542F8227455E}
-\makelabel{cap:AddIsLiftableAlongMonomorphism for IsCapCategory, IsFunction}{7.7.106}{X7BD695308127A877}
-\makelabel{cap:AddIsMonomorphism for IsCapCategory, IsFunction}{7.7.107}{X87DEC4BD7C48E679}
-\makelabel{cap:AddIsOne for IsCapCategory, IsFunction}{7.7.108}{X7FCC38DC7843D455}
-\makelabel{cap:AddIsProjective for IsCapCategory, IsFunction}{7.7.109}{X865C78CF789DA86D}
-\makelabel{cap:AddIsSplitEpimorphism for IsCapCategory, IsFunction}{7.7.110}{X7D7BDF8F7EED3A72}
-\makelabel{cap:AddIsSplitMonomorphism for IsCapCategory, IsFunction}{7.7.111}{X7C5D46B77A65ACF2}
-\makelabel{cap:AddIsTerminal for IsCapCategory, IsFunction}{7.7.112}{X7EDB2D5B7F234ADA}
-\makelabel{cap:AddIsWellDefinedForMorphisms for IsCapCategory, IsFunction}{7.7.113}{X7A4BE39A83D2A730}
-\makelabel{cap:AddIsWellDefinedForObjects for IsCapCategory, IsFunction}{7.7.114}{X859219147B3058B8}
-\makelabel{cap:AddIsWellDefinedForTwoCells for IsCapCategory, IsFunction}{7.7.115}{X7EE52A1587E15D94}
-\makelabel{cap:AddIsZeroForMorphisms for IsCapCategory, IsFunction}{7.7.116}{X87DD3BD27C49450A}
-\makelabel{cap:AddIsZeroForObjects for IsCapCategory, IsFunction}{7.7.117}{X78C3E7BF78A9A7D5}
-\makelabel{cap:AddIsomorphismFromCoequalizerOfCoproductDiagramToPushout for IsCapCategory, IsFunction}{7.7.118}{X7B80534F79D74B95}
-\makelabel{cap:AddIsomorphismFromCoimageToCokernelOfKernel for IsCapCategory, IsFunction}{7.7.119}{X80B45F4D7A7B96A4}
-\makelabel{cap:AddIsomorphismFromCokernelOfDiagonalDifferenceToPushout for IsCapCategory, IsFunction}{7.7.120}{X811F965D7B9837F9}
-\makelabel{cap:AddIsomorphismFromCokernelOfKernelToCoimage for IsCapCategory, IsFunction}{7.7.121}{X7D9B059578AC42D6}
-\makelabel{cap:AddIsomorphismFromCoproductToDirectSum for IsCapCategory, IsFunction}{7.7.122}{X87C04FAA7F49427B}
-\makelabel{cap:AddIsomorphismFromDirectProductToDirectSum for IsCapCategory, IsFunction}{7.7.123}{X793FDA608055E5C9}
-\makelabel{cap:AddIsomorphismFromDirectSumToCoproduct for IsCapCategory, IsFunction}{7.7.124}{X7D710CA282194DC7}
-\makelabel{cap:AddIsomorphismFromDirectSumToDirectProduct for IsCapCategory, IsFunction}{7.7.125}{X79DA06C087D4BDF3}
-\makelabel{cap:AddIsomorphismFromEqualizerOfDirectProductDiagramToFiberProduct for IsCapCategory, IsFunction}{7.7.126}{X83D3BDAF7BFBF924}
-\makelabel{cap:AddIsomorphismFromFiberProductToEqualizerOfDirectProductDiagram for IsCapCategory, IsFunction}{7.7.127}{X7FF20AFE7CE85AF5}
-\makelabel{cap:AddIsomorphismFromFiberProductToKernelOfDiagonalDifference for IsCapCategory, IsFunction}{7.7.128}{X82A6A64979DFFE43}
-\makelabel{cap:AddIsomorphismFromHomologyObjectToItsConstructionAsAnImageObject for IsCapCategory, IsFunction}{7.7.129}{X7BD4A45087C884FD}
-\makelabel{cap:AddIsomorphismFromImageObjectToKernelOfCokernel for IsCapCategory, IsFunction}{7.7.130}{X7B09757B8411AD52}
-\makelabel{cap:AddIsomorphismFromInitialObjectToZeroObject for IsCapCategory, IsFunction}{7.7.131}{X876F82038640430A}
-\makelabel{cap:AddIsomorphismFromItsConstructionAsAnImageObjectToHomologyObject for IsCapCategory, IsFunction}{7.7.132}{X80B2303081911753}
-\makelabel{cap:AddIsomorphismFromKernelOfCokernelToImageObject for IsCapCategory, IsFunction}{7.7.133}{X78A3EEFB843C5067}
-\makelabel{cap:AddIsomorphismFromKernelOfDiagonalDifferenceToFiberProduct for IsCapCategory, IsFunction}{7.7.134}{X7B255D3F7F8D0846}
-\makelabel{cap:AddIsomorphismFromPushoutToCoequalizerOfCoproductDiagram for IsCapCategory, IsFunction}{7.7.135}{X7C757EA67A35147A}
-\makelabel{cap:AddIsomorphismFromPushoutToCokernelOfDiagonalDifference for IsCapCategory, IsFunction}{7.7.136}{X8639C412856D8860}
-\makelabel{cap:AddIsomorphismFromTerminalObjectToZeroObject for IsCapCategory, IsFunction}{7.7.137}{X85A29A037839B32B}
-\makelabel{cap:AddIsomorphismFromZeroObjectToInitialObject for IsCapCategory, IsFunction}{7.7.138}{X8084DA9E870DF7DB}
-\makelabel{cap:AddIsomorphismFromZeroObjectToTerminalObject for IsCapCategory, IsFunction}{7.7.139}{X7BDED1CE7F0FADE9}
-\makelabel{cap:AddKernelEmbedding for IsCapCategory, IsFunction}{7.7.140}{X788D35FA8050DA84}
-\makelabel{cap:AddKernelEmbeddingWithGivenKernelObject for IsCapCategory, IsFunction}{7.7.141}{X87668C2183C9E8A1}
-\makelabel{cap:AddKernelLift for IsCapCategory, IsFunction}{7.7.142}{X7A3F184085748DE6}
-\makelabel{cap:AddKernelLiftWithGivenKernelObject for IsCapCategory, IsFunction}{7.7.143}{X7D6119357E10B4DA}
-\makelabel{cap:AddKernelObject for IsCapCategory, IsFunction}{7.7.144}{X8681E565875A8C03}
-\makelabel{cap:AddKernelObjectFunctorial for IsCapCategory, IsFunction}{7.7.145}{X818A1E2C82034517}
-\makelabel{cap:AddKernelObjectFunctorialWithGivenKernelObjects for IsCapCategory, IsFunction}{7.7.146}{X7BE607577847C4DC}
-\makelabel{cap:AddLift for IsCapCategory, IsFunction}{7.7.147}{X7DA9346A8517648D}
-\makelabel{cap:AddLiftAlongMonomorphism for IsCapCategory, IsFunction}{7.7.148}{X869A19337CB3059E}
-\makelabel{cap:AddLiftOrFail for IsCapCategory, IsFunction}{7.7.149}{X86B265337903596B}
-\makelabel{cap:AddMereExistenceOfSolutionOfLinearSystemInAbCategory for IsCapCategory, IsFunction}{7.7.150}{X80E205428725FEA7}
-\makelabel{cap:AddMonomorphismIntoSomeInjectiveObject for IsCapCategory, IsFunction}{7.7.151}{X81C9788D7DD27D18}
-\makelabel{cap:AddMonomorphismIntoSomeInjectiveObjectWithGivenSomeInjectiveObject for IsCapCategory, IsFunction}{7.7.152}{X7CCBF6577ADC62D9}
-\makelabel{cap:AddMorphismBetweenDirectSums for IsCapCategory, IsFunction}{7.7.153}{X873C908279759A45}
-\makelabel{cap:AddMorphismBetweenDirectSumsWithGivenDirectSums for IsCapCategory, IsFunction}{7.7.154}{X7E295E2784C267D5}
-\makelabel{cap:AddMorphismConstructor for IsCapCategory, IsFunction}{7.7.155}{X7A1067568608419D}
-\makelabel{cap:AddMorphismDatum for IsCapCategory, IsFunction}{7.7.156}{X7ADDB80C7F9BC838}
-\makelabel{cap:AddMorphismFromCoimageToImageWithGivenObjects for IsCapCategory, IsFunction}{7.7.157}{X7FCCF6EA7BD56684}
-\makelabel{cap:AddMorphismFromEqualizerToSink for IsCapCategory, IsFunction}{7.7.158}{X86015A918233B365}
-\makelabel{cap:AddMorphismFromEqualizerToSinkWithGivenEqualizer for IsCapCategory, IsFunction}{7.7.159}{X857FA53779546DAC}
-\makelabel{cap:AddMorphismFromFiberProductToSink for IsCapCategory, IsFunction}{7.7.160}{X87BB71D881AFD21C}
-\makelabel{cap:AddMorphismFromFiberProductToSinkWithGivenFiberProduct for IsCapCategory, IsFunction}{7.7.161}{X7F652D597B5298C6}
-\makelabel{cap:AddMorphismFromKernelObjectToSink for IsCapCategory, IsFunction}{7.7.162}{X83B7DB587851A040}
-\makelabel{cap:AddMorphismFromKernelObjectToSinkWithGivenKernelObject for IsCapCategory, IsFunction}{7.7.163}{X7844716879CAFB0C}
-\makelabel{cap:AddMorphismFromSourceToCoequalizer for IsCapCategory, IsFunction}{7.7.164}{X7CC2819E868B2ACF}
-\makelabel{cap:AddMorphismFromSourceToCoequalizerWithGivenCoequalizer for IsCapCategory, IsFunction}{7.7.165}{X84074D4B7E584205}
-\makelabel{cap:AddMorphismFromSourceToCokernelObject for IsCapCategory, IsFunction}{7.7.166}{X7E2024F080A442DF}
-\makelabel{cap:AddMorphismFromSourceToCokernelObjectWithGivenCokernelObject for IsCapCategory, IsFunction}{7.7.167}{X837F485E7A5E6511}
-\makelabel{cap:AddMorphismFromSourceToPushout for IsCapCategory, IsFunction}{7.7.168}{X7A8728957EEC0667}
-\makelabel{cap:AddMorphismFromSourceToPushoutWithGivenPushout for IsCapCategory, IsFunction}{7.7.169}{X7D880C937DDE1F34}
-\makelabel{cap:AddMultiplyWithElementOfCommutativeRingForMorphisms for IsCapCategory, IsFunction}{7.7.170}{X7AE8C7897CB6FDF8}
-\makelabel{cap:AddObjectConstructor for IsCapCategory, IsFunction}{7.7.171}{X7D093D4981AC4E7F}
-\makelabel{cap:AddObjectDatum for IsCapCategory, IsFunction}{7.7.172}{X7EF116D57BFA80B5}
-\makelabel{cap:AddPostCompose for IsCapCategory, IsFunction}{7.7.173}{X853E87F47F9FC287}
-\makelabel{cap:AddPostComposeList for IsCapCategory, IsFunction}{7.7.174}{X85A4A74585001622}
-\makelabel{cap:AddPreCompose for IsCapCategory, IsFunction}{7.7.175}{X868C87097D322509}
-\makelabel{cap:AddPreComposeList for IsCapCategory, IsFunction}{7.7.176}{X7CE1A7FC792C6577}
-\makelabel{cap:AddProjectionInFactorOfDirectProduct for IsCapCategory, IsFunction}{7.7.177}{X84F5824779267907}
-\makelabel{cap:AddProjectionInFactorOfDirectProductWithGivenDirectProduct for IsCapCategory, IsFunction}{7.7.178}{X7B83D0627A2DCF93}
-\makelabel{cap:AddProjectionInFactorOfDirectSum for IsCapCategory, IsFunction}{7.7.179}{X7B87E0308677AB17}
-\makelabel{cap:AddProjectionInFactorOfDirectSumWithGivenDirectSum for IsCapCategory, IsFunction}{7.7.180}{X81ACCDB081967CD3}
-\makelabel{cap:AddProjectionInFactorOfFiberProduct for IsCapCategory, IsFunction}{7.7.181}{X7BC4A40A8587EB82}
-\makelabel{cap:AddProjectionInFactorOfFiberProductWithGivenFiberProduct for IsCapCategory, IsFunction}{7.7.182}{X822C988083A72B14}
-\makelabel{cap:AddProjectionOntoCoequalizer for IsCapCategory, IsFunction}{7.7.183}{X7C76BED4827D9C28}
-\makelabel{cap:AddProjectionOntoCoequalizerWithGivenCoequalizer for IsCapCategory, IsFunction}{7.7.184}{X8691E0FA7BF900F5}
-\makelabel{cap:AddProjectiveDimension for IsCapCategory, IsFunction}{7.7.185}{X828B50D57F3DAB71}
-\makelabel{cap:AddProjectiveLift for IsCapCategory, IsFunction}{7.7.186}{X7AEE24E581A44083}
-\makelabel{cap:AddPushout for IsCapCategory, IsFunction}{7.7.187}{X78FDEE468742E573}
-\makelabel{cap:AddPushoutFunctorial for IsCapCategory, IsFunction}{7.7.188}{X85F9FDCF7E697028}
-\makelabel{cap:AddPushoutFunctorialWithGivenPushouts for IsCapCategory, IsFunction}{7.7.189}{X810036A887D287AC}
-\makelabel{cap:AddRandomMorphismByInteger for IsCapCategory, IsFunction}{7.7.190}{X7BC5AC807FF84905}
-\makelabel{cap:AddRandomMorphismByList for IsCapCategory, IsFunction}{7.7.191}{X84BEF31F81ABC74E}
-\makelabel{cap:AddRandomMorphismWithFixedRangeByInteger for IsCapCategory, IsFunction}{7.7.192}{X7D58154C7B6478A8}
-\makelabel{cap:AddRandomMorphismWithFixedRangeByList for IsCapCategory, IsFunction}{7.7.193}{X7B2266E07E2114FE}
-\makelabel{cap:AddRandomMorphismWithFixedSourceAndRangeByInteger for IsCapCategory, IsFunction}{7.7.194}{X78E443767AA69703}
-\makelabel{cap:AddRandomMorphismWithFixedSourceAndRangeByList for IsCapCategory, IsFunction}{7.7.195}{X7A395AEB813562EA}
-\makelabel{cap:AddRandomMorphismWithFixedSourceByInteger for IsCapCategory, IsFunction}{7.7.196}{X80E69DF27EA33C03}
-\makelabel{cap:AddRandomMorphismWithFixedSourceByList for IsCapCategory, IsFunction}{7.7.197}{X7C5DEDED7A7D5F7A}
-\makelabel{cap:AddRandomObjectByInteger for IsCapCategory, IsFunction}{7.7.198}{X8537D28D7C878EB2}
-\makelabel{cap:AddRandomObjectByList for IsCapCategory, IsFunction}{7.7.199}{X86F6CF9382A4906A}
-\makelabel{cap:AddSimplifyEndo for IsCapCategory, IsFunction}{7.7.200}{X79584C2B7AE88801}
-\makelabel{cap:AddSimplifyEndoIsoFromInputObject for IsCapCategory, IsFunction}{7.7.201}{X7E143B0B7AFED0A5}
-\makelabel{cap:AddSimplifyEndoIsoToInputObject for IsCapCategory, IsFunction}{7.7.202}{X8289DD3582E90412}
-\makelabel{cap:AddSimplifyMorphism for IsCapCategory, IsFunction}{7.7.203}{X82FC080B78E17869}
-\makelabel{cap:AddSimplifyObject for IsCapCategory, IsFunction}{7.7.204}{X798AA0B57BDC7891}
-\makelabel{cap:AddSimplifyObjectIsoFromInputObject for IsCapCategory, IsFunction}{7.7.205}{X839A072483DA4590}
-\makelabel{cap:AddSimplifyObjectIsoToInputObject for IsCapCategory, IsFunction}{7.7.206}{X7CFDA57581061E05}
-\makelabel{cap:AddSimplifyRange for IsCapCategory, IsFunction}{7.7.207}{X78D0F3D57A70F0AA}
-\makelabel{cap:AddSimplifyRangeIsoFromInputObject for IsCapCategory, IsFunction}{7.7.208}{X7FB594A37A1B8DA3}
-\makelabel{cap:AddSimplifyRangeIsoToInputObject for IsCapCategory, IsFunction}{7.7.209}{X7BC056A2866EE0FC}
-\makelabel{cap:AddSimplifySource for IsCapCategory, IsFunction}{7.7.210}{X800D4F4678C4B03E}
-\makelabel{cap:AddSimplifySourceAndRange for IsCapCategory, IsFunction}{7.7.211}{X7FDBB4087F652D97}
-\makelabel{cap:AddSimplifySourceAndRangeIsoFromInputRange for IsCapCategory, IsFunction}{7.7.212}{X7B3E60B07AF758F7}
-\makelabel{cap:AddSimplifySourceAndRangeIsoFromInputSource for IsCapCategory, IsFunction}{7.7.213}{X86CEC88B82874A86}
-\makelabel{cap:AddSimplifySourceAndRangeIsoToInputRange for IsCapCategory, IsFunction}{7.7.214}{X7AEBD3D882FFB8A7}
-\makelabel{cap:AddSimplifySourceAndRangeIsoToInputSource for IsCapCategory, IsFunction}{7.7.215}{X7814950A81D7A307}
-\makelabel{cap:AddSimplifySourceIsoFromInputObject for IsCapCategory, IsFunction}{7.7.216}{X83B7D18780C28D3F}
-\makelabel{cap:AddSimplifySourceIsoToInputObject for IsCapCategory, IsFunction}{7.7.217}{X7E67CB62821ED6AA}
-\makelabel{cap:AddSolveLinearSystemInAbCategory for IsCapCategory, IsFunction}{7.7.218}{X781C4BCA81250295}
-\makelabel{cap:AddSolveLinearSystemInAbCategoryOrFail for IsCapCategory, IsFunction}{7.7.219}{X7B3C26FE86C92ABA}
-\makelabel{cap:AddSomeInjectiveObject for IsCapCategory, IsFunction}{7.7.220}{X7DFC9A568472688B}
-\makelabel{cap:AddSomeProjectiveObject for IsCapCategory, IsFunction}{7.7.221}{X7C3AF36D86F11429}
-\makelabel{cap:AddSomeReductionBySplitEpiSummand for IsCapCategory, IsFunction}{7.7.222}{X7EB0389487C277CE}
-\makelabel{cap:AddSomeReductionBySplitEpiSummandMorphismFromInputRange for IsCapCategory, IsFunction}{7.7.223}{X7E6384988569B9CA}
-\makelabel{cap:AddSomeReductionBySplitEpiSummandMorphismToInputRange for IsCapCategory, IsFunction}{7.7.224}{X871D45CA80DAAFC2}
-\makelabel{cap:AddSubtractionForMorphisms for IsCapCategory, IsFunction}{7.7.225}{X7ECA7B0182144B81}
-\makelabel{cap:AddTerminalObject for IsCapCategory, IsFunction}{7.7.226}{X7C4B4B7F8009501B}
-\makelabel{cap:AddTerminalObjectFunctorial for IsCapCategory, IsFunction}{7.7.227}{X82ED99F9845D2DA7}
-\makelabel{cap:AddTerminalObjectFunctorialWithGivenTerminalObjects for IsCapCategory, IsFunction}{7.7.228}{X7A7BBCB08021B976}
-\makelabel{cap:AddUniversalMorphismFromCoequalizer for IsCapCategory, IsFunction}{7.7.229}{X82B3F52779407E2F}
-\makelabel{cap:AddUniversalMorphismFromCoequalizerWithGivenCoequalizer for IsCapCategory, IsFunction}{7.7.230}{X7F27613984BEA3BB}
-\makelabel{cap:AddUniversalMorphismFromCoproduct for IsCapCategory, IsFunction}{7.7.231}{X874696508440B555}
-\makelabel{cap:AddUniversalMorphismFromCoproductWithGivenCoproduct for IsCapCategory, IsFunction}{7.7.232}{X7ABE731884D77899}
-\makelabel{cap:AddUniversalMorphismFromDirectSum for IsCapCategory, IsFunction}{7.7.233}{X82AEA81280F0FE29}
-\makelabel{cap:AddUniversalMorphismFromDirectSumWithGivenDirectSum for IsCapCategory, IsFunction}{7.7.234}{X81DB161779E15937}
-\makelabel{cap:AddUniversalMorphismFromImage for IsCapCategory, IsFunction}{7.7.235}{X7BE632048014DB7F}
-\makelabel{cap:AddUniversalMorphismFromImageWithGivenImageObject for IsCapCategory, IsFunction}{7.7.236}{X79813E327CAD3D99}
-\makelabel{cap:AddUniversalMorphismFromInitialObject for IsCapCategory, IsFunction}{7.7.237}{X808255727E365DA5}
-\makelabel{cap:AddUniversalMorphismFromInitialObjectWithGivenInitialObject for IsCapCategory, IsFunction}{7.7.238}{X7F7D9168870D7AC6}
-\makelabel{cap:AddUniversalMorphismFromPushout for IsCapCategory, IsFunction}{7.7.239}{X7ACB31A479737723}
-\makelabel{cap:AddUniversalMorphismFromPushoutWithGivenPushout for IsCapCategory, IsFunction}{7.7.240}{X847BA99A851088A1}
-\makelabel{cap:AddUniversalMorphismFromZeroObject for IsCapCategory, IsFunction}{7.7.241}{X873263B37942E963}
-\makelabel{cap:AddUniversalMorphismFromZeroObjectWithGivenZeroObject for IsCapCategory, IsFunction}{7.7.242}{X8396EFB87AABCD66}
-\makelabel{cap:AddUniversalMorphismIntoCoimage for IsCapCategory, IsFunction}{7.7.243}{X85DB30B982F6C564}
-\makelabel{cap:AddUniversalMorphismIntoCoimageWithGivenCoimageObject for IsCapCategory, IsFunction}{7.7.244}{X7D83EDB07844C0FA}
-\makelabel{cap:AddUniversalMorphismIntoDirectProduct for IsCapCategory, IsFunction}{7.7.245}{X7E4C217083150A21}
-\makelabel{cap:AddUniversalMorphismIntoDirectProductWithGivenDirectProduct for IsCapCategory, IsFunction}{7.7.246}{X84C986C67D703457}
-\makelabel{cap:AddUniversalMorphismIntoDirectSum for IsCapCategory, IsFunction}{7.7.247}{X7AA30E857A11AA2A}
-\makelabel{cap:AddUniversalMorphismIntoDirectSumWithGivenDirectSum for IsCapCategory, IsFunction}{7.7.248}{X7E666F5683000D34}
-\makelabel{cap:AddUniversalMorphismIntoEqualizer for IsCapCategory, IsFunction}{7.7.249}{X814FACA47A759C7A}
-\makelabel{cap:AddUniversalMorphismIntoEqualizerWithGivenEqualizer for IsCapCategory, IsFunction}{7.7.250}{X872A26F678D6989B}
-\makelabel{cap:AddUniversalMorphismIntoFiberProduct for IsCapCategory, IsFunction}{7.7.251}{X7F7446F882DF6DA5}
-\makelabel{cap:AddUniversalMorphismIntoFiberProductWithGivenFiberProduct for IsCapCategory, IsFunction}{7.7.252}{X84C5017486990FB2}
-\makelabel{cap:AddUniversalMorphismIntoTerminalObject for IsCapCategory, IsFunction}{7.7.253}{X84D7DDAF835BDFA3}
-\makelabel{cap:AddUniversalMorphismIntoTerminalObjectWithGivenTerminalObject for IsCapCategory, IsFunction}{7.7.254}{X8230986A7821D9B4}
-\makelabel{cap:AddUniversalMorphismIntoZeroObject for IsCapCategory, IsFunction}{7.7.255}{X7CAC035583A3BD60}
-\makelabel{cap:AddUniversalMorphismIntoZeroObjectWithGivenZeroObject for IsCapCategory, IsFunction}{7.7.256}{X8550CFE1804A9965}
-\makelabel{cap:AddVerticalPostCompose for IsCapCategory, IsFunction}{7.7.257}{X7AA662D58265F658}
-\makelabel{cap:AddVerticalPreCompose for IsCapCategory, IsFunction}{7.7.258}{X85F4507081F229DD}
-\makelabel{cap:AddZeroMorphism for IsCapCategory, IsFunction}{7.7.259}{X824C08CE7D7FB387}
-\makelabel{cap:AddZeroObject for IsCapCategory, IsFunction}{7.7.260}{X7F0111277DF3FB7E}
-\makelabel{cap:AddZeroObjectFunctorial for IsCapCategory, IsFunction}{7.7.261}{X7C6A709286103BAE}
-\makelabel{cap:AddZeroObjectFunctorialWithGivenZeroObjects for IsCapCategory, IsFunction}{7.7.262}{X826BAB7F84D9499D}
+\makelabel{cap:CAPOperationPrepareFunction}{7.5.1}{X84409FF87D35BE99}
+\makelabel{cap:CAPAddPrepareFunction}{7.5.2}{X7843089F86F47D3B}
+\makelabel{cap:ListCAPPrepareFunctions}{7.5.3}{X82AEE9507F0B48BC}
+\makelabel{cap:AddAdditionForMorphisms for IsCapCategory, IsFunction}{7.6.1}{X811BB502781CFBB9}
+\makelabel{cap:AddAdditiveGenerators for IsCapCategory, IsFunction}{7.6.2}{X7BE108F1785F069A}
+\makelabel{cap:AddAdditiveInverseForMorphisms for IsCapCategory, IsFunction}{7.6.3}{X7AB78A707BF08401}
+\makelabel{cap:AddAstrictionToCoimage for IsCapCategory, IsFunction}{7.6.4}{X786682798320D413}
+\makelabel{cap:AddAstrictionToCoimageWithGivenCoimageObject for IsCapCategory, IsFunction}{7.6.5}{X7A3941A6808F122B}
+\makelabel{cap:AddBasisOfExternalHom for IsCapCategory, IsFunction}{7.6.6}{X7E995205864340BD}
+\makelabel{cap:AddCanonicalIdentificationFromCoimageToImageObject for IsCapCategory, IsFunction}{7.6.7}{X7FCB65A17DB481CA}
+\makelabel{cap:AddCanonicalIdentificationFromImageObjectToCoimage for IsCapCategory, IsFunction}{7.6.8}{X87BCB4F28116D43C}
+\makelabel{cap:AddCoastrictionToImage for IsCapCategory, IsFunction}{7.6.9}{X78C7D6E582FD41E9}
+\makelabel{cap:AddCoastrictionToImageWithGivenImageObject for IsCapCategory, IsFunction}{7.6.10}{X8077FB7485FCD5E6}
+\makelabel{cap:AddCoefficientsOfMorphism for IsCapCategory, IsFunction}{7.6.11}{X7F594A2F85F3806B}
+\makelabel{cap:AddCoequalizer for IsCapCategory, IsFunction}{7.6.12}{X854D668E7F7AE192}
+\makelabel{cap:AddCoequalizerFunctorial for IsCapCategory, IsFunction}{7.6.13}{X85D135A186E19749}
+\makelabel{cap:AddCoequalizerFunctorialWithGivenCoequalizers for IsCapCategory, IsFunction}{7.6.14}{X784EE97C7CBD86AE}
+\makelabel{cap:AddCoimageObject for IsCapCategory, IsFunction}{7.6.15}{X87747A0B87DA7CF9}
+\makelabel{cap:AddCoimageObjectFunctorial for IsCapCategory, IsFunction}{7.6.16}{X7F38C4A17E52073B}
+\makelabel{cap:AddCoimageObjectFunctorialWithGivenCoimageObjects for IsCapCategory, IsFunction}{7.6.17}{X80465F7B85F144D7}
+\makelabel{cap:AddCoimageProjection for IsCapCategory, IsFunction}{7.6.18}{X85B54DD47C3E9682}
+\makelabel{cap:AddCoimageProjectionWithGivenCoimageObject for IsCapCategory, IsFunction}{7.6.19}{X819E76B4798EA44C}
+\makelabel{cap:AddCokernelColift for IsCapCategory, IsFunction}{7.6.20}{X7988858A83DAFF4B}
+\makelabel{cap:AddCokernelColiftWithGivenCokernelObject for IsCapCategory, IsFunction}{7.6.21}{X7991C43079F444CC}
+\makelabel{cap:AddCokernelObject for IsCapCategory, IsFunction}{7.6.22}{X7827637D7B8E7E60}
+\makelabel{cap:AddCokernelObjectFunctorial for IsCapCategory, IsFunction}{7.6.23}{X7E982C787FDA03DC}
+\makelabel{cap:AddCokernelObjectFunctorialWithGivenCokernelObjects for IsCapCategory, IsFunction}{7.6.24}{X7B162B6E7D60FFE7}
+\makelabel{cap:AddCokernelProjection for IsCapCategory, IsFunction}{7.6.25}{X7D9723AA7E4EAC2A}
+\makelabel{cap:AddCokernelProjectionWithGivenCokernelObject for IsCapCategory, IsFunction}{7.6.26}{X793803DC816CBA27}
+\makelabel{cap:AddColift for IsCapCategory, IsFunction}{7.6.27}{X84A7986F82ED769E}
+\makelabel{cap:AddColiftAlongEpimorphism for IsCapCategory, IsFunction}{7.6.28}{X7BBEF7C479E612ED}
+\makelabel{cap:AddColiftOrFail for IsCapCategory, IsFunction}{7.6.29}{X7F066CBC7ADD9201}
+\makelabel{cap:AddComponentOfMorphismFromDirectSum for IsCapCategory, IsFunction}{7.6.30}{X7ABE523F82B2DB7C}
+\makelabel{cap:AddComponentOfMorphismIntoDirectSum for IsCapCategory, IsFunction}{7.6.31}{X82B3F4A87CDF6F87}
+\makelabel{cap:AddCoproduct for IsCapCategory, IsFunction}{7.6.32}{X790C5EE180471583}
+\makelabel{cap:AddCoproductFunctorial for IsCapCategory, IsFunction}{7.6.33}{X79F685258336C4B4}
+\makelabel{cap:AddCoproductFunctorialWithGivenCoproducts for IsCapCategory, IsFunction}{7.6.34}{X7B23923D84D6FC9F}
+\makelabel{cap:AddDirectProduct for IsCapCategory, IsFunction}{7.6.35}{X7FE84F89844B8352}
+\makelabel{cap:AddDirectProductFunctorial for IsCapCategory, IsFunction}{7.6.36}{X78F2B05A7DC3F890}
+\makelabel{cap:AddDirectProductFunctorialWithGivenDirectProducts for IsCapCategory, IsFunction}{7.6.37}{X789E69C583A0E118}
+\makelabel{cap:AddDirectSum for IsCapCategory, IsFunction}{7.6.38}{X7CE460A37D8D468F}
+\makelabel{cap:AddDirectSumCodiagonalDifference for IsCapCategory, IsFunction}{7.6.39}{X84CF535682E444B6}
+\makelabel{cap:AddDirectSumDiagonalDifference for IsCapCategory, IsFunction}{7.6.40}{X842E4433870BE980}
+\makelabel{cap:AddDirectSumFunctorial for IsCapCategory, IsFunction}{7.6.41}{X80778A107EFC97B8}
+\makelabel{cap:AddDirectSumFunctorialWithGivenDirectSums for IsCapCategory, IsFunction}{7.6.42}{X829D88B6845FA373}
+\makelabel{cap:AddDirectSumProjectionInPushout for IsCapCategory, IsFunction}{7.6.43}{X84852B0980DF02AE}
+\makelabel{cap:AddDistinguishedObjectOfHomomorphismStructure for IsCapCategory, IsFunction}{7.6.44}{X7D7A07CC7C9541DB}
+\makelabel{cap:AddEmbeddingOfEqualizer for IsCapCategory, IsFunction}{7.6.45}{X86275A2F7EF2A472}
+\makelabel{cap:AddEmbeddingOfEqualizerWithGivenEqualizer for IsCapCategory, IsFunction}{7.6.46}{X8346BE927EB0C95B}
+\makelabel{cap:AddEpimorphismFromProjectiveCoverObject for IsCapCategory, IsFunction}{7.6.47}{X80D4EB9F793C19E7}
+\makelabel{cap:AddEpimorphismFromProjectiveCoverObjectWithGivenProjectiveCoverObject for IsCapCategory, IsFunction}{7.6.48}{X82D978CC78155811}
+\makelabel{cap:AddEpimorphismFromSomeProjectiveObject for IsCapCategory, IsFunction}{7.6.49}{X85B76EA67A35B7B2}
+\makelabel{cap:AddEpimorphismFromSomeProjectiveObjectWithGivenSomeProjectiveObject for IsCapCategory, IsFunction}{7.6.50}{X7B7B27468506DA04}
+\makelabel{cap:AddEqualizer for IsCapCategory, IsFunction}{7.6.51}{X8708C28287172ED7}
+\makelabel{cap:AddEqualizerFunctorial for IsCapCategory, IsFunction}{7.6.52}{X8042AA538466FFE0}
+\makelabel{cap:AddEqualizerFunctorialWithGivenEqualizers for IsCapCategory, IsFunction}{7.6.53}{X819700097DE622A4}
+\makelabel{cap:AddFiberProduct for IsCapCategory, IsFunction}{7.6.54}{X86B7F8B983B9B184}
+\makelabel{cap:AddFiberProductEmbeddingInDirectSum for IsCapCategory, IsFunction}{7.6.55}{X8718265481B0270E}
+\makelabel{cap:AddFiberProductFunctorial for IsCapCategory, IsFunction}{7.6.56}{X7BFDD60786E07890}
+\makelabel{cap:AddFiberProductFunctorialWithGivenFiberProducts for IsCapCategory, IsFunction}{7.6.57}{X85CCD05C7D3D6B7C}
+\makelabel{cap:AddHomologyObject for IsCapCategory, IsFunction}{7.6.58}{X7B175A717B8D152B}
+\makelabel{cap:AddHomologyObjectFunctorialWithGivenHomologyObjects for IsCapCategory, IsFunction}{7.6.59}{X78E7DBF47DBDFB55}
+\makelabel{cap:AddHomomorphismStructureOnMorphisms for IsCapCategory, IsFunction}{7.6.60}{X80ADD34F7833A668}
+\makelabel{cap:AddHomomorphismStructureOnMorphismsWithGivenObjects for IsCapCategory, IsFunction}{7.6.61}{X7F6B67487C55B055}
+\makelabel{cap:AddHomomorphismStructureOnObjects for IsCapCategory, IsFunction}{7.6.62}{X7833851F7DD2D0F1}
+\makelabel{cap:AddHorizontalPostCompose for IsCapCategory, IsFunction}{7.6.63}{X80B2FA2F7C2E2BDA}
+\makelabel{cap:AddHorizontalPreCompose for IsCapCategory, IsFunction}{7.6.64}{X7C759D3A7CB3FA3A}
+\makelabel{cap:AddIdentityMorphism for IsCapCategory, IsFunction}{7.6.65}{X878F4D2481E94EB6}
+\makelabel{cap:AddIdentityTwoCell for IsCapCategory, IsFunction}{7.6.66}{X85B4A2607CDFC0D2}
+\makelabel{cap:AddImageEmbedding for IsCapCategory, IsFunction}{7.6.67}{X796EDCCD7A729E12}
+\makelabel{cap:AddImageEmbeddingWithGivenImageObject for IsCapCategory, IsFunction}{7.6.68}{X785393EB7C27451E}
+\makelabel{cap:AddImageObject for IsCapCategory, IsFunction}{7.6.69}{X7CA61123868B51B2}
+\makelabel{cap:AddImageObjectFunctorial for IsCapCategory, IsFunction}{7.6.70}{X8044B4EC7F102769}
+\makelabel{cap:AddImageObjectFunctorialWithGivenImageObjects for IsCapCategory, IsFunction}{7.6.71}{X7B22900C82A20B49}
+\makelabel{cap:AddIndecomposableInjectiveObjects for IsCapCategory, IsFunction}{7.6.72}{X79CC10D18746249B}
+\makelabel{cap:AddIndecomposableProjectiveObjects for IsCapCategory, IsFunction}{7.6.73}{X782ED2C27FB4739D}
+\makelabel{cap:AddInitialObject for IsCapCategory, IsFunction}{7.6.74}{X78D5E19E781D696A}
+\makelabel{cap:AddInitialObjectFunctorial for IsCapCategory, IsFunction}{7.6.75}{X80950253819512A8}
+\makelabel{cap:AddInitialObjectFunctorialWithGivenInitialObjects for IsCapCategory, IsFunction}{7.6.76}{X85493AEC80972B68}
+\makelabel{cap:AddInjectionOfCofactorOfCoproduct for IsCapCategory, IsFunction}{7.6.77}{X81B68CB6783FAFE0}
+\makelabel{cap:AddInjectionOfCofactorOfCoproductWithGivenCoproduct for IsCapCategory, IsFunction}{7.6.78}{X7DC2E9CD78A8622C}
+\makelabel{cap:AddInjectionOfCofactorOfDirectSum for IsCapCategory, IsFunction}{7.6.79}{X845EB2F47C8FE49C}
+\makelabel{cap:AddInjectionOfCofactorOfDirectSumWithGivenDirectSum for IsCapCategory, IsFunction}{7.6.80}{X86A78CC2859E4382}
+\makelabel{cap:AddInjectionOfCofactorOfPushout for IsCapCategory, IsFunction}{7.6.81}{X87ED0E87850C6D96}
+\makelabel{cap:AddInjectionOfCofactorOfPushoutWithGivenPushout for IsCapCategory, IsFunction}{7.6.82}{X8352461A796F9214}
+\makelabel{cap:AddInjectiveColift for IsCapCategory, IsFunction}{7.6.83}{X7CE0C54080533C0E}
+\makelabel{cap:AddInjectiveDimension for IsCapCategory, IsFunction}{7.6.84}{X7E7B72EC7B2FB537}
+\makelabel{cap:AddInjectiveEnvelopeObject for IsCapCategory, IsFunction}{7.6.85}{X81CE72B78061AE51}
+\makelabel{cap:AddInterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure for IsCapCategory, IsFunction}{7.6.86}{X805AC6057B80880D}
+\makelabel{cap:AddInterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructureWithGivenObjects for IsCapCategory, IsFunction}{7.6.87}{X79A927B187FE594C}
+\makelabel{cap:AddInterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism for IsCapCategory, IsFunction}{7.6.88}{X87DD6A387E32DD37}
+\makelabel{cap:AddInverseForMorphisms for IsCapCategory, IsFunction}{7.6.89}{X865C7A1781F3AEF7}
+\makelabel{cap:AddInverseMorphismFromCoimageToImageWithGivenObjects for IsCapCategory, IsFunction}{7.6.90}{X7E25930683F94127}
+\makelabel{cap:AddIsAutomorphism for IsCapCategory, IsFunction}{7.6.91}{X7FA3BD6D79D99498}
+\makelabel{cap:AddIsBijectiveObject for IsCapCategory, IsFunction}{7.6.92}{X78D83890795EAAF2}
+\makelabel{cap:AddIsCodominating for IsCapCategory, IsFunction}{7.6.93}{X78E046E387674019}
+\makelabel{cap:AddIsColiftable for IsCapCategory, IsFunction}{7.6.94}{X7A41C14B8169E993}
+\makelabel{cap:AddIsColiftableAlongEpimorphism for IsCapCategory, IsFunction}{7.6.95}{X86BF34667D329168}
+\makelabel{cap:AddIsCongruentForMorphisms for IsCapCategory, IsFunction}{7.6.96}{X861A83B3802D0FBD}
+\makelabel{cap:AddIsDominating for IsCapCategory, IsFunction}{7.6.97}{X834AC612831DDD11}
+\makelabel{cap:AddIsEndomorphism for IsCapCategory, IsFunction}{7.6.98}{X87B1905481F6AF28}
+\makelabel{cap:AddIsEpimorphism for IsCapCategory, IsFunction}{7.6.99}{X8523850C827FE182}
+\makelabel{cap:AddIsEqualAsFactorobjects for IsCapCategory, IsFunction}{7.6.100}{X82DE9AE387425307}
+\makelabel{cap:AddIsEqualAsSubobjects for IsCapCategory, IsFunction}{7.6.101}{X7A97D3C3869323D1}
+\makelabel{cap:AddIsEqualForCacheForMorphisms for IsCapCategory, IsFunction}{7.6.102}{X833165B27AA74580}
+\makelabel{cap:AddIsEqualForCacheForObjects for IsCapCategory, IsFunction}{7.6.103}{X7887D32C7973F4A0}
+\makelabel{cap:AddIsEqualForMorphisms for IsCapCategory, IsFunction}{7.6.104}{X83F60F5F7E57F3C8}
+\makelabel{cap:AddIsEqualForMorphismsOnMor for IsCapCategory, IsFunction}{7.6.105}{X84AB81547A770D36}
+\makelabel{cap:AddIsEqualForObjects for IsCapCategory, IsFunction}{7.6.106}{X787F654B82150781}
+\makelabel{cap:AddIsEqualToIdentityMorphism for IsCapCategory, IsFunction}{7.6.107}{X79F9BCED7C82AEAC}
+\makelabel{cap:AddIsEqualToZeroMorphism for IsCapCategory, IsFunction}{7.6.108}{X849B7E507B01ABE7}
+\makelabel{cap:AddIsHomSetInhabited for IsCapCategory, IsFunction}{7.6.109}{X85D7E2DE7D45CF70}
+\makelabel{cap:AddIsIdempotent for IsCapCategory, IsFunction}{7.6.110}{X85701DBE7A5F90A1}
+\makelabel{cap:AddIsInitial for IsCapCategory, IsFunction}{7.6.111}{X7E6EDA9484F3E6F6}
+\makelabel{cap:AddIsInjective for IsCapCategory, IsFunction}{7.6.112}{X7F7F309F7C67D6CE}
+\makelabel{cap:AddIsIsomorphism for IsCapCategory, IsFunction}{7.6.113}{X7B0818ED7A7BBCB4}
+\makelabel{cap:AddIsLiftable for IsCapCategory, IsFunction}{7.6.114}{X79AC542F8227455E}
+\makelabel{cap:AddIsLiftableAlongMonomorphism for IsCapCategory, IsFunction}{7.6.115}{X7BD695308127A877}
+\makelabel{cap:AddIsMonomorphism for IsCapCategory, IsFunction}{7.6.116}{X87DEC4BD7C48E679}
+\makelabel{cap:AddIsOne for IsCapCategory, IsFunction}{7.6.117}{X7FCC38DC7843D455}
+\makelabel{cap:AddIsProjective for IsCapCategory, IsFunction}{7.6.118}{X865C78CF789DA86D}
+\makelabel{cap:AddIsSplitEpimorphism for IsCapCategory, IsFunction}{7.6.119}{X7D7BDF8F7EED3A72}
+\makelabel{cap:AddIsSplitMonomorphism for IsCapCategory, IsFunction}{7.6.120}{X7C5D46B77A65ACF2}
+\makelabel{cap:AddIsTerminal for IsCapCategory, IsFunction}{7.6.121}{X7EDB2D5B7F234ADA}
+\makelabel{cap:AddIsWellDefinedForMorphisms for IsCapCategory, IsFunction}{7.6.122}{X7A4BE39A83D2A730}
+\makelabel{cap:AddIsWellDefinedForObjects for IsCapCategory, IsFunction}{7.6.123}{X859219147B3058B8}
+\makelabel{cap:AddIsWellDefinedForTwoCells for IsCapCategory, IsFunction}{7.6.124}{X7EE52A1587E15D94}
+\makelabel{cap:AddIsZeroForMorphisms for IsCapCategory, IsFunction}{7.6.125}{X87DD3BD27C49450A}
+\makelabel{cap:AddIsZeroForObjects for IsCapCategory, IsFunction}{7.6.126}{X78C3E7BF78A9A7D5}
+\makelabel{cap:AddIsomorphismFromCoequalizerOfCoproductDiagramToPushout for IsCapCategory, IsFunction}{7.6.127}{X7B80534F79D74B95}
+\makelabel{cap:AddIsomorphismFromCoimageToCokernelOfKernel for IsCapCategory, IsFunction}{7.6.128}{X80B45F4D7A7B96A4}
+\makelabel{cap:AddIsomorphismFromCokernelOfDiagonalDifferenceToPushout for IsCapCategory, IsFunction}{7.6.129}{X811F965D7B9837F9}
+\makelabel{cap:AddIsomorphismFromCokernelOfKernelToCoimage for IsCapCategory, IsFunction}{7.6.130}{X7D9B059578AC42D6}
+\makelabel{cap:AddIsomorphismFromCoproductToDirectSum for IsCapCategory, IsFunction}{7.6.131}{X87C04FAA7F49427B}
+\makelabel{cap:AddIsomorphismFromDirectProductToDirectSum for IsCapCategory, IsFunction}{7.6.132}{X793FDA608055E5C9}
+\makelabel{cap:AddIsomorphismFromDirectSumToCoproduct for IsCapCategory, IsFunction}{7.6.133}{X7D710CA282194DC7}
+\makelabel{cap:AddIsomorphismFromDirectSumToDirectProduct for IsCapCategory, IsFunction}{7.6.134}{X79DA06C087D4BDF3}
+\makelabel{cap:AddIsomorphismFromEqualizerOfDirectProductDiagramToFiberProduct for IsCapCategory, IsFunction}{7.6.135}{X83D3BDAF7BFBF924}
+\makelabel{cap:AddIsomorphismFromFiberProductToEqualizerOfDirectProductDiagram for IsCapCategory, IsFunction}{7.6.136}{X7FF20AFE7CE85AF5}
+\makelabel{cap:AddIsomorphismFromFiberProductToKernelOfDiagonalDifference for IsCapCategory, IsFunction}{7.6.137}{X82A6A64979DFFE43}
+\makelabel{cap:AddIsomorphismFromHomologyObjectToItsConstructionAsAnImageObject for IsCapCategory, IsFunction}{7.6.138}{X7BD4A45087C884FD}
+\makelabel{cap:AddIsomorphismFromImageObjectToKernelOfCokernel for IsCapCategory, IsFunction}{7.6.139}{X7B09757B8411AD52}
+\makelabel{cap:AddIsomorphismFromInitialObjectToZeroObject for IsCapCategory, IsFunction}{7.6.140}{X876F82038640430A}
+\makelabel{cap:AddIsomorphismFromItsConstructionAsAnImageObjectToHomologyObject for IsCapCategory, IsFunction}{7.6.141}{X80B2303081911753}
+\makelabel{cap:AddIsomorphismFromKernelOfCokernelToImageObject for IsCapCategory, IsFunction}{7.6.142}{X78A3EEFB843C5067}
+\makelabel{cap:AddIsomorphismFromKernelOfDiagonalDifferenceToFiberProduct for IsCapCategory, IsFunction}{7.6.143}{X7B255D3F7F8D0846}
+\makelabel{cap:AddIsomorphismFromPushoutToCoequalizerOfCoproductDiagram for IsCapCategory, IsFunction}{7.6.144}{X7C757EA67A35147A}
+\makelabel{cap:AddIsomorphismFromPushoutToCokernelOfDiagonalDifference for IsCapCategory, IsFunction}{7.6.145}{X8639C412856D8860}
+\makelabel{cap:AddIsomorphismFromTerminalObjectToZeroObject for IsCapCategory, IsFunction}{7.6.146}{X85A29A037839B32B}
+\makelabel{cap:AddIsomorphismFromZeroObjectToInitialObject for IsCapCategory, IsFunction}{7.6.147}{X8084DA9E870DF7DB}
+\makelabel{cap:AddIsomorphismFromZeroObjectToTerminalObject for IsCapCategory, IsFunction}{7.6.148}{X7BDED1CE7F0FADE9}
+\makelabel{cap:AddKernelEmbedding for IsCapCategory, IsFunction}{7.6.149}{X788D35FA8050DA84}
+\makelabel{cap:AddKernelEmbeddingWithGivenKernelObject for IsCapCategory, IsFunction}{7.6.150}{X87668C2183C9E8A1}
+\makelabel{cap:AddKernelLift for IsCapCategory, IsFunction}{7.6.151}{X7A3F184085748DE6}
+\makelabel{cap:AddKernelLiftWithGivenKernelObject for IsCapCategory, IsFunction}{7.6.152}{X7D6119357E10B4DA}
+\makelabel{cap:AddKernelObject for IsCapCategory, IsFunction}{7.6.153}{X8681E565875A8C03}
+\makelabel{cap:AddKernelObjectFunctorial for IsCapCategory, IsFunction}{7.6.154}{X818A1E2C82034517}
+\makelabel{cap:AddKernelObjectFunctorialWithGivenKernelObjects for IsCapCategory, IsFunction}{7.6.155}{X7BE607577847C4DC}
+\makelabel{cap:AddLift for IsCapCategory, IsFunction}{7.6.156}{X7DA9346A8517648D}
+\makelabel{cap:AddLiftAlongMonomorphism for IsCapCategory, IsFunction}{7.6.157}{X869A19337CB3059E}
+\makelabel{cap:AddLiftOrFail for IsCapCategory, IsFunction}{7.6.158}{X86B265337903596B}
+\makelabel{cap:AddMereExistenceOfSolutionOfLinearSystemInAbCategory for IsCapCategory, IsFunction}{7.6.159}{X80E205428725FEA7}
+\makelabel{cap:AddMonomorphismIntoInjectiveEnvelopeObject for IsCapCategory, IsFunction}{7.6.160}{X7BD5C9B0867857CC}
+\makelabel{cap:AddMonomorphismIntoInjectiveEnvelopeObjectWithGivenInjectiveEnvelopeObject for IsCapCategory, IsFunction}{7.6.161}{X87B801BF7F861F09}
+\makelabel{cap:AddMonomorphismIntoSomeInjectiveObject for IsCapCategory, IsFunction}{7.6.162}{X81C9788D7DD27D18}
+\makelabel{cap:AddMonomorphismIntoSomeInjectiveObjectWithGivenSomeInjectiveObject for IsCapCategory, IsFunction}{7.6.163}{X7CCBF6577ADC62D9}
+\makelabel{cap:AddMorphismBetweenDirectSums for IsCapCategory, IsFunction}{7.6.164}{X873C908279759A45}
+\makelabel{cap:AddMorphismBetweenDirectSumsWithGivenDirectSums for IsCapCategory, IsFunction}{7.6.165}{X7E295E2784C267D5}
+\makelabel{cap:AddMorphismConstructor for IsCapCategory, IsFunction}{7.6.166}{X7A1067568608419D}
+\makelabel{cap:AddMorphismDatum for IsCapCategory, IsFunction}{7.6.167}{X7ADDB80C7F9BC838}
+\makelabel{cap:AddMorphismFromCoimageToImageWithGivenObjects for IsCapCategory, IsFunction}{7.6.168}{X7FCCF6EA7BD56684}
+\makelabel{cap:AddMorphismFromEqualizerToSink for IsCapCategory, IsFunction}{7.6.169}{X86015A918233B365}
+\makelabel{cap:AddMorphismFromEqualizerToSinkWithGivenEqualizer for IsCapCategory, IsFunction}{7.6.170}{X857FA53779546DAC}
+\makelabel{cap:AddMorphismFromFiberProductToSink for IsCapCategory, IsFunction}{7.6.171}{X87BB71D881AFD21C}
+\makelabel{cap:AddMorphismFromFiberProductToSinkWithGivenFiberProduct for IsCapCategory, IsFunction}{7.6.172}{X7F652D597B5298C6}
+\makelabel{cap:AddMorphismFromKernelObjectToSink for IsCapCategory, IsFunction}{7.6.173}{X83B7DB587851A040}
+\makelabel{cap:AddMorphismFromKernelObjectToSinkWithGivenKernelObject for IsCapCategory, IsFunction}{7.6.174}{X7844716879CAFB0C}
+\makelabel{cap:AddMorphismFromSourceToCoequalizer for IsCapCategory, IsFunction}{7.6.175}{X7CC2819E868B2ACF}
+\makelabel{cap:AddMorphismFromSourceToCoequalizerWithGivenCoequalizer for IsCapCategory, IsFunction}{7.6.176}{X84074D4B7E584205}
+\makelabel{cap:AddMorphismFromSourceToCokernelObject for IsCapCategory, IsFunction}{7.6.177}{X7E2024F080A442DF}
+\makelabel{cap:AddMorphismFromSourceToCokernelObjectWithGivenCokernelObject for IsCapCategory, IsFunction}{7.6.178}{X837F485E7A5E6511}
+\makelabel{cap:AddMorphismFromSourceToPushout for IsCapCategory, IsFunction}{7.6.179}{X7A8728957EEC0667}
+\makelabel{cap:AddMorphismFromSourceToPushoutWithGivenPushout for IsCapCategory, IsFunction}{7.6.180}{X7D880C937DDE1F34}
+\makelabel{cap:AddMultiplyWithElementOfCommutativeRingForMorphisms for IsCapCategory, IsFunction}{7.6.181}{X7AE8C7897CB6FDF8}
+\makelabel{cap:AddObjectConstructor for IsCapCategory, IsFunction}{7.6.182}{X7D093D4981AC4E7F}
+\makelabel{cap:AddObjectDatum for IsCapCategory, IsFunction}{7.6.183}{X7EF116D57BFA80B5}
+\makelabel{cap:AddPostCompose for IsCapCategory, IsFunction}{7.6.184}{X853E87F47F9FC287}
+\makelabel{cap:AddPostComposeList for IsCapCategory, IsFunction}{7.6.185}{X85A4A74585001622}
+\makelabel{cap:AddPostInverseForMorphisms for IsCapCategory, IsFunction}{7.6.186}{X806FBF5479DB397D}
+\makelabel{cap:AddPreCompose for IsCapCategory, IsFunction}{7.6.187}{X868C87097D322509}
+\makelabel{cap:AddPreComposeList for IsCapCategory, IsFunction}{7.6.188}{X7CE1A7FC792C6577}
+\makelabel{cap:AddPreInverseForMorphisms for IsCapCategory, IsFunction}{7.6.189}{X85E1E8037F7353F8}
+\makelabel{cap:AddProjectionInFactorOfDirectProduct for IsCapCategory, IsFunction}{7.6.190}{X84F5824779267907}
+\makelabel{cap:AddProjectionInFactorOfDirectProductWithGivenDirectProduct for IsCapCategory, IsFunction}{7.6.191}{X7B83D0627A2DCF93}
+\makelabel{cap:AddProjectionInFactorOfDirectSum for IsCapCategory, IsFunction}{7.6.192}{X7B87E0308677AB17}
+\makelabel{cap:AddProjectionInFactorOfDirectSumWithGivenDirectSum for IsCapCategory, IsFunction}{7.6.193}{X81ACCDB081967CD3}
+\makelabel{cap:AddProjectionInFactorOfFiberProduct for IsCapCategory, IsFunction}{7.6.194}{X7BC4A40A8587EB82}
+\makelabel{cap:AddProjectionInFactorOfFiberProductWithGivenFiberProduct for IsCapCategory, IsFunction}{7.6.195}{X822C988083A72B14}
+\makelabel{cap:AddProjectionOntoCoequalizer for IsCapCategory, IsFunction}{7.6.196}{X7C76BED4827D9C28}
+\makelabel{cap:AddProjectionOntoCoequalizerWithGivenCoequalizer for IsCapCategory, IsFunction}{7.6.197}{X8691E0FA7BF900F5}
+\makelabel{cap:AddProjectiveCoverObject for IsCapCategory, IsFunction}{7.6.198}{X7C6B7D3A80725B9A}
+\makelabel{cap:AddProjectiveDimension for IsCapCategory, IsFunction}{7.6.199}{X828B50D57F3DAB71}
+\makelabel{cap:AddProjectiveLift for IsCapCategory, IsFunction}{7.6.200}{X7AEE24E581A44083}
+\makelabel{cap:AddPushout for IsCapCategory, IsFunction}{7.6.201}{X78FDEE468742E573}
+\makelabel{cap:AddPushoutFunctorial for IsCapCategory, IsFunction}{7.6.202}{X85F9FDCF7E697028}
+\makelabel{cap:AddPushoutFunctorialWithGivenPushouts for IsCapCategory, IsFunction}{7.6.203}{X810036A887D287AC}
+\makelabel{cap:AddRandomMorphismByInteger for IsCapCategory, IsFunction}{7.6.204}{X7BC5AC807FF84905}
+\makelabel{cap:AddRandomMorphismByList for IsCapCategory, IsFunction}{7.6.205}{X84BEF31F81ABC74E}
+\makelabel{cap:AddRandomMorphismWithFixedRangeByInteger for IsCapCategory, IsFunction}{7.6.206}{X7D58154C7B6478A8}
+\makelabel{cap:AddRandomMorphismWithFixedRangeByList for IsCapCategory, IsFunction}{7.6.207}{X7B2266E07E2114FE}
+\makelabel{cap:AddRandomMorphismWithFixedSourceAndRangeByInteger for IsCapCategory, IsFunction}{7.6.208}{X78E443767AA69703}
+\makelabel{cap:AddRandomMorphismWithFixedSourceAndRangeByList for IsCapCategory, IsFunction}{7.6.209}{X7A395AEB813562EA}
+\makelabel{cap:AddRandomMorphismWithFixedSourceByInteger for IsCapCategory, IsFunction}{7.6.210}{X80E69DF27EA33C03}
+\makelabel{cap:AddRandomMorphismWithFixedSourceByList for IsCapCategory, IsFunction}{7.6.211}{X7C5DEDED7A7D5F7A}
+\makelabel{cap:AddRandomObjectByInteger for IsCapCategory, IsFunction}{7.6.212}{X8537D28D7C878EB2}
+\makelabel{cap:AddRandomObjectByList for IsCapCategory, IsFunction}{7.6.213}{X86F6CF9382A4906A}
+\makelabel{cap:AddSimplifyEndo for IsCapCategory, IsFunction}{7.6.214}{X79584C2B7AE88801}
+\makelabel{cap:AddSimplifyEndoIsoFromInputObject for IsCapCategory, IsFunction}{7.6.215}{X7E143B0B7AFED0A5}
+\makelabel{cap:AddSimplifyEndoIsoToInputObject for IsCapCategory, IsFunction}{7.6.216}{X8289DD3582E90412}
+\makelabel{cap:AddSimplifyMorphism for IsCapCategory, IsFunction}{7.6.217}{X82FC080B78E17869}
+\makelabel{cap:AddSimplifyObject for IsCapCategory, IsFunction}{7.6.218}{X798AA0B57BDC7891}
+\makelabel{cap:AddSimplifyObjectIsoFromInputObject for IsCapCategory, IsFunction}{7.6.219}{X839A072483DA4590}
+\makelabel{cap:AddSimplifyObjectIsoToInputObject for IsCapCategory, IsFunction}{7.6.220}{X7CFDA57581061E05}
+\makelabel{cap:AddSimplifyRange for IsCapCategory, IsFunction}{7.6.221}{X78D0F3D57A70F0AA}
+\makelabel{cap:AddSimplifyRangeIsoFromInputObject for IsCapCategory, IsFunction}{7.6.222}{X7FB594A37A1B8DA3}
+\makelabel{cap:AddSimplifyRangeIsoToInputObject for IsCapCategory, IsFunction}{7.6.223}{X7BC056A2866EE0FC}
+\makelabel{cap:AddSimplifySource for IsCapCategory, IsFunction}{7.6.224}{X800D4F4678C4B03E}
+\makelabel{cap:AddSimplifySourceAndRange for IsCapCategory, IsFunction}{7.6.225}{X7FDBB4087F652D97}
+\makelabel{cap:AddSimplifySourceAndRangeIsoFromInputRange for IsCapCategory, IsFunction}{7.6.226}{X7B3E60B07AF758F7}
+\makelabel{cap:AddSimplifySourceAndRangeIsoFromInputSource for IsCapCategory, IsFunction}{7.6.227}{X86CEC88B82874A86}
+\makelabel{cap:AddSimplifySourceAndRangeIsoToInputRange for IsCapCategory, IsFunction}{7.6.228}{X7AEBD3D882FFB8A7}
+\makelabel{cap:AddSimplifySourceAndRangeIsoToInputSource for IsCapCategory, IsFunction}{7.6.229}{X7814950A81D7A307}
+\makelabel{cap:AddSimplifySourceIsoFromInputObject for IsCapCategory, IsFunction}{7.6.230}{X83B7D18780C28D3F}
+\makelabel{cap:AddSimplifySourceIsoToInputObject for IsCapCategory, IsFunction}{7.6.231}{X7E67CB62821ED6AA}
+\makelabel{cap:AddSolveLinearSystemInAbCategory for IsCapCategory, IsFunction}{7.6.232}{X781C4BCA81250295}
+\makelabel{cap:AddSolveLinearSystemInAbCategoryOrFail for IsCapCategory, IsFunction}{7.6.233}{X7B3C26FE86C92ABA}
+\makelabel{cap:AddSomeInjectiveObject for IsCapCategory, IsFunction}{7.6.234}{X7DFC9A568472688B}
+\makelabel{cap:AddSomeProjectiveObject for IsCapCategory, IsFunction}{7.6.235}{X7C3AF36D86F11429}
+\makelabel{cap:AddSomeReductionBySplitEpiSummand for IsCapCategory, IsFunction}{7.6.236}{X7EB0389487C277CE}
+\makelabel{cap:AddSomeReductionBySplitEpiSummandMorphismFromInputRange for IsCapCategory, IsFunction}{7.6.237}{X7E6384988569B9CA}
+\makelabel{cap:AddSomeReductionBySplitEpiSummandMorphismToInputRange for IsCapCategory, IsFunction}{7.6.238}{X871D45CA80DAAFC2}
+\makelabel{cap:AddSubtractionForMorphisms for IsCapCategory, IsFunction}{7.6.239}{X7ECA7B0182144B81}
+\makelabel{cap:AddSumOfMorphisms for IsCapCategory, IsFunction}{7.6.240}{X853690377C4630ED}
+\makelabel{cap:AddTerminalObject for IsCapCategory, IsFunction}{7.6.241}{X7C4B4B7F8009501B}
+\makelabel{cap:AddTerminalObjectFunctorial for IsCapCategory, IsFunction}{7.6.242}{X82ED99F9845D2DA7}
+\makelabel{cap:AddTerminalObjectFunctorialWithGivenTerminalObjects for IsCapCategory, IsFunction}{7.6.243}{X7A7BBCB08021B976}
+\makelabel{cap:AddUniversalMorphismFromCoequalizer for IsCapCategory, IsFunction}{7.6.244}{X82B3F52779407E2F}
+\makelabel{cap:AddUniversalMorphismFromCoequalizerWithGivenCoequalizer for IsCapCategory, IsFunction}{7.6.245}{X7F27613984BEA3BB}
+\makelabel{cap:AddUniversalMorphismFromCoproduct for IsCapCategory, IsFunction}{7.6.246}{X874696508440B555}
+\makelabel{cap:AddUniversalMorphismFromCoproductWithGivenCoproduct for IsCapCategory, IsFunction}{7.6.247}{X7ABE731884D77899}
+\makelabel{cap:AddUniversalMorphismFromDirectSum for IsCapCategory, IsFunction}{7.6.248}{X82AEA81280F0FE29}
+\makelabel{cap:AddUniversalMorphismFromDirectSumWithGivenDirectSum for IsCapCategory, IsFunction}{7.6.249}{X81DB161779E15937}
+\makelabel{cap:AddUniversalMorphismFromImage for IsCapCategory, IsFunction}{7.6.250}{X7BE632048014DB7F}
+\makelabel{cap:AddUniversalMorphismFromImageWithGivenImageObject for IsCapCategory, IsFunction}{7.6.251}{X79813E327CAD3D99}
+\makelabel{cap:AddUniversalMorphismFromInitialObject for IsCapCategory, IsFunction}{7.6.252}{X808255727E365DA5}
+\makelabel{cap:AddUniversalMorphismFromInitialObjectWithGivenInitialObject for IsCapCategory, IsFunction}{7.6.253}{X7F7D9168870D7AC6}
+\makelabel{cap:AddUniversalMorphismFromPushout for IsCapCategory, IsFunction}{7.6.254}{X7ACB31A479737723}
+\makelabel{cap:AddUniversalMorphismFromPushoutWithGivenPushout for IsCapCategory, IsFunction}{7.6.255}{X847BA99A851088A1}
+\makelabel{cap:AddUniversalMorphismFromZeroObject for IsCapCategory, IsFunction}{7.6.256}{X873263B37942E963}
+\makelabel{cap:AddUniversalMorphismFromZeroObjectWithGivenZeroObject for IsCapCategory, IsFunction}{7.6.257}{X8396EFB87AABCD66}
+\makelabel{cap:AddUniversalMorphismIntoCoimage for IsCapCategory, IsFunction}{7.6.258}{X85DB30B982F6C564}
+\makelabel{cap:AddUniversalMorphismIntoCoimageWithGivenCoimageObject for IsCapCategory, IsFunction}{7.6.259}{X7D83EDB07844C0FA}
+\makelabel{cap:AddUniversalMorphismIntoDirectProduct for IsCapCategory, IsFunction}{7.6.260}{X7E4C217083150A21}
+\makelabel{cap:AddUniversalMorphismIntoDirectProductWithGivenDirectProduct for IsCapCategory, IsFunction}{7.6.261}{X84C986C67D703457}
+\makelabel{cap:AddUniversalMorphismIntoDirectSum for IsCapCategory, IsFunction}{7.6.262}{X7AA30E857A11AA2A}
+\makelabel{cap:AddUniversalMorphismIntoDirectSumWithGivenDirectSum for IsCapCategory, IsFunction}{7.6.263}{X7E666F5683000D34}
+\makelabel{cap:AddUniversalMorphismIntoEqualizer for IsCapCategory, IsFunction}{7.6.264}{X814FACA47A759C7A}
+\makelabel{cap:AddUniversalMorphismIntoEqualizerWithGivenEqualizer for IsCapCategory, IsFunction}{7.6.265}{X872A26F678D6989B}
+\makelabel{cap:AddUniversalMorphismIntoFiberProduct for IsCapCategory, IsFunction}{7.6.266}{X7F7446F882DF6DA5}
+\makelabel{cap:AddUniversalMorphismIntoFiberProductWithGivenFiberProduct for IsCapCategory, IsFunction}{7.6.267}{X84C5017486990FB2}
+\makelabel{cap:AddUniversalMorphismIntoTerminalObject for IsCapCategory, IsFunction}{7.6.268}{X84D7DDAF835BDFA3}
+\makelabel{cap:AddUniversalMorphismIntoTerminalObjectWithGivenTerminalObject for IsCapCategory, IsFunction}{7.6.269}{X8230986A7821D9B4}
+\makelabel{cap:AddUniversalMorphismIntoZeroObject for IsCapCategory, IsFunction}{7.6.270}{X7CAC035583A3BD60}
+\makelabel{cap:AddUniversalMorphismIntoZeroObjectWithGivenZeroObject for IsCapCategory, IsFunction}{7.6.271}{X8550CFE1804A9965}
+\makelabel{cap:AddVerticalPostCompose for IsCapCategory, IsFunction}{7.6.272}{X7AA662D58265F658}
+\makelabel{cap:AddVerticalPreCompose for IsCapCategory, IsFunction}{7.6.273}{X85F4507081F229DD}
+\makelabel{cap:AddZeroMorphism for IsCapCategory, IsFunction}{7.6.274}{X824C08CE7D7FB387}
+\makelabel{cap:AddZeroObject for IsCapCategory, IsFunction}{7.6.275}{X7F0111277DF3FB7E}
+\makelabel{cap:AddZeroObjectFunctorial for IsCapCategory, IsFunction}{7.6.276}{X7C6A709286103BAE}
+\makelabel{cap:AddZeroObjectFunctorialWithGivenZeroObjects for IsCapCategory, IsFunction}{7.6.277}{X826BAB7F84D9499D}
 \makelabel{cap:DerivationInfo}{8.1.1}{X847BF8788620ADEC}
 \makelabel{cap:ActivateDerivationInfo}{8.1.2}{X82EB820C81919BD5}
 \makelabel{cap:DeactivateDerivationInfo}{8.1.3}{X7853FBCF7DAA6AD1}
-\makelabel{cap:IsDerivedMethod for IsObject}{8.2.1}{X7E30DF4F8029D24F}
+\makelabel{cap:IsDerivedMethod for IsAttributeStoringRep}{8.2.1}{X8445F6F187784DF1}
 \makelabel{cap:MakeDerivation for IsString, IsFunction, IsDenseList,IsPosInt, IsFunction, IsFunction}{8.2.2}{X7DB4FFE37D1BB931}
 \makelabel{cap:DerivationName for IsDerivedMethod}{8.2.3}{X85FA69CA831B3D68}
 \makelabel{cap:DerivationWeight for IsDerivedMethod}{8.2.4}{X8039396185E25B0C}
@@ -822,7 +877,7 @@
 \makelabel{cap:UsedOperationsWithMultiplesAndCategoryGetters for IsDerivedMethod}{8.2.9}{X7CEDBB3E7BCA64D1}
 \makelabel{cap:InstallDerivationForCategory for IsDerivedMethod, IsPosInt, IsCapCategory}{8.2.10}{X7DCED23B84345454}
 \makelabel{cap:FunctionCalledBeforeInstallation for IsDerivedMethod}{8.2.11}{X87B8757F7AAEE7DE}
-\makelabel{cap:IsDerivedMethodGraph for IsObject}{8.3.1}{X7BFD964E8739600C}
+\makelabel{cap:IsDerivedMethodGraph for IsAttributeStoringRep}{8.3.1}{X81A930FD84B9A43F}
 \makelabel{cap:MakeDerivationGraph for IsDenseList}{8.3.2}{X7E19A0AD8661EF00}
 \makelabel{cap:AddOperationsToDerivationGraph for IsDerivedMethodGraph, IsDenseList}{8.3.3}{X7B801088854A0127}
 \makelabel{cap:AddDerivation for IsDerivedMethodGraph, IsDerivedMethod}{8.3.4}{X7DEBC71E8450F86A}
@@ -834,7 +889,7 @@
 \makelabel{cap:Operations for IsDerivedMethodGraph}{8.3.10}{X8669CCC78175B23B}
 \makelabel{cap:DerivationsUsingOperation for IsDerivedMethodGraph, IsString}{8.3.11}{X7D8B5FE482B39913}
 \makelabel{cap:DerivationsOfOperation for IsDerivedMethodGraph, IsString}{8.3.12}{X7A4C262581C53309}
-\makelabel{cap:IsOperationWeightList for IsObject}{8.4.1}{X832B6935788EA870}
+\makelabel{cap:IsOperationWeightList for IsAttributeStoringRep}{8.4.1}{X7FDA7FFE7DE614F6}
 \makelabel{cap:MakeOperationWeightList for IsCapCategory, IsDerivedMethodGraph}{8.4.2}{X7CFC7F17786B1B6E}
 \makelabel{cap:DerivationGraph for IsOperationWeightList}{8.4.3}{X7E6F8469808FE57E}
 \makelabel{cap:CategoryOfOperationWeightList for IsOperationWeightList}{8.4.4}{X80E9071D87ABCA57}
@@ -848,7 +903,7 @@
 \makelabel{cap:PrintDerivationTree for IsOperationWeightList, IsString}{8.4.12}{X8145094E862826BE}
 \makelabel{cap:PrintTree for IsObject, IsFunction, IsFunction}{8.4.13}{X7E59037F7B4E42D0}
 \makelabel{cap:PrintTreeRec for IsObject, IsFunction, IsFunction, IsInt}{8.4.14}{X8293EF6286A82480}
-\makelabel{cap:IsStringMinHeap for IsObject}{8.5.1}{X86D1D85F828978AE}
+\makelabel{cap:IsStringMinHeap for IsAttributeStoringRep}{8.5.1}{X7EAA63F885D8E710}
 \makelabel{cap:StringMinHeap}{8.5.2}{X812EDE3F8737AB9D}
 \makelabel{cap:Add for IsStringMinHeap, IsString, IsInt}{8.5.3}{X80604054823A6F01}
 \makelabel{cap:ExtractMin for IsStringMinHeap}{8.5.4}{X7E136159853A3BAC}
@@ -860,79 +915,91 @@
 \makelabel{cap:Heapify for IsStringMinHeap, IsPosInt}{8.5.10}{X78B8D0BD7A2FE83A}
 \makelabel{cap:ObjectCache for IsCapFunctor}{9.1.1}{X7B3D8EB378625F73}
 \makelabel{cap:MorphismCache for IsCapFunctor}{9.1.2}{X84472BD57E11264C}
-\makelabel{cap:InstallMethodWithToDoForIsWellDefined}{9.2.1}{X7B516ECB84EE7FFF}
-\makelabel{cap:InstallSetWithToDoForIsWellDefined for IsObject, IsString, IsList}{9.2.2}{X7C486C0F7D6161A0}
-\makelabel{cap:DeclareAttributeWithToDoForIsWellDefined}{9.2.3}{X7801E9D185E5C130}
-\makelabel{cap:DeclareFamilyProperty}{9.2.4}{X87364D2E830F7FAE}
-\makelabel{cap:CAPINTERNALREPLACESTRINGWITHFILTER}{9.2.5}{X83EC415C82D6FCEC}
-\makelabel{cap:CAPINTERNALREPLACESTRINGSWITHFILTERS}{9.2.6}{X840466B67CFF9CEA}
-\makelabel{cap:CAPINTERNALMERGEFILTERLISTS}{9.2.7}{X7F2869657DDE9AC9}
-\makelabel{cap:CAPINTERNALRETURNOPTIONORDEFAULT}{9.2.8}{X849B851C80D47B4F}
-\makelabel{cap:CAPINTERNALFINDAPPEARANCEOFSYMBOLINFUNCTION}{9.2.9}{X7C7A71C97DC2FABF}
-\makelabel{cap:CAPINTERNALMERGEPRECONDITIONSLIST}{9.2.10}{X78A121F97CF81A43}
-\makelabel{cap:CAPINTERNALASSERTISCELLOFCATEGORY}{9.2.11}{X82F35A5C80A6AB86}
-\makelabel{cap:CAPINTERNALASSERTISOBJECTOFCATEGORY}{9.2.12}{X8335A3308291E3A2}
-\makelabel{cap:CAPINTERNALASSERTISMORPHISMOFCATEGORY}{9.2.13}{X7DD95FC27FBF20E3}
-\makelabel{cap:CAPINTERNALASSERTISTWOCELLOFCATEGORY}{9.2.14}{X818BBDDE8387D373}
-\makelabel{cap:CAPINTERNALASSERTISLISTOFOBJECTSOFCATEGORY}{9.2.15}{X78E82B6879C375CC}
-\makelabel{cap:CAPINTERNALASSERTISLISTOFMORPHISMSOFCATEGORY}{9.2.16}{X7CADA28879902A65}
-\makelabel{cap:CAPINTERNALASSERTISLISTOFTWOCELLSOFCATEGORY}{9.2.17}{X856160007E5AA72D}
-\makelabel{cap:CAPINTERNALASSERTISNONNEGATIVEINTEGERORINFINITY}{9.2.18}{X7C40279E7AC33FB9}
-\makelabel{cap:CachingStatistic}{9.2.19}{X82FC76688082956A}
-\makelabel{cap:BrowseCachingStatistic}{9.2.20}{X7E4CA53E7C03600F}
-\makelabel{cap:InstallDeprecatedAlias}{9.2.21}{X7B2A707E797A06FB}
-\makelabel{cap:IsSpecializationOfFilter}{9.2.22}{X7BE001D378D75CF9}
-\makelabel{cap:IsSpecializationOfFilterList}{9.2.23}{X7E756CEB799322B0}
-\makelabel{cap:InstallMethodForCompilerForCAP}{9.2.24}{X7F953A7086264653}
-\makelabel{cap:InstallOtherMethodForCompilerForCAP}{9.2.25}{X7FC9241882AB3F5A}
-\makelabel{cap:CapJitAddKnownMethod}{9.2.26}{X7AF9D3AC85CB0F3D}
-\makelabel{cap:CapJitAddTypeSignature}{9.2.27}{X816D0A767BD73071}
-\makelabel{cap:CapJitAddTypeSignatureDeferred}{9.2.28}{X8345518F79EBB586}
-\makelabel{cap:CapJitDataTypeOfCategory}{9.2.29}{X812BAF8D81DBE36B}
-\makelabel{cap:CapJitDataTypeOfObjectOfCategory}{9.2.29}{X812BAF8D81DBE36B}
-\makelabel{cap:CapJitDataTypeOfMorphismOfCategory}{9.2.29}{X812BAF8D81DBE36B}
-\makelabel{cap:CapFixpoint}{9.2.30}{X824449507B8AC925}
-\makelabel{cap:Iterated for IsList, IsFunction, IsObject}{9.2.31}{X83607E077857CBDB}
-\makelabel{cap:TransitivelyNeededOtherPackages}{9.2.32}{X7FA62DB97B67C4AB}
-\makelabel{cap:PackageOfCAPOperation}{9.2.33}{X7E9D968D86A536EF}
-\makelabel{cap:SafePosition for IsList, IsObject}{9.2.34}{X844FE77D85C951AA}
-\makelabel{cap:SafePositionProperty for IsList, IsFunction}{9.2.35}{X81DF04B87E3C9D0D}
-\makelabel{cap:NTuple}{9.2.36}{X7F2E50C87EC6E530}
-\makelabel{cap:Pair}{9.2.37}{X7A63799B824FAEBA}
-\makelabel{cap:Triple}{9.2.38}{X7C52730F8526A57E}
-\makelabel{cap:HandlePrecompiledTowers}{9.2.39}{X7B339750826300B4}
-\makelabel{cap:CAPJITINCOMPLETELOGIC}{9.2.40}{X7D06D3287E3BFCBB}
-\makelabel{cap:ListWithKeys}{9.2.41}{X7F313F4B853D176C}
-\makelabel{cap:SumWithKeys}{9.2.42}{X873A487F7DA2A359}
-\makelabel{cap:ProductWithKeys}{9.2.43}{X8321F3D8876ADA2D}
-\makelabel{cap:ForAllWithKeys}{9.2.44}{X7F0574797C13C966}
-\makelabel{cap:ForAnyWithKeys}{9.2.45}{X812F59097E8E7562}
-\makelabel{cap:NumberWithKeys}{9.2.46}{X8322F3FF84EC9AEB}
-\makelabel{cap:FilteredWithKeys}{9.2.47}{X7D0B0ECF7F70FB8E}
-\makelabel{cap:FirstWithKeys}{9.2.48}{X7914B5437CBEB3EC}
-\makelabel{cap:LastWithKeys}{9.2.49}{X849D015F79B08FCC}
+\makelabel{cap:DeclareFamilyProperty}{9.2.1}{X87364D2E830F7FAE}
+\makelabel{cap:CAPINTERNALREPLACESTRINGWITHFILTER}{9.2.2}{X83EC415C82D6FCEC}
+\makelabel{cap:CAPINTERNALREPLACESTRINGSWITHFILTERS}{9.2.3}{X840466B67CFF9CEA}
+\makelabel{cap:CAPINTERNALMERGEFILTERLISTS}{9.2.4}{X7F2869657DDE9AC9}
+\makelabel{cap:CAPINTERNALRETURNOPTIONORDEFAULT}{9.2.5}{X849B851C80D47B4F}
+\makelabel{cap:CAPINTERNALFINDAPPEARANCEOFSYMBOLINFUNCTION}{9.2.6}{X7C7A71C97DC2FABF}
+\makelabel{cap:CAPINTERNALMERGEPRECONDITIONSLIST}{9.2.7}{X78A121F97CF81A43}
+\makelabel{cap:CAPINTERNALASSERTISCELLOFCATEGORY}{9.2.8}{X82F35A5C80A6AB86}
+\makelabel{cap:CAPINTERNALASSERTISOBJECTOFCATEGORY}{9.2.9}{X8335A3308291E3A2}
+\makelabel{cap:CAPINTERNALASSERTISMORPHISMOFCATEGORY}{9.2.10}{X7DD95FC27FBF20E3}
+\makelabel{cap:CAPINTERNALASSERTISTWOCELLOFCATEGORY}{9.2.11}{X818BBDDE8387D373}
+\makelabel{cap:CAPINTERNALASSERTISLISTOFOBJECTSOFCATEGORY}{9.2.12}{X78E82B6879C375CC}
+\makelabel{cap:CAPINTERNALASSERTISLISTOFMORPHISMSOFCATEGORY}{9.2.13}{X7CADA28879902A65}
+\makelabel{cap:CAPINTERNALASSERTISLISTOFTWOCELLSOFCATEGORY}{9.2.14}{X856160007E5AA72D}
+\makelabel{cap:CAPINTERNALASSERTISNONNEGATIVEINTEGERORINFINITY}{9.2.15}{X7C40279E7AC33FB9}
+\makelabel{cap:CachingStatistic}{9.2.16}{X82FC76688082956A}
+\makelabel{cap:BrowseCachingStatistic}{9.2.17}{X7E4CA53E7C03600F}
+\makelabel{cap:InstallDeprecatedAlias}{9.2.18}{X7B2A707E797A06FB}
+\makelabel{cap:IsSpecializationOfFilter}{9.2.19}{X7BE001D378D75CF9}
+\makelabel{cap:IsSpecializationOfFilterList}{9.2.20}{X7E756CEB799322B0}
+\makelabel{cap:InstallMethodForCompilerForCAP}{9.2.21}{X7F953A7086264653}
+\makelabel{cap:InstallOtherMethodForCompilerForCAP}{9.2.22}{X7FC9241882AB3F5A}
+\makelabel{cap:CapJitAddKnownMethod}{9.2.23}{X7AF9D3AC85CB0F3D}
+\makelabel{cap:CapJitAddTypeSignature}{9.2.24}{X816D0A767BD73071}
+\makelabel{cap:CapJitAddTypeSignatureDeferred}{9.2.25}{X8345518F79EBB586}
+\makelabel{cap:CapJitDataTypeOfCategory}{9.2.26}{X812BAF8D81DBE36B}
+\makelabel{cap:CapJitDataTypeOfObjectOfCategory}{9.2.26}{X812BAF8D81DBE36B}
+\makelabel{cap:CapJitDataTypeOfMorphismOfCategory}{9.2.26}{X812BAF8D81DBE36B}
+\makelabel{cap:CapFixpoint}{9.2.27}{X824449507B8AC925}
+\makelabel{cap:Iterated for IsList, IsFunction, IsObject}{9.2.28}{X83607E077857CBDB}
+\makelabel{cap:TransitivelyNeededOtherPackages}{9.2.29}{X7FA62DB97B67C4AB}
+\makelabel{cap:PackageOfCAPOperation}{9.2.30}{X7E9D968D86A536EF}
+\makelabel{cap:SafePosition for IsList, IsObject}{9.2.31}{X844FE77D85C951AA}
+\makelabel{cap:SafeUniquePosition for IsList, IsObject}{9.2.32}{X85FE589D84D60BEC}
+\makelabel{cap:SafePositionProperty for IsList, IsFunction}{9.2.33}{X81DF04B87E3C9D0D}
+\makelabel{cap:SafeUniquePositionProperty for IsList, IsFunction}{9.2.34}{X810EE26082CAA38E}
+\makelabel{cap:SafeFirst for IsList, IsFunction}{9.2.35}{X860EA891868B5777}
+\makelabel{cap:SafeUniqueEntry for IsList, IsFunction}{9.2.36}{X8608EAF482DAC239}
+\makelabel{cap:NTuple}{9.2.37}{X7F2E50C87EC6E530}
+\makelabel{cap:Pair}{9.2.38}{X7A63799B824FAEBA}
+\makelabel{cap:Triple}{9.2.39}{X7C52730F8526A57E}
+\makelabel{cap:HandlePrecompiledTowers}{9.2.40}{X7B339750826300B4}
+\makelabel{cap:CAPJITINCOMPLETELOGIC}{9.2.41}{X7D06D3287E3BFCBB}
+\makelabel{cap:ListWithKeys}{9.2.42}{X7F313F4B853D176C}
+\makelabel{cap:SumWithKeys}{9.2.43}{X873A487F7DA2A359}
+\makelabel{cap:ProductWithKeys}{9.2.44}{X8321F3D8876ADA2D}
+\makelabel{cap:ForAllWithKeys}{9.2.45}{X7F0574797C13C966}
+\makelabel{cap:ForAnyWithKeys}{9.2.46}{X812F59097E8E7562}
+\makelabel{cap:NumberWithKeys}{9.2.47}{X8322F3FF84EC9AEB}
+\makelabel{cap:FilteredWithKeys}{9.2.48}{X7D0B0ECF7F70FB8E}
+\makelabel{cap:FirstWithKeys}{9.2.49}{X7914B5437CBEB3EC}
+\makelabel{cap:LastWithKeys}{9.2.50}{X849D015F79B08FCC}
 \makelabel{cap:CAPINTERNALGENERATECONVENIENCEMETHODSFORLIMITS}{10.3.1}{X878F145478720C48}
 \makelabel{cap:CAPINTERNALVALIDATELIMITSINNAMERECORD}{10.3.2}{X82234AD37EE8FC54}
 \makelabel{cap:InfoCategoryConstructor}{11.1.1}{X7C2FCE2B7EBE56D9}
 \makelabel{cap:CategoryConstructor for IsRecord}{11.2.1}{X8070F8B48111E8A7}
-\makelabel{cap:WasCreatedAsWrapperCapCategory for IsCapCategory}{12.1.1}{X805F95CC83C8A7A0}
-\makelabel{cap:IsWrapperCapCategory for WasCreatedAsWrapperCapCategory}{12.1.2}{X783D407979D5B364}
-\makelabel{cap:IsWrapperCapCategoryCell for IsCapCategoryCell}{12.1.3}{X807535A779A3C0EC}
-\makelabel{cap:IsWrapperCapCategoryObject for IsWrapperCapCategoryCell and IsCapCategoryObject}{12.1.4}{X805C554B7F8BA971}
-\makelabel{cap:IsWrapperCapCategoryMorphism for IsWrapperCapCategoryCell and IsCapCategoryMorphism}{12.1.5}{X855897CB8250D0CF}
-\makelabel{cap:ModelingCategory for WasCreatedAsWrapperCapCategory}{12.2.1}{X81E3337B879B5EAA}
-\makelabel{cap:UnderlyingCell for IsWrapperCapCategoryCell}{12.2.2}{X7A5C1B677DE11201}
+\makelabel{cap:IsWrapperCapCategory for IsCapCategory}{12.1.1}{X82BF68357D8889C4}
+\makelabel{cap:IsWrapperCapCategoryObject for IsCapCategoryObject}{12.1.2}{X7E59F7CB7F1D9569}
+\makelabel{cap:IsWrapperCapCategoryMorphism for IsCapCategoryMorphism}{12.1.3}{X7B2D95DA7D635FD7}
+\makelabel{cap:ModelingCategory for IsCapCategory}{12.2.1}{X811A167F7DABD0F9}
+\makelabel{cap:UnderlyingCell for IsWrapperCapCategoryObject}{12.2.2}{X81829E6386E43EF3}
+\makelabel{cap:UnderlyingCell for IsWrapperCapCategoryMorphism}{12.2.3}{X7AA0358D85F1CD9F}
 \makelabel{cap:AsObjectInWrapperCategory for IsWrapperCapCategory, IsCapCategoryObject}{12.3.1}{X83886A588035ED96}
 \makelabel{cap:AsMorphismInWrapperCategory for IsWrapperCapCategoryObject, IsCapCategoryMorphism, IsWrapperCapCategoryObject}{12.3.2}{X832CBD5A80B84DDF}
 \makelabel{cap:AsMorphismInWrapperCategory for IsWrapperCapCategory, IsCapCategoryMorphism}{12.3.3}{X7A95EED57AD2AF78}
 \makelabel{cap:WrapperCategory for IsCapCategory, IsRecord}{12.3.5}{X7C22BC7182777CF4}
 \makelabel{cap:WrappingFunctor for IsWrapperCapCategory}{12.3.6}{X86932DDE8378A2AF}
-\makelabel{cap:ModelingObject for WasCreatedAsWrapperCapCategory, IsCapCategoryObject}{12.3.7}{X82451D9185CD9FA4}
-\makelabel{cap:ModeledObject for WasCreatedAsWrapperCapCategory, IsCapCategoryObject}{12.3.8}{X87D3B7227886FBAA}
-\makelabel{cap:ModelingMorphism for WasCreatedAsWrapperCapCategory, IsCapCategoryMorphism}{12.3.9}{X7ED17B397C5CC798}
-\makelabel{cap:ModeledMorphism for WasCreatedAsWrapperCapCategory, IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryObject}{12.3.10}{X82277F387D146EB4}
+\makelabel{cap:ModelingObject for IsCapCategory, IsCapCategoryObject}{12.3.7}{X7D2C2C3D7A342007}
+\makelabel{cap:ModeledObject for IsCapCategory, IsCapCategoryObject}{12.3.8}{X82896F3A81CFFF57}
+\makelabel{cap:ModelingMorphism for IsCapCategory, IsCapCategoryMorphism}{12.3.9}{X7C8C515B7E679556}
+\makelabel{cap:ModeledMorphism for IsCapCategory, IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryObject}{12.3.10}{X8616A636859481E0}
 \makelabel{cap:IsDummyCategory for IsCapCategory}{13.1.1}{X872B304F85971287}
-\makelabel{cap:IsDummyCategoryCell for IsCapCategoryCell}{13.1.2}{X8113C4A37D32FF64}
-\makelabel{cap:IsDummyCategoryObject for IsDummyCategoryCell and IsCapCategoryObject}{13.1.3}{X81A613CD82E69A1F}
-\makelabel{cap:IsDummyCategoryMorphism for IsDummyCategoryCell and IsCapCategoryMorphism}{13.1.4}{X7C2C1DE6817B547E}
+\makelabel{cap:IsDummyCategoryObject for IsCapCategoryObject}{13.1.2}{X7FB7ED298101C4C5}
+\makelabel{cap:IsDummyCategoryMorphism for IsCapCategoryMorphism}{13.1.3}{X86ED2D2D84900225}
 \makelabel{cap:DummyCategory for IsRecord}{13.2.1}{X85EFD8FA7CA98ECB}
+\makelabel{cap:IsCapTerminalCategoryWithSingleObject for IsCapCategory}{15.1.1}{X8665012E7D503742}
+\makelabel{cap:IsObjectInCapTerminalCategoryWithSingleObject for IsCapCategoryObject}{15.1.2}{X7F48DB947BDA1232}
+\makelabel{cap:IsMorphismInCapTerminalCategoryWithSingleObject for IsCapCategoryMorphism}{15.1.3}{X86041A8F851354DB}
+\makelabel{cap:IsCapTerminalCategoryWithMultipleObjects for IsCapCategory}{15.1.4}{X85A149A17E45806B}
+\makelabel{cap:IsObjectInCapTerminalCategoryWithMultipleObjects for IsCapCategoryObject}{15.1.5}{X8751E72879CE707D}
+\makelabel{cap:IsMorphismInCapTerminalCategoryWithMultipleObjects for IsCapCategoryMorphism}{15.1.6}{X7BC47E5D7AD51588}
+\makelabel{cap:IsTerminalCategory for IsCapCategory}{15.1.7}{X8724DDA281946BEB}
+\makelabel{cap:TerminalCategoryWithSingleObject}{15.2.1}{X7D7044AA82764329}
+\makelabel{cap:TerminalCategoryWithMultipleObjects}{15.2.2}{X7CBD1E9B81BBFFC8}
+\makelabel{cap:CAPINTERNALCONSTRUCTORFORTERMINALCATEGORY}{15.2.3}{X81FA767C792670A2}
+\makelabel{cap:UniqueObject for IsCapTerminalCategoryWithSingleObject}{15.3.1}{X85CD99D48472E1AA}
+\makelabel{cap:UniqueMorphism for IsCapTerminalCategoryWithSingleObject}{15.3.2}{X843705A4819E81E1}
+\makelabel{cap:FunctorFromTerminalCategory for IsCapCategoryObject}{15.3.3}{X80813F9A86FCCC24}

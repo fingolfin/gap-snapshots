@@ -16,12 +16,17 @@
 #! @Section API
 InstallGlobalFunction(HashSet,
 function(arg...)
-    local hashfunc, eqfunc, capacity, res;
+    local hashfunc, eqfunc, capacity, res, values, v;
 
+    values := [];
     hashfunc := HashBasic;
     eqfunc := \=;
     capacity := 16;
 
+    if Length(arg) > 0 and IsList(arg[1]) then
+        values := Remove(arg, 1);
+        capacity := Maximum(capacity, Length(values));
+    fi;
     if Length(arg) > 0 and IsFunction(arg[1]) then
         hashfunc := Remove(arg, 1);
     fi;
@@ -36,14 +41,48 @@ function(arg...)
     fi;
 
     res := DS_Hash_Create(hashfunc, eqfunc, capacity, true);
+    for v in values do
+        AddSet(res, v);
+    od;
     return res;
 end);
 
-InstallMethod(ViewObj, "for hashsets",
+InstallMethod(PrintString, "for hashsets",
     [ IsHashSetRep ],
 function(ht)
-    Print("<hash set obj capacity=",DS_Hash_Capacity(ht),
-            " used=",DS_Hash_Used(ht),">");
+    local v, first, string;
+    string := [];
+    Add(string, "HashSet([\>\>");
+    first := true;
+    for v in ht do
+        if first then
+            first := false;
+        else
+            Add(string, ",\< \>");
+        fi;
+        Add(string, PrintString(v));
+    od;
+    Add(string, "\<\<])");
+    return Concatenation(string);
+end);
+
+InstallMethod(String, "for hashsets",
+    [ IsHashSetRep ],
+function(ht)
+    local v, first, string;
+    string := [];
+    Add(string, "HashSet([");
+    first := true;
+    for v in ht do
+        if first then
+            first := false;
+        else
+            Add(string, ", ");
+        fi;
+        Add(string, String(v));
+    od;
+    Add(string, "])");
+    return Concatenation(string);
 end);
 
 #! @Description
@@ -92,7 +131,7 @@ InstallOtherMethod( IsEmpty,
 #! Convert a hashset into a &GAP; set
 #! @Arguments hashset
 #! @Returns a set
-InstallMethod( Set,
+InstallOtherMethod( Set,
     "for a hash set",
     [ IsHashSetRep ],
     ht -> Difference(Set(ht![5]),[fail]));
@@ -101,7 +140,7 @@ InstallMethod( Set,
 #! Convert a hashset into a &GAP; set
 #! @Arguments hashset
 #! @Returns an immutable set
-InstallMethod( AsSet,
+InstallOtherMethod( AsSet,
     "for a hash set",
     [ IsHashSetRep ],
     ht -> MakeImmutable(Set(ht)));
@@ -129,7 +168,7 @@ end);
 #! the creation of an iterator are not guaranteed to be returned by that iterator.
 #! @Arguments set
 #! @Returns an iterator
-InstallMethod( Iterator,
+InstallOtherMethod( Iterator,
     "for a hash set",
     [ IsHashSetRep ],
 function(ht)

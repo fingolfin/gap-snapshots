@@ -10,35 +10,28 @@
 #
 gap> START_TEST("cap26.tst");
 
-# doc/_Chapter_Examples_and_Tests.xml:1189-1219
-gap> vecspaces := CreateCapCategory( "VectorSpaces02" );
-VectorSpaces02
-gap> ReadPackage( "CAP", "examples/VectorSpacesAddKernel02.g" );
+# doc/_Chapter_Examples_and_Tests.xml:1343-1366
+gap> vecspaces := CreateCapCategory( "VectorSpacesForIsWellDefinedTest" );
+VectorSpacesForIsWellDefinedTest 
+gap> ReadPackage( "CAP", "examples/VectorSpacesAllMethods.g" );
 true
-gap> V := QVectorSpace( 2 );
-<A rational vector space of dimension 2>
-gap> W := QVectorSpace( 3 );
-<A rational vector space of dimension 3>
-gap> alpha := VectorSpaceMorphism( V, [ [ 1, 1, 1 ], [ -1, -1, -1 ] ], W );
-A rational vector space homomorphism with matrix: 
-[ [   1,   1,   1 ],
-  [  -1,  -1,  -1 ] ]
-
-gap> k := KernelObject( alpha );
+gap> LoadPackage( "GeneralizedMorphismsForCAP", false );
+true
+gap> A := QVectorSpace( 1 );
 <A rational vector space of dimension 1>
-gap> T := QVectorSpace( 2 );
+gap> B := QVectorSpace( 2 );
 <A rational vector space of dimension 2>
-gap> tau := VectorSpaceMorphism( T, [ [ 2, 2 ], [ 2, 2 ] ], V );
+gap> alpha := VectorSpaceMorphism( A, [ [ 1, 2 ] ], B );
 A rational vector space homomorphism with matrix: 
-[ [  2,  2 ],
-  [  2,  2 ] ]
+[ [  1,  2 ] ]
 
-gap> k_lift := KernelLift( alpha, tau );
-A rational vector space homomorphism with matrix: 
-[ [  2 ],
-  [  2 ] ]
-
-gap> HasKernelEmbedding( alpha );
+gap> g := GeneralizedMorphism( alpha, alpha, alpha );
+<A morphism in Generalized morphism category of VectorSpacesForIsWellDefinedTest>
+gap> IsWellDefined( alpha );
+true
+gap> IsWellDefined( g );
+true
+gap> IsEqualForObjects( A, B );
 false
 
 #

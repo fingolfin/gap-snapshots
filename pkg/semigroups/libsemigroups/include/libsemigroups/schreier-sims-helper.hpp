@@ -111,7 +111,7 @@ namespace libsemigroups {
       // This is not currently implemented! We just use all of the points
       // in the orbits of S1. Implementing it probably requires refactoring the
       // code.
-      detail::StaticVector2<point_type, N> refined_orbit;
+      detail::StaticTriVector2<point_type, N> refined_orbit;
       for (size_t depth = 0; depth < base_size; ++depth) {
         // First point is always base point to make algorithm simpler
         LIBSEMIGROUPS_ASSERT(S1.base(depth) == S2B->base(depth));
@@ -160,7 +160,7 @@ namespace libsemigroups {
         // Find largest depth that has an unvisited node and increment its
         // index. Adjust stabilizer depth as depths are exhausted.
         for (;; --depth) {
-          LIBSEMIGROUPS_ASSERT((depth >= 0) && (depth < base_size));
+          LIBSEMIGROUPS_ASSERT(depth < base_size);
           state_index[depth]++;
           if (state_index[depth] < refined_orbit.size(depth)) {
             break;

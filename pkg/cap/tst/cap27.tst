@@ -10,10 +10,10 @@
 #
 gap> START_TEST("cap27.tst");
 
-# doc/_Chapter_Examples_and_Tests.xml:1222-1259
-gap> vecspaces := CreateCapCategory( "VectorSpaces03" );
-VectorSpaces03
-gap> ReadPackage( "CAP", "examples/VectorSpacesAddKernel03.g" );
+# doc/_Chapter_Examples_and_Tests.xml:1375-1409
+gap> vecspaces := CreateCapCategory( "VectorSpaces01" );
+VectorSpaces01
+gap> ReadPackage( "CAP", "examples/VectorSpacesAddKernel01.g" );
 true
 gap> V := QVectorSpace( 2 );
 <A rational vector space of dimension 2>
@@ -26,27 +26,24 @@ A rational vector space homomorphism with matrix:
 
 gap> k := KernelObject( alpha );
 <A rational vector space of dimension 1>
-gap> k_emb := KernelEmbedding( alpha );
-A rational vector space homomorphism with matrix: 
-[ [  1,  1 ] ]
-
-gap> IsIdenticalObj( Source( k_emb ), k );
-true
-gap> V := QVectorSpace( 2 );
+gap> T := QVectorSpace( 2 );
 <A rational vector space of dimension 2>
-gap> W := QVectorSpace( 3 );
-<A rational vector space of dimension 3>
-gap> beta := VectorSpaceMorphism( V, [ [ 1, 1, 1 ], [ -1, -1, -1 ] ], W );
+gap> tau := VectorSpaceMorphism( T, [ [ 2, 2 ], [ 2, 2 ] ], V );
 A rational vector space homomorphism with matrix: 
-[ [   1,   1,   1 ],
-  [  -1,  -1,  -1 ] ]
+[ [  2,  2 ],
+  [  2,  2 ] ]
 
-gap> k_emb := KernelEmbedding( beta );
+gap> k_lift := KernelLift( alpha, tau );
+A rational vector space homomorphism with matrix: 
+[ [  2 ],
+  [  2 ] ]
+
+gap> HasKernelEmbedding( alpha );
+false
+gap> KernelEmbedding( alpha );
 A rational vector space homomorphism with matrix: 
 [ [  1,  1 ] ]
 
-gap> IsIdenticalObj( Source( k_emb ), KernelObject( beta ) );
-true
 
 #
 gap> STOP_TEST("cap27.tst", 1);

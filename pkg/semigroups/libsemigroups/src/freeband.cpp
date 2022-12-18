@@ -234,9 +234,14 @@ namespace libsemigroups {
     }
   }  // namespace
 
-  bool freeband_equal_to(word_type&& x, word_type&& y) {
+  bool freeband_equal_to(word_type const& x, word_type const& y) {
     if (x == y) {
       return true;
+    }
+    if (x.empty() || y.empty()) {
+      // FIXME: Code segfaults without this check, its possible there is some
+      // unsafe memory access further in the code.
+      return false;
     }
     size_t N = content_size(x);
     if (N != content_size(y)) {

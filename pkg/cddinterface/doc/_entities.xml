@@ -1,0 +1,3 @@
+<!ENTITY homalg '<Package>homalg</Package>'>
+<!ENTITY GAP4 '<Package>GAP4</Package>'>
+<!ENTITY CddInterface '<Package>CddInterface</Package>'>

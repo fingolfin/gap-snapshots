@@ -9,7 +9,7 @@
     A package for semigroups and monoids
   </Subtitle>
   <Version>
-    5.0.2
+    5.2.0
   </Version>
   <Author>
     James Mitchell<Alt Only="LaTeX"><Br/></Alt>
@@ -27,6 +27,12 @@ Mathematical Institute, North Haugh, St Andrews, Fife, KY16 9SS, Scotland<Br/>
 </Address>
 <Email>mam49@st-andrews.ac.uk</Email>
 <Homepage>https://github.com/marinaanagno</Homepage>
+
+  </Author>
+  <Author>
+    Thomas Breuer<Alt Only="LaTeX"><Br/></Alt>
+<Email>sam@math.rwth-aachen.de</Email>
+<Homepage>https://www.math.rwth-aachen.de/~Thomas.Breuer/</Homepage>
 
   </Author>
   <Author>
@@ -224,7 +230,7 @@ Jack Cole Building, North Haugh, St Andrews, Fife, KY16 9SX, Scotland<Br/>
 
   </Author>
   <Date>
-    12 August 2022
+    1 December 2022
   </Date>
   <Abstract>
     

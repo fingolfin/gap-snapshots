@@ -31,9 +31,11 @@
 #include <cstdint>      // for uint64_t, int64_t
 #include <iterator>     // for forward_iterator_tag, distance
 #include <numeric>      // for accumulate
+#include <ostream>      // for operator<<
 #include <queue>        // for queue
 #include <random>       // for mt19937
 #include <stack>        // for stack
+#include <string>       // for to_string
 #include <tuple>        // for tie
 #include <type_traits>  // for is_integral, is_unsigned
 #include <utility>      // for pair
@@ -421,9 +423,22 @@ namespace libsemigroups {
     //! - 1\f$ to nodes larger than \f$n - 1\f$.
     // TODO(later) this is the nc version do a non-nc version also
     // Means restrict the number of nodes to the first 0, ... ,n - 1.
+    // TODO(v3) rename to shrink_nodes_to
     void inline restrict(size_t n) {
       _nr_nodes = n;
       _dynamic_array_2.shrink_rows_to(n);
+    }
+
+    // Only valid if no edges incident to nodes in [first, last) point outside
+    // [first, last)
+    void inline induced_subdigraph(node_type first, node_type last) {
+      _nr_nodes = last - first;
+      _dynamic_array_2.shrink_rows_to(first, last);
+      if (first != 0) {
+        std::for_each(_dynamic_array_2.begin(),
+                      _dynamic_array_2.end(),
+                      [&first](node_type& x) { x -= first; });
+      }
     }
 
     //! Adds to the out-degree.
@@ -736,6 +751,17 @@ namespace libsemigroups {
     T inline number_of_nodes() const noexcept {
       return _nr_nodes;
     }
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+    ActionDigraph& number_of_active_nodes(size_type val) {
+      _num_active_nodes = val;
+      return *this;
+    }
+
+    size_type inline number_of_active_nodes() const noexcept {
+      return _num_active_nodes;
+    }
+#endif
 
     //! Returns the number of edges.
     //!
@@ -2626,14 +2652,15 @@ namespace libsemigroups {
     //!
     //! \complexity
     //! Constant.
-    // TODO(later) this either shouldn't exist or DynamicArray2 should be
-    // public.
+    // TODO(v3) this either shouldn't exist it's used by ToddCoxeter when
+    // creating the quotient FroidurePin, but we could just use the
+    // ActionDigraph itself.
     detail::DynamicArray2<T> const& table() const noexcept {
       return _dynamic_array_2;
     }
 
    protected:
-    //! No doc
+    // TODO(v3) make this public, doc, and test it
     template <typename S>
     void apply_row_permutation(S const& p) {
       reset();
@@ -2996,6 +3023,7 @@ namespace libsemigroups {
 
     T                                _degree;
     T                                _nr_nodes;
+    T                                _num_active_nodes;
     mutable detail::DynamicArray2<T> _dynamic_array_2;
 
     struct Attr {
@@ -3031,6 +3059,7 @@ namespace libsemigroups {
   ActionDigraph<T>::ActionDigraph(T m, T n)
       : _degree(n),
         _nr_nodes(m),
+        _num_active_nodes(),
         _dynamic_array_2(_degree, _nr_nodes, UNDEFINED),
         _scc_back_forest(),
         _scc_forest(),
@@ -3159,6 +3188,8 @@ namespace libsemigroups {
       }
     }
 
+    // Why does this exist? TODO(v3) try replacing it with Eigen::MatrixPower or
+    // x.pow()
     static inline Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic>
     pow(Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic> const& x,
         size_t                                                       e) {

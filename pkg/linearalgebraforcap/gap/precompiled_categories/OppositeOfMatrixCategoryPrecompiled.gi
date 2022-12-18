@@ -19,6 +19,17 @@ end
     , 100 );
     
     ##
+    AddAdditiveGenerators( cat,
+        
+########
+function ( cat_1 )
+    return [ CreateCapCategoryObjectWithAttributes( cat_1, Opposite, CreateCapCategoryObjectWithAttributes( OppositeCategory( cat_1 ), Dimension, 1 ) ) ];
+end
+########
+        
+    , 100 );
+    
+    ##
     AddAdditiveInverseForMorphisms( cat,
         
 ########
@@ -127,10 +138,10 @@ end
     , 100 );
     
     ##
-    AddCoefficientsOfMorphismWithGivenBasisOfExternalHom( cat,
+    AddCoefficientsOfMorphism( cat,
         
 ########
-function ( cat_1, arg2_1, arg3_1 )
+function ( cat_1, arg2_1 )
     return EntriesOfHomalgMatrix( UnderlyingMatrix( Opposite( arg2_1 ) ) );
 end
 ########
@@ -145,6 +156,30 @@ function ( cat_1, s_1, a_1, r_1 )
     local deduped_1_1;
     deduped_1_1 := OppositeCategory( cat_1 );
     return CreateCapCategoryMorphismWithAttributes( cat_1, s_1, r_1, Opposite, CreateCapCategoryMorphismWithAttributes( deduped_1_1, Opposite( r_1 ), Opposite( s_1 ), UnderlyingMatrix, ConvertMatrixToColumn( HomalgIdentityMatrix( Dimension( Opposite( a_1 ) ), UnderlyingRing( deduped_1_1 ) ) ) ) );
+end
+########
+        
+    , 100 );
+    
+    ##
+    AddCoimageObject( cat,
+        
+########
+function ( cat_1, arg2_1 )
+    return CreateCapCategoryObjectWithAttributes( cat_1, Opposite, CreateCapCategoryObjectWithAttributes( OppositeCategory( cat_1 ), Dimension, RowRankOfMatrix( UnderlyingMatrix( Opposite( arg2_1 ) ) ) ) );
+end
+########
+        
+    , 100 );
+    
+    ##
+    AddCoimageProjectionWithGivenCoimageObject( cat,
+        
+########
+function ( cat_1, alpha_1, C_1 )
+    local deduped_1_1;
+    deduped_1_1 := Opposite( alpha_1 );
+    return CreateCapCategoryMorphismWithAttributes( cat_1, Source( alpha_1 ), C_1, Opposite, CreateCapCategoryMorphismWithAttributes( OppositeCategory( cat_1 ), Opposite( C_1 ), Range( deduped_1_1 ), UnderlyingMatrix, BasisOfRows( UnderlyingMatrix( deduped_1_1 ) ) ) );
 end
 ########
         
@@ -354,6 +389,30 @@ end
     , 100 );
     
     ##
+    AddImageEmbeddingWithGivenImageObject( cat,
+        
+########
+function ( cat_1, alpha_1, I_1 )
+    local deduped_1_1;
+    deduped_1_1 := Opposite( alpha_1 );
+    return CreateCapCategoryMorphismWithAttributes( cat_1, I_1, Range( alpha_1 ), Opposite, CreateCapCategoryMorphismWithAttributes( OppositeCategory( cat_1 ), Source( deduped_1_1 ), Opposite( I_1 ), UnderlyingMatrix, BasisOfColumns( UnderlyingMatrix( deduped_1_1 ) ) ) );
+end
+########
+        
+    , 100 );
+    
+    ##
+    AddImageObject( cat,
+        
+########
+function ( cat_1, arg2_1 )
+    return CreateCapCategoryObjectWithAttributes( cat_1, Opposite, CreateCapCategoryObjectWithAttributes( OppositeCategory( cat_1 ), Dimension, ColumnRankOfMatrix( UnderlyingMatrix( Opposite( arg2_1 ) ) ) ) );
+end
+########
+        
+    , 100 );
+    
+    ##
     AddInjectionOfCofactorOfDirectSumWithGivenDirectSum( cat,
         
 ########
@@ -387,11 +446,11 @@ end
     AddInterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( cat,
         
 ########
-function ( cat_1, arg2_1, arg3_1, arg4_1 )
+function ( cat_1, source_1, range_1, alpha_1 )
     local deduped_1_1, deduped_2_1;
-    deduped_2_1 := Opposite( arg2_1 );
-    deduped_1_1 := Opposite( arg3_1 );
-    return CreateCapCategoryMorphismWithAttributes( cat_1, arg2_1, arg3_1, Opposite, CreateCapCategoryMorphismWithAttributes( OppositeCategory( cat_1 ), deduped_1_1, deduped_2_1, UnderlyingMatrix, ConvertRowToMatrix( UnderlyingMatrix( arg4_1 ), Dimension( deduped_1_1 ), Dimension( deduped_2_1 ) ) ) );
+    deduped_2_1 := Opposite( source_1 );
+    deduped_1_1 := Opposite( range_1 );
+    return CreateCapCategoryMorphismWithAttributes( cat_1, source_1, range_1, Opposite, CreateCapCategoryMorphismWithAttributes( OppositeCategory( cat_1 ), deduped_1_1, deduped_2_1, UnderlyingMatrix, ConvertRowToMatrix( UnderlyingMatrix( alpha_1 ), Dimension( deduped_1_1 ), Dimension( deduped_2_1 ) ) ) );
 end
 ########
         
@@ -703,35 +762,6 @@ function ( cat_1, objects_1, k_1, P_1 )
         end );
     deduped_1_1 := deduped_2_1[k_1];
     return CreateCapCategoryMorphismWithAttributes( cat_1, P_1, deduped_4_1, Opposite, CreateCapCategoryMorphismWithAttributes( deduped_5_1, Opposite( CAP_JIT_INCOMPLETE_LOGIC( deduped_4_1 ) ), Opposite( P_1 ), UnderlyingMatrix, UnionOfColumns( HomalgZeroMatrix( deduped_1_1, Sum( deduped_2_1{[ 1 .. k_1 - 1 ]} ), deduped_3_1 ), HomalgIdentityMatrix( deduped_1_1, deduped_3_1 ), HomalgZeroMatrix( deduped_1_1, Sum( deduped_2_1{[ k_1 + 1 .. Length( objects_1 ) ]} ), deduped_3_1 ) ) ) );
-end
-########
-        
-    , 100 );
-    
-    ##
-    AddRandomMorphismWithFixedSourceAndRangeByInteger( cat,
-        
-########
-function ( cat_1, A_1, B_1, n_1 )
-    local hoisted_1_1, deduped_2_1, deduped_3_1, deduped_4_1;
-    deduped_4_1 := Opposite( A_1 );
-    deduped_3_1 := Opposite( B_1 );
-    deduped_2_1 := OppositeCategory( cat_1 );
-    hoisted_1_1 := RandomMatrix( Dimension( deduped_3_1 ), Dimension( deduped_4_1 ), UnderlyingRing( deduped_2_1 ) );
-    return CreateCapCategoryMorphismWithAttributes( cat_1, A_1, B_1, Opposite, CreateCapCategoryMorphismWithAttributes( deduped_2_1, deduped_3_1, deduped_4_1, UnderlyingMatrix, Sum( [ 1 ], function ( c_2 )
-                return c_2 * hoisted_1_1;
-            end ) ) );
-end
-########
-        
-    , 100 );
-    
-    ##
-    AddRandomObjectByInteger( cat,
-        
-########
-function ( cat_1, n_1 )
-    return CreateCapCategoryObjectWithAttributes( cat_1, Opposite, CreateCapCategoryObjectWithAttributes( OppositeCategory( cat_1 ), Dimension, Random( [ 0 .. n_1 ] ) ) );
 end
 ########
         
@@ -1052,6 +1082,15 @@ end
 ########
         
     , 100 );
+    
+    if IsBound( cat!.precompiled_functions_added ) then
+        
+        # COVERAGE_IGNORE_NEXT_LINE
+        Error( "precompiled functions have already been added before" );
+        
+    fi;
+    
+    cat!.precompiled_functions_added := true;
     
 end );
 

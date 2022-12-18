@@ -294,7 +294,7 @@ function( n, pos_n, m )
 
     # no parent; 
     if d[ 2 ]="G" then # loop of type MG2
-        G := AllGroups( d[ 3 ], IsCommutative, false)[ d[ 4 ] ];  #relies on GAP group libraries !!
+        G := AllSmallGroups( d[ 3 ], IsCommutative, false)[ d[ 4 ] ];  #relies on GAP group libraries !!
         return LoopMG2( G );
     fi;
     if d[ 2 ]="T" then # special loop (direct product of an old loop and a cyclic group)
@@ -311,7 +311,7 @@ end);
 ##  Auxiliary function activating Steiner loops from the database.
 ##
 ##  The database LOOPS_steiner_data contains blocks of steiner triple systems.
-##  If the system is on k points, the poitns are labelled 0,...,k-1.
+##  If the system is on k points, the points are labelled 0,...,k-1.
 ##  The constructed Steiner loop has elements labelled 1,...,k+1=n
 
 InstallGlobalFunction( LOOPS_ActivateSteinerLoop,

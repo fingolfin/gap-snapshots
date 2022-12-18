@@ -2370,7 +2370,7 @@
   [33X[1;0Y[29X[2XStructuralSeriesOfGroup[102X( [3XG[103X ) [32X attribute[133X
   
   [33X[0;0YThe  structural  series  of  a  finite  group  [3XG[103X  is  a descending series of
-  characteristic  subgroups  which  goes  throught  the  derived series of the
+  characteristic  subgroups  which  goes  through  the  derived  series of the
   solvable radical of $G$, refined into elementary abelian factors, as well as
   the  socle  and  the  [3XPker[103X (kernel of the action on socle components) of the
   radical factor[133X
@@ -2815,7 +2815,7 @@
   attempted  if  this function returns true (this is separated for performance
   reasons).  In  the  example below, the result would be the same with leaving
   out  the fourth function, but calculation this way is slightly faster. If an
-  inital  argument [3Xact[103X is given, it must be a group containing and normalizing
+  initial argument [3Xact[103X is given, it must be a group containing and normalizing
   [3XG[103X,  and  representatives  for  classes  under  the  action of this group are
   chosen.[133X
   

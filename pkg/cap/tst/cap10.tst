@@ -10,7 +10,7 @@
 #
 gap> START_TEST("cap10.tst");
 
-# doc/_Chapter_Examples_and_Tests.xml:147-207
+# doc/_Chapter_Examples_and_Tests.xml:156-216
 gap> ReadPackage( "CAP", "examples/FieldAsCategory.g" );;
 gap> Q := HomalgFieldOfRationals();;
 gap> Qoid := FieldAsCategory( Q );;

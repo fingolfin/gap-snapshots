@@ -23,7 +23,11 @@ InstallGlobalFunction( MATRIX_CATEGORY,
   function( homalg_field )
     local category;
     
-    category := CreateCapCategory( Concatenation( "Category of matrices over ", RingName( homalg_field ) ) );
+    category := CreateCapCategoryWithDataTypes(
+        Concatenation( "Category of matrices over ", RingName( homalg_field ) ), IsMatrixCategory,
+        IsVectorSpaceObject and HasDimension and HasIsProjective and IsProjective, IsVectorSpaceMorphism and HasUnderlyingMatrix, IsCapCategoryTwoCell,
+        IsInt, IsHomalgMatrix, fail
+    );
     
     category!.category_as_first_argument := true;
     
@@ -46,12 +50,6 @@ InstallGlobalFunction( MATRIX_CATEGORY,
     
     # this cache replaces the KeyDependentOperation caching when using ObjectConstructor directly instead of MatrixCategoryObject
     SetCachingToWeak( category, "ObjectConstructor" );
-    
-    SetFilterObj( category, IsMatrixCategory );
-    
-    AddObjectRepresentation( category, IsVectorSpaceObject and HasDimension and HasIsProjective and IsProjective );
-    
-    AddMorphismRepresentation( category, IsVectorSpaceMorphism and HasUnderlyingMatrix );
     
     category!.field_for_matrix_category := homalg_field;
     
@@ -88,31 +86,26 @@ InstallGlobalFunction( MATRIX_CATEGORY,
         
     fi;
     
-    if ValueOption( "no_precompiled_code" ) <> true then
+    if ValueOption( "no_precompiled_code" ) = true then
         
-        ADD_FUNCTIONS_FOR_MatrixCategoryPrecompiled( category );
+        if IsPackageMarkedForLoading( "FreydCategoriesForCAP", ">= 2022.10-14" ) then
+            
+            return MatrixCategoryAsCategoryOfRows( homalg_field );
+            
+        else
+            
+            Error( "To get a version of `MatrixCategory` without precompiled code, the package `FreydCategoriesForCAP` is required." );
+            
+        fi;
         
     else
         
-        Print(
-            "WARNING: MatixCategory has no primitive installation but is generated from CategoryOfRows by compilation. ",
-            "Creating it without precompiled code will return a category without installed operations.\n"
-        );
+        ADD_FUNCTIONS_FOR_MatrixCategoryPrecompiled( category );
         
     fi;
     
     Finalize( category );
     
     return category;
-    
-end );
-
-##
-InstallMethod( MatrixCategoryAsCategoryOfRows,
-               [ IsFieldForHomalg ],
-               
-  function( homalg_ring )
-    
-    Error( "FreydCategoriesForCAP has to be loaded for using MatrixCategoryAsCategoryOfRows" );
     
 end );

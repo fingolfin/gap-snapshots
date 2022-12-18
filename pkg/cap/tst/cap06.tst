@@ -10,9 +10,9 @@
 #
 gap> START_TEST("cap06.tst");
 
-# doc/_Chapter_Examples_and_Tests.xml:78-81
+# doc/_Chapter_Examples_and_Tests.xml:87-90
 gap> InputSignature( F2 );
-[ [ Product of: Category of left presentations of Q, Opposite of Category of left presentations of Q, false ] ]
+[ [ Product of: Category of left presentations of Q, Opposite( Category of left presentations of Q ), false ] ]
 
 #
 gap> STOP_TEST("cap06.tst", 1);

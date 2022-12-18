@@ -60,18 +60,7 @@ MorphismDatum
 <Heading>GAP categories</Heading>
 
 <ManSection>
-  <Filt Arg="arg" Name="WasCreatedAsWrapperCapCategory" Label="for IsCapCategory"/>
- <Returns><K>true</K> or <K>false</K>
-</Returns>
- <Description>
-  The &GAP; category of CAP categories that have been created using <Ref Oper="WrapperCategory" Label="for IsCapCategory, IsRecord" />
-  but not necessarily use the default data structure.
- </Description>
-</ManSection>
-
-
-<ManSection>
-  <Filt Arg="arg" Name="IsWrapperCapCategory" Label="for WasCreatedAsWrapperCapCategory"/>
+  <Filt Arg="arg" Name="IsWrapperCapCategory" Label="for IsCapCategory"/>
  <Returns><K>true</K> or <K>false</K>
 </Returns>
  <Description>
@@ -81,17 +70,7 @@ MorphismDatum
 
 
 <ManSection>
-  <Filt Arg="arg" Name="IsWrapperCapCategoryCell" Label="for IsCapCategoryCell"/>
- <Returns><K>true</K> or <K>false</K>
-</Returns>
- <Description>
-  The &GAP; category of cells in a wrapper CAP category.
- </Description>
-</ManSection>
-
-
-<ManSection>
-  <Filt Arg="arg" Name="IsWrapperCapCategoryObject" Label="for IsWrapperCapCategoryCell and IsCapCategoryObject"/>
+  <Filt Arg="arg" Name="IsWrapperCapCategoryObject" Label="for IsCapCategoryObject"/>
  <Returns><K>true</K> or <K>false</K>
 </Returns>
  <Description>
@@ -101,7 +80,7 @@ MorphismDatum
 
 
 <ManSection>
-  <Filt Arg="arg" Name="IsWrapperCapCategoryMorphism" Label="for IsWrapperCapCategoryCell and IsCapCategoryMorphism"/>
+  <Filt Arg="arg" Name="IsWrapperCapCategoryMorphism" Label="for IsCapCategoryMorphism"/>
  <Returns><K>true</K> or <K>false</K>
 </Returns>
  <Description>
@@ -117,7 +96,7 @@ MorphismDatum
 <Heading>Attributes</Heading>
 
 <ManSection>
-  <Attr Arg="category" Name="ModelingCategory" Label="for WasCreatedAsWrapperCapCategory"/>
+  <Attr Arg="category" Name="ModelingCategory" Label="for IsCapCategory"/>
  <Returns>a category
 </Returns>
  <Description>
@@ -127,11 +106,21 @@ MorphismDatum
 
 
 <ManSection>
-  <Attr Arg="cell" Name="UnderlyingCell" Label="for IsWrapperCapCategoryCell"/>
- <Returns>a category cell
+  <Attr Arg="object" Name="UnderlyingCell" Label="for IsWrapperCapCategoryObject"/>
+ <Returns>a category object
 </Returns>
  <Description>
-  The cell underlying the wrapper category cell <A>cell</A>.
+  The cell underlying the wrapper category object <A>object</A>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="morphism" Name="UnderlyingCell" Label="for IsWrapperCapCategoryMorphism"/>
+ <Returns>a category morphism
+</Returns>
+ <Description>
+  The cell underlying the wrapper category morphism <A>morphism</A>.
  </Description>
 </ManSection>
 
@@ -174,7 +163,7 @@ MorphismDatum
 
 
 <ManSection>
-  <Oper Arg="cell, category" Name="\/" Label="for IsCapCategoryCell, IsWrapperCapCategory"/>
+  <Oper Arg="cell, category" Name="/" Label="for IsCapCategoryCell, IsWrapperCapCategory"/>
  <Description>
   Convenience method for <Ref Oper="AsObjectInWrapperCategory" Label="for IsWrapperCapCategory, IsCapCategoryObject" />
   and <Ref Oper="AsMorphismInWrapperCategory" Label="for IsWrapperCapCategory, IsCapCategoryMorphism" />.
@@ -234,7 +223,7 @@ MorphismDatum
 
 
 <ManSection>
-  <Oper Arg="cat, obj" Name="ModelingObject" Label="for WasCreatedAsWrapperCapCategory, IsCapCategoryObject"/>
+  <Oper Arg="cat, obj" Name="ModelingObject" Label="for IsCapCategory, IsCapCategoryObject"/>
  <Returns>a CAP category object
 </Returns>
  <Description>
@@ -245,7 +234,7 @@ MorphismDatum
 
 
 <ManSection>
-  <Oper Arg="cat, obj" Name="ModeledObject" Label="for WasCreatedAsWrapperCapCategory, IsCapCategoryObject"/>
+  <Oper Arg="cat, obj" Name="ModeledObject" Label="for IsCapCategory, IsCapCategoryObject"/>
  <Returns>a CAP category object
 </Returns>
  <Description>
@@ -256,7 +245,7 @@ MorphismDatum
 
 
 <ManSection>
-  <Oper Arg="cat, mor" Name="ModelingMorphism" Label="for WasCreatedAsWrapperCapCategory, IsCapCategoryMorphism"/>
+  <Oper Arg="cat, mor" Name="ModelingMorphism" Label="for IsCapCategory, IsCapCategoryMorphism"/>
  <Returns>a CAP category morphism
 </Returns>
  <Description>
@@ -267,7 +256,7 @@ MorphismDatum
 
 
 <ManSection>
-  <Oper Arg="cat, source, obj, range" Name="ModeledMorphism" Label="for WasCreatedAsWrapperCapCategory, IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryObject"/>
+  <Oper Arg="cat, source, obj, range" Name="ModeledMorphism" Label="for IsCapCategory, IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryObject"/>
  <Returns>a CAP category morphism
 </Returns>
  <Description>

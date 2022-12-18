@@ -5,40 +5,7 @@
 #
 #! @Chapter Technical Details
 
-#! @Section Install Functions for IsWellDefined
-
-#! @Description
-#!  The IsWellDefined filter is a basic function of CAP.
-#!  For every categorial construction the outcome is well defined if
-#!  and only if every input object or morphism of the construction is well defined.
-#!  So for every implementation of a categorial construction a ToDoListEntry needs
-#!  to be defined which propagates well definedness from the input cells to the output.
-#!  For not writing this construction in every method, this function can be used to install
-#!  a method which then installs the correct ToDoListEntries for the output.
-#!  The input syntax works exactly like InstallMethod, with one extension:
-#!  The method creates an auxilliary function which computes the output from the function given to
-#!  InstallMethodWithToDoForIsWellDefined, then installs the ToDoListEntries, and then installs the
-#!  auxilliary function instead of the original one. This is normally done with InstallMethod.
-#!  However, one can change this via the option InstallMethod, which can be set to any other function
-#!  which is then used instead of InstallMethod. This is used for the caching functions.
-DeclareGlobalFunction( "InstallMethodWithToDoForIsWellDefined" );
-
-DeclareGlobalFunction( "ToDoForIsWellDefinedWrapper" );
-
-
-#! @Description
-#!  For the caching one needs the possibility to install setters for functions with multiple arguments.
-#!  This is a setter function which automatically adds ToDoListEntries for IsWellDefined like described above
-#!  for the manually setted result of a method.
-DeclareOperation( "InstallSetWithToDoForIsWellDefined",
-                  [ IsObject, IsString, IsList ] );
-
-#! @Description
-#!  Since attributes install their setters themselfes, one needs to declare attributes
-#!  in another way to ensure ToDoListEntries for IsWellDefined in the setter of an attribute.
-#!  This function works like DeclareAttribute, but installs ToDoListEntries for the setter of
-#!  the attribute. Please note that implementations still need to be done with InstallMethodWithToDoForIsWellDefined.
-DeclareGlobalFunction( "DeclareAttributeWithToDoForIsWellDefined" );
+#! @Section Tools
 
 #!
 DeclareGlobalFunction( "DeclareFamilyProperty" );
@@ -56,6 +23,8 @@ DeclareGlobalFunction( "CAP_INTERNAL_REPLACE_STRING_WITH_FILTER" );
 #! @Description
 #!  Applies <Ref Func="CAP_INTERNAL_REPLACE_STRING_WITH_FILTER" /> to all elements of <A>list</A> and returns the result.
 DeclareGlobalFunction( "CAP_INTERNAL_REPLACE_STRINGS_WITH_FILTERS" );
+
+DeclareGlobalFunction( "CAP_INTERNAL_REPLACE_STRINGS_WITH_FILTERS_FOR_JULIA" );
 
 #! @Arguments list, additional list
 #! @Returns merged lists
@@ -268,10 +237,34 @@ DeclareGlobalFunction( "PackageOfCAPOperation" );
 DeclareOperation( "SafePosition", [ IsList, IsObject ] );
 
 #! @Description
+#!   Returns `Position( <A>list</A>, <A>obj</A> )` while asserting that this value is not `fail` and the position is unique.
+#! @Arguments list, obj
+#! @Returns an integer
+DeclareOperation( "SafeUniquePosition", [ IsList, IsObject ] );
+
+#! @Description
 #!   Returns `PositionProperty( <A>list</A>, <A>func</A> )` while asserting that this value is not `fail`.
 #! @Arguments list, func
 #! @Returns an integer
 DeclareOperation( "SafePositionProperty", [ IsList, IsFunction ] );
+
+#! @Description
+#!   Returns a position in <A>list</A> for which <A>func</A> returns `true` when applied to the corresponding entry while asserting that there exists exactly one such position.
+#! @Arguments list, func
+#! @Returns an integer
+DeclareOperation( "SafeUniquePositionProperty", [ IsList, IsFunction ] );
+
+#! @Description
+#!   Returns `First( <A>list</A>, <A>func</A> )` while asserting that this value is not `fail`.
+#! @Arguments list, func
+#! @Returns an element of the list
+DeclareOperation( "SafeFirst", [ IsList, IsFunction ] );
+
+#! @Description
+#!   Returns a value in <A>list</A> for which <A>func</A> returns `true` while asserting that there exists exactly one such entry.
+#! @Arguments list, func
+#! @Returns an element of the list
+DeclareOperation( "SafeUniqueEntry", [ IsList, IsFunction ] );
 
 #! @Description
 #!   Returns <A>args</A> while asserting that its length is <A>n</A>.

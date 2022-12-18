@@ -10,7 +10,7 @@
 #
 gap> START_TEST("cap23.tst");
 
-# doc/_Chapter_Examples_and_Tests.xml:1079-1111
+# doc/_Chapter_Examples_and_Tests.xml:1100-1150
 gap> vecspaces := CreateCapCategory( "VectorSpacesForGeneralizedMorphismsTest" );
 VectorSpacesForGeneralizedMorphismsTest
 gap> ReadPackage( "CAP", "examples/VectorSpacesAllMethods.g" );
@@ -19,29 +19,47 @@ gap> A := QVectorSpace( 1 );
 <A rational vector space of dimension 1>
 gap> B := QVectorSpace( 2 );
 <A rational vector space of dimension 2>
-gap> phi_tilde_source_aid := VectorSpaceMorphism( A, [ [ 2 ] ], A );
+gap> C := QVectorSpace( 3 );
+<A rational vector space of dimension 3>
+gap> phi2_tilde_associated := VectorSpaceMorphism( A, [ [ 1, 5 ] ], B );
 A rational vector space homomorphism with matrix: 
-[ [  2 ] ]
+[ [  1,  5 ] ]
 
-gap> phi_tilde_associated := VectorSpaceMorphism( A, [ [ 1, 1 ] ], B );
+gap> phi2_tilde_range_aid := VectorSpaceMorphism( C, [ [ 1, 0 ], [ 0, 1 ], [ 1, 1 ] ], B );
 A rational vector space homomorphism with matrix: 
-[ [  1,  1 ] ]
+[ [  1,  0 ],
+  [  0,  1 ],
+  [  1,  1 ] ]
 
-gap> phi_tilde_range_aid := VectorSpaceMorphism( B, [ [ 1, 2 ], [ 3, 4 ] ], B );
-A rational vector space homomorphism with matrix: 
-[ [  1,  2 ],
-  [  3,  4 ] ]
-
-gap> phi_tilde := GeneralizedMorphism( phi_tilde_source_aid, phi_tilde_associated, phi_tilde_range_aid );
+gap> phi2_tilde := GeneralizedMorphismWithRangeAid( phi2_tilde_associated, phi2_tilde_range_aid );
 <A morphism in Generalized morphism category of VectorSpacesForGeneralizedMorphismsTest>
-gap> HonestRepresentative( phi_tilde );
+gap> psi2_tilde_associated := VectorSpaceMorphism( C, [ [ 1 ], [ 3 ], [ 4 ] ], A );
 A rational vector space homomorphism with matrix: 
-[ [  -1/4,   1/4 ] ]
+[ [  1 ],
+  [  3 ],
+  [  4 ] ]
 
-gap> IsWellDefined( phi_tilde );
-true
-gap> IsWellDefined( psi_tilde );
-true
+gap> psi2_tilde_range_aid := VectorSpaceMorphism( B, [ [ 1 ], [ 1 ] ], A );
+A rational vector space homomorphism with matrix: 
+[ [  1 ],
+  [  1 ] ]
+
+gap> psi2_tilde := GeneralizedMorphismWithRangeAid( psi2_tilde_associated, psi2_tilde_range_aid );
+<A morphism in Generalized morphism category of VectorSpacesForGeneralizedMorphismsTest>
+gap> composition2 := PreCompose( phi2_tilde, psi2_tilde );
+<A morphism in Generalized morphism category of VectorSpacesForGeneralizedMorphismsTest>
+gap> Arrow( composition2 );
+A rational vector space homomorphism with matrix: 
+[ [  16 ] ]
+
+gap> RangeAid( composition2 );
+A rational vector space homomorphism with matrix: 
+[ [  1 ],
+  [  1 ] ]
+
+gap> SourceAid( composition2 );
+A rational vector space homomorphism with matrix: 
+[ [  1 ] ]
 
 #
 gap> STOP_TEST("cap23.tst", 1);

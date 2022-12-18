@@ -76,7 +76,7 @@ end;
 #F  BrowseData.FormattedUserPreferenceDescription( <data>, <values>, <width> )
 ##
 BrowseData.FormattedUserPreferenceDescription:= function( data, values, width )
-    local string, suff, paragraph, values_eval, default, len, i, line;
+    local string, list, suff, paragraph, values_eval, default, len, i, line;
 
     string:= "";
 
@@ -86,7 +86,13 @@ BrowseData.FormattedUserPreferenceDescription:= function( data, values, width )
       Append( string, "(undeclared preference)\n" );
     else
       # Show the description text.
-      for paragraph in data.description do
+      list:= data.description;
+      if IsBoundGlobal( "StripMarkupFromUserPreferenceDescription" ) then
+        # The strings may contain GAPDoc markup; remove this markup.
+        list:= List( data.description,
+                 ValueGlobal( "StripMarkupFromUserPreferenceDescription" ) );
+      fi;
+      for paragraph in list do
         Append( string, FormatParagraph( paragraph, width, "left" ) );
       od;
 

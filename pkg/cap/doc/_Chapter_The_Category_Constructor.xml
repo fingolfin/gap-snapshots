@@ -102,6 +102,9 @@
 <Item>
 <Code>create_func_morphism_or_fail</Code>: see below
 </Item>
+<Item>
+<Code>create_func_list_of_objects</Code>: see below
+</Item>
 </List>
 <P/>
   The values of the keys <Code>create_func_*</Code> should be either the string <Code>"default</Code>" or functions which accept the category and the name of a &CAP; operation

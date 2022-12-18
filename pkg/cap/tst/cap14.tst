@@ -10,7 +10,7 @@
 #
 gap> START_TEST("cap14.tst");
 
-# doc/_Chapter_Examples_and_Tests.xml:424-460
+# doc/_Chapter_Examples_and_Tests.xml:437-473
 gap> LoadPackage( "LinearAlgebraForCAP", false );
 true
 gap> Q := HomalgFieldOfRationals( );

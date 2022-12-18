@@ -9,7 +9,7 @@
     Utility functions in &GAP;
   </Subtitle>
   <Version>
-    0.77
+    0.81
   </Version>
   <Author>
     Thomas Breuer<Alt Only="LaTeX"><Br/></Alt>
@@ -36,6 +36,12 @@
 
   </Author>
   <Author>
+    Christopher Jefferson<Alt Only="LaTeX"><Br/></Alt>
+<Email>caj21@st-andrews.ac.uk</Email>
+<Homepage>https://caj.host.cs.st-andrews.ac.uk/</Homepage>
+
+  </Author>
+  <Author>
     Stefan Kohl<Alt Only="LaTeX"><Br/></Alt>
 <Email>stefan@mcs.st-and.ac.uk</Email>
 <Homepage>https://www.gap-system.org/DevelopersPages/StefanKohl/</Homepage>
@@ -54,7 +60,7 @@
 
   </Author>
   <Date>
-    25 September 2022
+    4 December 2022
   </Date>
   <Abstract>
     The &Utils; package provides a space for utility functions in a variety of &GAP; packages to be collected together into a single package.  In this way it is hoped that they will become more visible to package authors.

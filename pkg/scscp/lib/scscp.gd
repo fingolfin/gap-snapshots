@@ -1,6 +1,6 @@
 ###########################################################################
 ##
-#W scscp.gd                 The SCSCP package           Alexander Konovalov
+#W scscp.gd                 The SCSCP package            Olexandr Konovalov
 #W                                                             Steve Linton
 ##
 ###########################################################################
@@ -541,13 +541,6 @@ DeclareGlobalFunction( "StartSCSCPsession" );
 ##  <Example>
 ##  <![CDATA[
 ##  gap> EvaluateBySCSCP( "WS_Factorial",[10],"localhost",26133);
-##  #I  Creating a socket ...
-##  #I  Connecting to a remote socket via TCP/IP ...
-##  #I  Got connection initiation message
-##  #I  Requesting version 1.3 from the server ...
-##  #I  Server confirmed version 1.3 to the client ...
-##  #I  Request sent ...
-##  #I  Waiting for reply ...
 ##  rec( attributes := [ [ "call_id", "localhost:26133:2442:6hMEN40d" ] ], 
 ##    object := 3628800 )
 ##  gap> SetInfoLevel(InfoSCSCP,0);
@@ -579,7 +572,7 @@ DeclareGlobalFunction( "EvaluateBySCSCP" );
 ##  </Returns>	 
 ##  <Description>
 ##  This function is constructed using the <Ref Func="FirstProcess"/>.
-##  It is useful when it is not known which partcular method is
+##  It is useful when it is not known which particular method is
 ##  more efficient, because it allows to call in parallel several procedures
 ##  (given by the list of their names <A>commands</A>) 
 ##  with the same list of arguments <A>listargs</A> (having

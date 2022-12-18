@@ -9,7 +9,7 @@
     Computing with quasigroups and loops in &GAP;
   </Subtitle>
   <Version>
-    3.4.2
+    3.4.3
   </Version>
   <Author>
     Gábor Péter Nagy<Alt Only="LaTeX"><Br/></Alt>
@@ -35,25 +35,22 @@ USA<Br/>
 
   </Author>
   <Date>
-    31 July 2022
+    14 November 2022
   </Date>
   <Abstract>
     The LOOPS package provides researchers in nonassociative algebra with a computational tool that integrates standard notions of loop theory with libraries of loops and group-theoretical algorithms of GAP. The package also expands GAP toward nonassociative structures.
   </Abstract>
   <Copyright>
-    
-<Index>License</Index>
+    <Index>License</Index>
 &copyright; 2005-2017 Gábor P. Nagy and Petr Vojtěchovský.<P/>
 The &LOOPS; package is free software;
 you can redistribute it and/or modify it under the terms of the
 <URL Text="GNU General Public License">https://www.fsf.org/licenses/gpl.html</URL>
 as published by the Free Software Foundation; either version 2 of the License,
 or (at your option) any later version.
-
   </Copyright>
   <Acknowledgements>
-    
-We thank the following people for sending us remarks and comments, and
+    We thank the following people for sending us remarks and comments, and
 for suggesting new functionality of the package: Muniru Asiru, Bjoern
 Assmann, Andreas Distler, Ale&#353; Dr&#225;pal, Graham Ellis, Steve
 Flammia, Kenneth W. Johnson, Michael K. Kinyon, Olexandr Konovalov,
@@ -69,6 +66,5 @@ order 27, 81 was obtained jointly with Izabella Stuhl.
 <P/>Gábor P. Nagy was supported by OTKA grants F042959 and T043758, and
 Petr Vojtěchovský was supported by the 2006 and 2016 University of
 Denver PROF grants and the Simons Foundation Collaboration Grant 210176.
-
   </Acknowledgements>
   </TitlePage>

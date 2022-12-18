@@ -1,5 +1,14 @@
 # CHANGES log for the 'Utils' package
 
+## Version 0.81 for GAP 4.12.1 (04/12/22) 
+ * (17/11/22) removed (the dead) pcp option from PcGroupToMagmaFormat 
+              so that the dependency on Polycyclic could be removed 
+ * (21/10/22) added OptionRecordWithDefaults in 7.2 from Christopher Jefferson 
+ * (04/10/22) declared PreImagesRepresentativeNC in init.g 
+
+## Version 0.77 for GAP 4.12.0 (25/09/22) 
+ * (25/09/22) added Download operation by Thomas Breuer - new Chapter 8 
+
 ## Version 0.76 for GAP 4.12.0 (06/08/22) 
  * (06/08/22) added LeftCoset operations 
 

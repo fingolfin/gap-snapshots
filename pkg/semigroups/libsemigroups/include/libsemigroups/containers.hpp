@@ -19,20 +19,105 @@
 #ifndef LIBSEMIGROUPS_CONTAINERS_HPP_
 #define LIBSEMIGROUPS_CONTAINERS_HPP_
 
-#include <array>        // for array
-#include <cstddef>      // for size_t
-#include <iterator>     // for reverse_iterator
-#include <sstream>      // for ostream, ostr...
-#include <type_traits>  // for is_default_constructible
-#include <vector>       // for vector, allocator
+#include <algorithm>         // for max
+#include <array>             // for array
+#include <cstddef>           // for size_t
+#include <functional>        // for hash
+#include <initializer_list>  // for initializer_list
+#include <iterator>          // for reverse_iterator, distance
+#include <sstream>           // for operator<<, ostream
+#include <string>            // for to_string
+#include <type_traits>       // for decay_t, false_type, is_def...
+#include <utility>           // for forward
+#include <vector>            // for vector, allocator
 
 #include "debug.hpp"     // for LIBSEMIGROUPS_ASSERT
 #include "iterator.hpp"  // for ConstIteratorStateful, ConstItera...
 
 namespace libsemigroups {
   namespace detail {
+    template <typename T, size_t N>
+    class StaticTriVector2 {
+      // So that StaticTriVector2<T, N> can access private data members
+      // of StaticTriVector2<S, M> and vice versa.
+      template <typename S, size_t M>
+      friend class StaticTriVector2;
 
-    // Template class for 2-dimnensional dynamic arrays.
+     public:
+      // Aliases for iterators
+      using const_iterator =
+          typename std::array<T, N*(N + 1) / 2>::const_iterator;
+
+      StaticTriVector2(StaticTriVector2 const&) = default;
+      StaticTriVector2(StaticTriVector2&&)      = default;
+      StaticTriVector2& operator=(StaticTriVector2 const&) = default;
+      StaticTriVector2& operator=(StaticTriVector2&&) = default;
+      ~StaticTriVector2()                             = default;
+
+      StaticTriVector2() : _data(), _sizes() {
+        clear();
+      }
+
+      // Not noexcept since std::array::fill is not.
+      void clear() {
+        _sizes.fill(0);
+      }
+
+      // Not noexcept because std::array::operator[] isn't
+      void push_back(size_t depth, T x) {
+        LIBSEMIGROUPS_ASSERT(depth < N);
+        LIBSEMIGROUPS_ASSERT(_sizes[depth] < N - depth);
+        _data[depth * (2 * N - depth + 1) / 2 + _sizes[depth]] = x;
+        _sizes[depth]++;
+      }
+
+      // Not noexcept because std::array::operator[] isn't
+      inline T back(size_t depth) const {
+        LIBSEMIGROUPS_ASSERT(depth < N);
+        return _data[depth * (2 * N - depth + 1) / 2 + _sizes[depth] - 1];
+      }
+
+      // Not noexcept because std::array::operator[] isn't
+      inline T const& at(size_t depth, size_t index) const {
+        LIBSEMIGROUPS_ASSERT(depth < N);
+        LIBSEMIGROUPS_ASSERT(index < _sizes[depth]);
+        return _data[depth * (2 * N - depth + 1) / 2 + index];
+      }
+
+      // Not noexcept because std::array::operator[] isn't
+      inline size_t size(size_t depth) const {
+        LIBSEMIGROUPS_ASSERT(depth < N);
+        return _sizes[depth];
+      }
+
+      inline const_iterator cbegin(size_t depth) const noexcept {
+        LIBSEMIGROUPS_ASSERT(depth < N);
+        return _data.cbegin() + depth * (2 * N - depth + 1) / 2;
+      }
+
+      // Not noexcept because std::array::operator[] isn't
+      inline const_iterator cend(size_t depth) const {
+        LIBSEMIGROUPS_ASSERT(depth < N);
+        return _data.cbegin() + depth * (2 * N - depth + 1) / 2 + _sizes[depth];
+      }
+
+      inline const_iterator begin(size_t depth) const noexcept {
+        LIBSEMIGROUPS_ASSERT(depth < N);
+        return _data.begin() + depth * (2 * N - depth + 1) / 2;
+      }
+
+      // Not noexcept because std::array::operator[] isn't
+      inline const_iterator end(size_t depth) const {
+        LIBSEMIGROUPS_ASSERT(depth < N);
+        return _data.begin() + depth * (2 * N - depth + 1) / 2 + _sizes[depth];
+      }
+
+     private:
+      std::array<T, N*(N + 1) / 2> _data;
+      std::array<size_t, N>        _sizes;
+    };
+
+    // Template class for 2-dimensional dynamic arrays.
     template <typename T, typename A = std::allocator<T>>
     class DynamicArray2 final {
       // So that DynamicArray2<T> can access private data members of
@@ -140,7 +225,7 @@ namespace libsemigroups {
         return _vec.max_size();
       }
 
-      // Not noexcept, since std::filll can throw
+      // Not noexcept, since std::fill can throw
       void fill(T const& val) {
         std::fill(_vec.begin(), _vec.end(), val);
       }
@@ -200,11 +285,20 @@ namespace libsemigroups {
       // Throws if the assignment operator of T throws
       void shrink_rows_to(size_type n) {
         if (n < _nr_rows) {
-          _vec.erase(_vec.begin() + n * (_nr_used_cols + _nr_unused_cols),
-                     _vec.end());
-          _vec.shrink_to_fit();
-          _nr_rows = n;
+          shrink_rows_to(0, n);
         }
+      }
+
+      void shrink_rows_to(size_type first, size_type last) {
+        LIBSEMIGROUPS_ASSERT(first <= last);
+        LIBSEMIGROUPS_ASSERT(first <= _nr_rows);
+        LIBSEMIGROUPS_ASSERT(last <= _nr_rows);
+
+        auto nr_cols = _nr_used_cols + _nr_unused_cols;
+        _vec.erase(_vec.begin() + last * nr_cols, _vec.end());
+        _vec.erase(_vec.begin(), _vec.begin() + first * nr_cols);
+        _vec.shrink_to_fit();
+        _nr_rows = last - first;
       }
 
       // Throws if the assignment operator of T throws
@@ -801,6 +895,24 @@ namespace libsemigroups {
       // Not noexcept because std::array::operator[] isn't
       T const& operator[](size_t pos) const {
         return _array[pos];
+      }
+
+      template <class InputIt>
+      iterator insert(const_iterator pos, InputIt first, InputIt last) {
+        size_type const M = std::distance(first, last);
+        LIBSEMIGROUPS_ASSERT(_size + M <= N);
+        LIBSEMIGROUPS_ASSERT(cend() - pos <= _array.cend() - cend());
+        // Is there a better way of initialising it?
+        iterator pos_copy = begin() + std::distance(cbegin(), pos);
+        for (iterator it = end(); it-- > pos_copy;) {
+          *(it + M) = std::move(*it);
+        }
+        iterator it = pos_copy;
+        for (auto copy = first; copy != last; ++it, ++copy) {
+          *it = *copy;
+        }
+        _size += M;
+        return it - M;
       }
 
      private:

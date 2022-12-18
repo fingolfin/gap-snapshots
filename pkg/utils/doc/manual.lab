@@ -24,6 +24,7 @@
 \makelabel{utils:Operations on iterators}{6.2}{X85413EED812C6497}
 \makelabel{utils:Records}{7}{X7AA1073C7E943DD7}
 \makelabel{utils:Functions for records}{7.1}{X82B3D1D583CDF0E5}
+\makelabel{utils:Option records for functions}{7.2}{X7E6207B47B9AA30C}
 \makelabel{utils:Web Downloads}{8}{X815B0C4B7EBE6E1E}
 \makelabel{utils:Functions for downloading files from the web}{8.1}{X8758CB7F79EFB6ED}
 \makelabel{utils:User preference DownloadVerifyCertificate}{8.1.2}{X85182BA486E3C2AA}
@@ -89,6 +90,7 @@
 \makelabel{utils:CartesianIterator}{6.2.1}{X87395A9181A35301}
 \makelabel{utils:UnorderedPairsIterator}{6.2.2}{X7C95E27987A812EA}
 \makelabel{utils:AssignGlobals}{7.1.1}{X84D82EB579B2ACCD}
+\makelabel{utils:OptionRecordWithDefaults}{7.2.1}{X8322B9377CC590D2}
 \makelabel{utils:Download}{8.1.1}{X7A7438AE8448635E}
 \makelabel{utils:DownloadVerifyCertificate}{8.1.2}{X85182BA486E3C2AA}
 \makelabel{utils:Log2HTML}{9.1.1}{X7B7ECADF85F748BE}

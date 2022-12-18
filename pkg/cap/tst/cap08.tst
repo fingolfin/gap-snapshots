@@ -10,7 +10,7 @@
 #
 gap> START_TEST("cap08.tst");
 
-# doc/_Chapter_Examples_and_Tests.xml:99-104
+# doc/_Chapter_Examples_and_Tests.xml:108-113
 gap> InstallFunctor( F2, "F_installation2" );;
 gap> F_installation2( input );;
 gap> F_installation2OnObjects( Product( V1, Opposite( V1 ) ) );;

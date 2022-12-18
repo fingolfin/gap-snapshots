@@ -15,3 +15,4 @@
 <#Include SYSTEM "_Chapter_Create_wrapper_hulls_of_a_category.xml">
 <#Include SYSTEM "_Chapter_Dummy_categories.xml">
 <#Include SYSTEM "_Chapter_Examples_and_Tests.xml">
+<#Include SYSTEM "_Chapter_Terminal_category.xml">

@@ -1,4 +1,4 @@
-.. |libsemigroups-version| replace:: 2.2.1
+.. |libsemigroups-version| replace:: 2.3.2
 
 .. _Installation:
 
@@ -123,7 +123,7 @@ Option
 Debug mode and verbose mode significantly degrade the performance of
 ``libsemigroups``. Compiling with ``fmt`` enabled increases build times
 significantly. Note that the flags ``--enable-fmt`` and ``--with-external-fmt``
-are indendent of each other, and so both flags should be included to enable
+are independent of each other, and so both flags should be included to enable
 ``fmt`` and use an external ``fmt``.
 
 Make install
@@ -172,7 +172,7 @@ the above by doing:
 ::
 
     brew install doxygen sphinx
-    pip3 install -r docs/requirements
+    pip3 install -r docs/requirements.txt
 
 .. TODO add ubuntu instructions
 

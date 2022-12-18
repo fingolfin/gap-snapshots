@@ -1,6 +1,59 @@
 Changelog - version 2
 =====================
 
+v2.3.2 (released 28/10/2022)
+----------------------------
+
+In this release a number of bugs and other minor issues were resolved.
+
+* Fix inaccurate exception information for ``replace_subword`` by @MTWhyte in
+  https://github.com/libsemigroups/libsemigroups/pull/394
+* Fix broken link in `CONTRIBUTING.rst` by @MTWhyte in
+  https://github.com/libsemigroups/libsemigroups/pull/396
+* matrix: add case for some Apple clang weirdness by @james-d-mitchell in
+  https://github.com/libsemigroups/libsemigroups/pull/401 This might be a bug
+  in clang versions 13 and 14, which caused the ``identity`` static member
+  function of the ``StaticMatrix`` class template to not properly initialise the
+  matrix being constructed.
+* string-view: fix bug in append method by @james-d-mitchell in
+  https://github.com/libsemigroups/libsemigroups/pull/399
+  This bug sometimes caused the ``normal_form`` member function of the
+  ``Kambites`` class template to return incorrect results, or sometimes to
+  cause a crash.
+
+v2.3.1 (released 10/10/2022)
+----------------------------
+
+In this release a number of corner cases in the ``Sims1`` class are
+fixed: 
+* sometimes ``number_of_congruences`` erroneously returned ``0`` for the number
+of congruences with 1 class;
+* if an empty presentation (no generators or relations) was used to
+initialise ``short_rules``, then the ``Sims1::for_each`` and
+``Sims1::find_if`` could crash;
+* a more serious bug which could cause an invalid read beyond the end of a
+container (caused by the erroneous assumption that the containers were always
+of even length). Thanks to `J. James` for reporting this issue.
+
+v2.3.0 (released 28/09/2022)
+----------------------------
+
+In this release a number of minor issues a fixed, some improvements are made,
+and the `Sims1` class has been redesigned and improved to implement a parallel
+version of the low index congruences algorithm.
+
+v2.2.3 (released 22/09/2022)
+----------------------------
+
+This is a minor release fixing a number of minor issues, and including some
+minor improvements.
+
+v2.2.2 (released 12/09/2022)
+----------------------------
+
+This is a minor release fixing a number of minor issues, and including some
+minor improvements.
+
 v2.2.1 (released 12/08/2022)
 ----------------------------
 

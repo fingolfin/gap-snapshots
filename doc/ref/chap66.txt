@@ -1523,7 +1523,7 @@
   
   [33X[0;0Y[2XGroebnerBasisNC[102X  works like [2XGroebnerBasis[102X with the only distinction that the
   first argument has to be a list of polynomials and that no test is performed
-  to check whether the ordering is defined for all occuring variables.[133X
+  to check whether the ordering is defined for all occurring variables.[133X
   
   [33X[0;0YNote  that  [5XGAP[105X  at  the  moment  only  includes  a  naïve implementation of
   Buchberger's  algorithm  (which  is  mainly intended as a teaching tool). It
@@ -1673,7 +1673,7 @@
   properties, they can access the attribute representing the rational function
   in the desired way.[133X
   
-  [33X[0;0YConsequentially, methods for rational functions are installed for properties
+  [33X[0;0YConsequently,  methods  for  rational functions are installed for properties
   and not for representations.[133X
   
   [33X[0;0YWhen  [13Xcreating[113X new rational functions however they must be created in one of

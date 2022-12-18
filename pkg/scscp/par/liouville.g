@@ -39,7 +39,7 @@ end;
 # the minimal x with L(x)>0. 
 #
 # A computer-aided search reported in [ R. Sherman Lehman, 
-# On Liouville's Funcion, Mathematics of Computation, Vol.14, 
+# On Liouville's Function, Mathematics of Computation, Vol.14, 
 # No.72 (Oct., 1960), pp.311-320 ] found the counterexample to 
 # be L(906180359)=+1, without claiming its minimality.
 #
@@ -94,10 +94,10 @@ ParSummatoryLiouvilleFunction := function( x, chunksize )
 # We may experiment with various values of 'chunksize'. Very small 
 # chunksize will cause an overhead because of longer list of intervals
 # (cost of time for its generation and storing in memory) and also
-# more intensive master-slave communication. Since the computation of
+# more intensive master-worker communication. Since the computation of
 # one value of Liouville's function for one number is rather fast, its
 # speed will be comparable with the speed of data exchange between
-# master and slave, and on extremely small chunksize values instead
+# master and worker, and on extremely small chunksize values instead
 # of speedup there will be slowdown.
 #
 local intervals, r1, r2, t1, t2, result;

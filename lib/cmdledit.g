@@ -810,7 +810,7 @@ BindKeysToGAPHandler(" ");
 # to include all characters which occur in all members of cand.
 # In the case-insensitive case this matching is done case-insensitively,
 # and we also change the existing letters of the identifier to match
-# identifers.
+# identifiers.
 # When there is no extension or change, these methods return 'fail'.
 BindGlobal("STANDARD_EXTENDERS", rec(
   caseSensitive := function(cand, word)
@@ -969,9 +969,9 @@ GAPInfo.CommandLineEditFunctions.Functions.Completion := function(l)
       if Length(cmps) > 0 and cmps[1] in idbnd then
         r := ValueGlobal(cmps[1]);
         for j in [2..Length(cmps)] do
-          if not hasbang[j-1] and IsBound(r.(cmps[j])) then
+          if not hasbang[j-1] and IsRecord(r) and IsBound(r.(cmps[j])) then
             r := r.(cmps[j]);
-          elif hasbang[j-1] and IsBound(r!.(cmps[j])) then
+          elif hasbang[j-1] and (IsRecord(r) or IsComponentObjectRep(r)) and IsBound(r!.(cmps[j])) then
             r := r!.(cmps[j]);
           else
             r := fail;

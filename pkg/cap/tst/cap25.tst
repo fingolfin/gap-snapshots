@@ -10,40 +10,38 @@
 #
 gap> START_TEST("cap25.tst");
 
-# doc/_Chapter_Examples_and_Tests.xml:1152-1186
-gap> vecspaces := CreateCapCategory( "VectorSpaces01" );
-VectorSpaces01
-gap> ReadPackage( "CAP", "examples/VectorSpacesAddKernel01.g" );
+# doc/_Chapter_Examples_and_Tests.xml:1302-1334
+gap> vecspaces := CreateCapCategory( "VectorSpacesForGeneralizedMorphismsTest" );
+VectorSpacesForGeneralizedMorphismsTest
+gap> ReadPackage( "CAP", "examples/VectorSpacesAllMethods.g" );
 true
-gap> V := QVectorSpace( 2 );
-<A rational vector space of dimension 2>
-gap> W := QVectorSpace( 3 );
-<A rational vector space of dimension 3>
-gap> alpha := VectorSpaceMorphism( V, [ [ 1, 1, 1 ], [ -1, -1, -1 ] ], W );
-A rational vector space homomorphism with matrix: 
-[ [   1,   1,   1 ],
-  [  -1,  -1,  -1 ] ]
-
-gap> k := KernelObject( alpha );
+gap> A := QVectorSpace( 1 );
 <A rational vector space of dimension 1>
-gap> T := QVectorSpace( 2 );
+gap> B := QVectorSpace( 2 );
 <A rational vector space of dimension 2>
-gap> tau := VectorSpaceMorphism( T, [ [ 2, 2 ], [ 2, 2 ] ], V );
+gap> phi_tilde_source_aid := VectorSpaceMorphism( A, [ [ 2 ] ], A );
 A rational vector space homomorphism with matrix: 
-[ [  2,  2 ],
-  [  2,  2 ] ]
+[ [  2 ] ]
 
-gap> k_lift := KernelLift( alpha, tau );
-A rational vector space homomorphism with matrix: 
-[ [  2 ],
-  [  2 ] ]
-
-gap> HasKernelEmbedding( alpha );
-false
-gap> KernelEmbedding( alpha );
+gap> phi_tilde_associated := VectorSpaceMorphism( A, [ [ 1, 1 ] ], B );
 A rational vector space homomorphism with matrix: 
 [ [  1,  1 ] ]
 
+gap> phi_tilde_range_aid := VectorSpaceMorphism( B, [ [ 1, 2 ], [ 3, 4 ] ], B );
+A rational vector space homomorphism with matrix: 
+[ [  1,  2 ],
+  [  3,  4 ] ]
+
+gap> phi_tilde := GeneralizedMorphism( phi_tilde_source_aid, phi_tilde_associated, phi_tilde_range_aid );
+<A morphism in Generalized morphism category of VectorSpacesForGeneralizedMorphismsTest>
+gap> HonestRepresentative( phi_tilde );
+A rational vector space homomorphism with matrix: 
+[ [  -1/4,   1/4 ] ]
+
+gap> IsWellDefined( phi_tilde );
+true
+gap> IsWellDefined( psi_tilde );
+true
 
 #
 gap> STOP_TEST("cap25.tst", 1);

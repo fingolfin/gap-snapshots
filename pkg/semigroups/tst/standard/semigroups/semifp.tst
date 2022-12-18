@@ -61,8 +61,8 @@ true
 
 # Test IsomorphismFpMonoid, infinite
 gap> IsomorphismFpMonoid(FreeMonoid(2));
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 2nd choice method found for `IsomorphismFpMonoid' on 1 arguments
+<free monoid on the generators [ m1, m2 ]> -> 
+<fp monoid with 2 generators and 0 relations of length 2>
 
 # Test IsomorphismFpSemigroup, infinite
 gap> IsomorphismFpSemigroup(FreeInverseSemigroup(2));
@@ -2170,12 +2170,12 @@ gap> ParseRelations(GeneratorsOfSemigroup(f), "yx=x= ((a)b^2y)^50");
 [ [ y*x, x ], [ x, (a*b^2*y)^50 ] ]
 gap> f := FreeSemigroup("x", "y", "a", "b", "X", "@");;
 gap> ParseRelations(GeneratorsOfSemigroup(f), "x=y");
-Error, expected the first argument to be a list of a free semigroup generators\
- represented by single English letter but found the generator @
+Error, expected the 1st argument to be a list of a free semigroup or monoid ge\
+nerators represented by a single alphabet letter but found @
 gap> f := FreeSemigroup("x", "y");;
 gap> ParseRelations(GeneratorsOfSemigroup(f), "x=()");
-Error, expected the second argument to be a string listing the relations of a \
-semigroup but found an = symbol which isn't pairing two words
+Error, expected the 2nd argument to be a string listing the relations of a sem\
+igroup but found an = symbol which isn't pairing two words
 gap> ParseRelations(GeneratorsOfSemigroup(f), "x=(");
 Error, expected the number of open brackets to match the number of closed brac\
 kets
@@ -2193,8 +2193,56 @@ Error, expected a free semigroup generator but found a
 gap> ParseRelations(GeneratorsOfSemigroup(f), "x=y^0");
 Error, expected ^ to be followed by a positive integer but found 0
 gap> ParseRelations(GeneratorsOfSemigroup(f), "x=");
-Error, expected the second argument to be a string listing the relations of a \
-semigroup but found an = symbol which isn't pairing two words
+Error, expected the 2nd argument to be a string listing the relations of a sem\
+igroup but found an = symbol which isn't pairing two words
+
+#
+gap> f := FreeMonoid("x", "y", "a", "b", "X");                              
+<free monoid on the generators [ x, y, a, b, X ]>
+gap> ParseRelations(GeneratorsOfMonoid(f),
+> "x=X^3(yx^2)=a,b(aX)^3x=XXXX,XXX=1");
+[ [ x, X^3*y*x^2 ], [ X^3*y*x^2, a ], [ b*(a*X)^3*x, X^4 ], 
+  [ X^3, <identity ...> ] ]
+gap> f := FreeMonoid("x", "y", "e");                 
+<free monoid on the generators [ x, y, e ]>
+gap> ParseRelations(GeneratorsOfMonoid(f), "ex=x=xe=1, ey=y=ye, xy = e, 1 = 1");
+[ [ e*x, x ], [ x, x*e ], [ x*e, <identity ...> ], [ e*y, y ], [ y, y*e ], 
+  [ x*y, e ], [ <identity ...>, <identity ...> ] ]
+gap> f := FreeMonoid("x", "y", "a", "b", "X");                              
+<free monoid on the generators [ x, y, a, b, X ]>
+gap> ParseRelations(GeneratorsOfMonoid(f), ",x=X^3(yx^2)=a,b(aX)^3x=XXXX=1^1=1");
+[ [ x, X^3*y*x^2 ], [ X^3*y*x^2, a ], [ b*(a*X)^3*x, X^4 ], 
+  [ X^4, <identity ...> ], [ <identity ...>, <identity ...> ] ]
+gap> ParseRelations(GeneratorsOfMonoid(f), "1=yx=x= ((a)b^2y)^50=1");
+[ [ <identity ...>, y*x ], [ y*x, x ], [ x, (a*b^2*y)^50 ], 
+  [ (a*b^2*y)^50, <identity ...> ] ]
+gap> f := FreeMonoid("x", "y", "a", "b", "X", "@");;
+gap> ParseRelations(GeneratorsOfMonoid(f), "1=x^1=y");
+Error, expected the 1st argument to be a list of a free semigroup or monoid ge\
+nerators represented by a single alphabet letter but found @
+gap> f := FreeMonoid("x", "y");;
+gap> ParseRelations(GeneratorsOfMonoid(f), "1=()");
+Error, expected the 2nd argument to be a string listing the relations of a sem\
+igroup but found an = symbol which isn't pairing two words
+gap> ParseRelations(GeneratorsOfMonoid(f), "1=(");
+Error, expected the number of open brackets to match the number of closed brac\
+kets
+gap> ParseRelations(GeneratorsOfMonoid(f), "x=(^1)");
+Error, expected ^ to be preceded by a ) or a generator but found (
+gap> ParseRelations(GeneratorsOfMonoid(f), "1=a^");
+Error, expected ^ to be followed by a positive integer but found end of string
+gap> ParseRelations(GeneratorsOfMonoid(f), "1=x^y");
+Error, expected ^ to be followed by a positive integer but found y
+gap> ParseRelations(GeneratorsOfMonoid(f), "1=^y");
+Error, expected ^ to be preceded by a ) or a generator but found beginning of \
+string
+gap> ParseRelations(GeneratorsOfMonoid(f), "1=x=a");
+Error, expected a free semigroup generator but found a
+gap> ParseRelations(GeneratorsOfMonoid(f), "1=x=y^0");
+Error, expected ^ to be followed by a positive integer but found 0
+gap> ParseRelations(GeneratorsOfMonoid(f), "1=");
+Error, expected the 2nd argument to be a string listing the relations of a sem\
+igroup but found an = symbol which isn't pairing two words
 
 # Test ElementOfFpSemigroup
 gap> f := FreeSemigroup("x", "y");;
@@ -2412,6 +2460,147 @@ gap> IsomorphismFpSemigroup(F / R);
 gap> IsomorphismFpMonoid(F / R);
 <fp group on the generators [ f1 ]> -> 
 <fp monoid with 2 generators and 3 relations of length 8>
+
+# String for IsElementOfFpMonoid 
+gap> String(One(FreeMonoid(0)));
+"<identity ...>"
+
+# String + Print for FreeMonoid/Semigroup
+gap> String(FreeMonoid("a", "b"));
+"FreeMonoidAndAssignGeneratorVars([ \"a\", \"b\" ])"
+gap> Print(FreeMonoid("a", "b"), "\n");
+FreeMonoidAndAssignGeneratorVars([ "a", "b" ])
+gap> String(FreeSemigroup("a", "b"));
+"FreeSemigroupAndAssignGeneratorVars([ \"a\", \"b\" ])"
+gap> Print(FreeSemigroup("a", "b"), "\n");
+FreeSemigroupAndAssignGeneratorVars([ "a", "b" ])
+
+# String + Print for FpMonoid/Semigroup
+gap> S := RightZeroSemigroup(2);
+<transformation semigroup of degree 2 with 2 generators>
+gap> S := Range(IsomorphismFpSemigroup(S));
+<fp semigroup with 2 generators and 4 relations of length 14>
+gap> String(S);
+"FreeSemigroupAndAssignGeneratorVars([ \"s1\", \"s2\" ])\> / \<\>[ [ s1^2, s1 \
+], [ s1*s2, s2 ], [ s2*s1, s1 ], [ s2^2, s2 ] ]\<"
+gap> Print(S, "\n");
+FreeSemigroupAndAssignGeneratorVars([ "s1", "s2" ]) / 
+[ [ s1^2, s1 ], [ s1*s2, s2 ], [ s2*s1, s1 ], [ s2^2, s2 ] ]
+gap> FreeSemigroupAndAssignGeneratorVars(["s1", "s2"]) / 
+> [[s1 ^ 2, s1], [s1 * s2, s2], [s2 * s1, s1], [s2 ^ 2, s2]];
+<fp semigroup with 2 generators and 4 relations of length 14>
+gap> S := Semigroup(RightZeroSemigroup(2), IdentityTransformation);
+<transformation monoid of degree 2 with 2 generators>
+gap> S := Range(IsomorphismFpMonoid(S));
+<fp monoid with 2 generators and 4 relations of length 14>
+gap> String(S);
+"FreeMonoidAndAssignGeneratorVars([ \"m1\", \"m2\" ])\> / \<\>[ [ m1^2, m1 ], \
+[ m1*m2, m2 ], [ m2*m1, m1 ], [ m2^2, m2 ] ]\<"
+gap> Print(S, "\n");
+FreeMonoidAndAssignGeneratorVars([ "m1", "m2" ]) / 
+[ [ m1^2, m1 ], [ m1*m2, m2 ], [ m2*m1, m1 ], [ m2^2, m2 ] ]
+gap> FreeMonoidAndAssignGeneratorVars(["m1", "m2"]) / 
+> [[m1 ^ 2, m1], [m1 * m2, m2], [m2 * m1, m1], [m2 ^ 2, m2]];
+<fp monoid with 2 generators and 4 relations of length 14>
+gap> Print(AsMonoid(IsFpMonoid, SymmetricInverseMonoid(2)), "\n");
+FreeMonoidAndAssignGeneratorVars([ "m1", "m2" ]) / 
+[ [ m1^2, One(m1) ], [ m2^2, m2 ], [ (m1*m2)^2, m2*m1*m2 ], [ (m2*m1)^2, m2*m1\
+*m2 ] ]
+gap> FreeMonoidAndAssignGeneratorVars(["m1", "m2"]) /
+> [[m1 ^ 2, One(m1)], [m2 ^ 2, m2], [(m1 * m2) ^ 2, m2 * m1 * m2], 
+> [(m2 * m1) ^ 2, m2 * m1 * m2]];
+<fp monoid with 2 generators and 4 relations of length 21>
+
+# IsomorphismFpSemigroup for a free semigroup/monoid
+gap> IsomorphismFpSemigroup(FreeSemigroup(2)); 
+<free semigroup on the generators [ s1, s2 ]> -> 
+<fp semigroup with 2 generators and 0 relations of length 2>
+gap> IsomorphismFpMonoid(FreeMonoid(2)); 
+<free monoid on the generators [ m1, m2 ]> -> 
+<fp monoid with 2 generators and 0 relations of length 2>
+gap> IsomorphismFpSemigroup(FreeMonoid(2)); 
+CompositionMapping( <fp monoid with 2 generators and 0 relations of length 2> 
+-> <fp semigroup with 3 generators and 5 relations of length 18>, 
+<free monoid on the generators [ m1, m2 ]> -> 
+<fp monoid with 2 generators and 0 relations of length 2> )
+
+# Factorization for an fp monoid
+gap> F := FreeMonoid(2);
+<free monoid on the generators [ m1, m2 ]>
+gap> F := Range(IsomorphismFpMonoid(F));
+<fp monoid with 2 generators and 0 relations of length 2>
+gap> w := Factorization(F, F.1 * F.2 * One(F));
+[ 2, 3 ]
+gap> EvaluateWord(GeneratorsOfSemigroup(F), w) = F.1 * F.2 * One(F);
+true
+gap> w := Factorization(F, One(F));
+[ 1 ]
+gap> EvaluateWord(GeneratorsOfSemigroup(F), w) = One(F);
+true
+
+# Reversed for elements of a fp semigroup/monoid
+gap> F := FreeSemigroup("a", "b");
+<free semigroup on the generators [ a, b ]>
+gap> AssignGeneratorVariables(F);
+gap> R := [[a ^ 3, a], [b ^ 2, b], [(a * b) ^ 2, a]];
+[ [ a^3, a ], [ b^2, b ], [ (a*b)^2, a ] ]
+gap> S := F / R;
+<fp semigroup with 2 generators and 3 relations of length 14>
+gap> Reversed(a * b * b);
+b^2*a
+gap> Reversed(a * b * b * a);
+a*b^2*a
+gap> Reversed(a * b * b) = b * b * a;
+true
+gap> Reversed(a * b * b * a) = a * b * b * a;
+true
+gap> F := FreeMonoid("a", "b");
+<free monoid on the generators [ a, b ]>
+gap> AssignGeneratorVariables(F);
+gap> R := ParseRelations([a, b], "a ^ 3=a, b ^ 2= b, (ab) ^ 2= 1");
+[ [ a^3, a ], [ b^2, b ], [ (a*b)^2, <identity ...> ] ]
+gap> S := F / R;
+<fp monoid with 2 generators and 3 relations of length 13>
+gap> Reversed(a * b * b) = b * b * a;
+true
+gap> Reversed(a * b * b * a) = a * b * b * a;
+true
+gap> Reversed(a * b * b);
+b^2*a
+gap> Reversed(a * b * b * a);
+a*b^2*a
+gap> Reversed(One(S));
+<identity ...>
+
+# AntiIsomorphismDualFpMonoid/Semigroup
+gap> F := FreeSemigroup("a", "b");
+<free semigroup on the generators [ a, b ]>
+gap> AssignGeneratorVariables(F);
+gap> R := [[a ^ 3, a], [b ^ 2, b], [(a * b) ^ 2, a]];
+[ [ a^3, a ], [ b^2, b ], [ (a*b)^2, a ] ]
+gap> S := F / R;
+<fp semigroup with 2 generators and 3 relations of length 14>
+gap> map := AntiIsomorphismDualFpSemigroup(S);
+MappingByFunction( <fp semigroup with 2 generators and 
+  3 relations of length 14>, <fp semigroup with 2 generators and 
+  3 relations of length 14>, function( x ) ... end, function( x ) ... end )
+gap> RelationsOfFpSemigroup(Range(map));
+[ [ a^3, a ], [ b^2, b ], [ (b*a)^2, a ] ]
+gap> F := FreeMonoid("a", "b");
+<free monoid on the generators [ a, b ]>
+gap> AssignGeneratorVariables(F);
+gap> R := [[a ^ 3, One(F)], [b ^ 2, One(F)], [(a * b) ^ 2, One(F)]];
+[ [ a^3, <identity ...> ], [ b^2, <identity ...> ], 
+  [ (a*b)^2, <identity ...> ] ]
+gap> S := F / R;
+<fp monoid with 2 generators and 3 relations of length 11>
+gap> map := AntiIsomorphismDualFpMonoid(S);
+MappingByFunction( <fp monoid with 2 generators and 3 relations of length 11>
+ , <fp monoid with 2 generators and 3 relations of length 11>
+ , function( x ) ... end, function( x ) ... end )
+gap> RelationsOfFpMonoid(Range(map));
+[ [ a^3, <identity ...> ], [ b^2, <identity ...> ], 
+  [ (b*a)^2, <identity ...> ] ]
 
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(a);

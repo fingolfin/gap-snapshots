@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W openmath.g               The SCSCP package             Alexander Konovalov
+#W openmath.g               The SCSCP package              Olexandr Konovalov
 #W                                                               Steve Linton
 ##
 #############################################################################
@@ -575,7 +575,7 @@ if IsClosedStream( stream )  then
 fi;
 
 if IsBound( objrec.object ) and not IsList( objrec.object ) then
-  Error( "OMPutProcedureCall: in the 3nd argument <objrec.object> must be a list \n" );
+  Error( "OMPutProcedureCall: in the 3rd argument <objrec.object> must be a list \n" );
 fi;
 
 if IsOutputTextStream( stream )  then

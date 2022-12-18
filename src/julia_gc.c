@@ -210,12 +210,12 @@ static jl_datatype_t * datatype_bag;
 static jl_datatype_t * datatype_largebag;
 static Bag *           GapStackBottom;
 static jl_ptls_t       JuliaTLS, SaveTLS;
-static BOOL            is_threaded;
+static BOOL            IsJuliaMultiThreaded;
 static jl_task_t *     RootTaskOfMainThread;
-static size_t          max_pool_obj_size;
+static size_t          MaxPoolObjSize;
 static UInt            YoungRef;
 static int             FullGC;
-static UInt            startTime, totalTime;
+static UInt            StartTime, TotalTime;
 
 
 #if JULIA_VERSION_MAJOR == 1 && JULIA_VERSION_MINOR == 7
@@ -258,7 +258,7 @@ static void * AllocateBagMemory(UInt type, UInt size)
 {
     // HOOK: return `size` bytes memory of TNUM `type`.
     void * result;
-    if (size <= max_pool_obj_size) {
+    if (size <= MaxPoolObjSize) {
         result = (void *)jl_gc_alloc_typed(JuliaTLS, size, datatype_bag);
     }
     else {
@@ -319,6 +319,7 @@ static inline int JMark(void * obj)
     return jl_gc_mark_queue_obj(JuliaTLS, (jl_value_t *)obj);
 }
 
+// the following is used by JuliaInterface
 void MarkJuliaObjSafe(void * obj)
 {
     if (!obj)
@@ -335,7 +336,7 @@ void MarkJuliaObjSafe(void * obj)
         YoungRef++;
 }
 
-
+// the following is used by JuliaInterface
 void MarkJuliaObj(void * obj)
 {
     if (!obj)
@@ -667,7 +668,7 @@ static void GapTaskScanner(jl_task_t * task, int root_task)
 
 UInt TotalGCTime(void)
 {
-    return totalTime;
+    return TotalTime;
 }
 
 static void PreGCHook(int full)
@@ -688,7 +689,7 @@ static void PreGCHook(int full)
     if (STATE(CurrLVars))
         CHANGED_BAG(STATE(CurrLVars));
 
-    startTime = SyTime();
+    StartTime = SyTime();
 
 #ifndef REQUIRE_PRECISE_MARKING
     memset(MarkCache, 0, sizeof(MarkCache));
@@ -701,7 +702,7 @@ static void PreGCHook(int full)
 static void PostGCHook(int full)
 {
     JuliaTLS = SaveTLS;
-    totalTime += SyTime() - startTime;
+    TotalTime += SyTime() - StartTime;
 #ifdef COLLECT_MARK_CACHE_STATS
     /* printf("\n>>>Attempts: %ld\nHit rate: %lf\nCollision rate: %lf\n",
       (long) MarkCacheAttempts,
@@ -742,6 +743,23 @@ static uintptr_t BagMarkFunc(jl_ptls_t ptls, jl_value_t * obj)
     return YoungRef;
 }
 
+jl_datatype_t * GAP_DeclareGapObj(jl_sym_t *      name,
+                                  jl_module_t *   module,
+                                  jl_datatype_t * parent)
+{
+    return jl_new_foreign_type(name, module, parent, MPtrMarkFunc, NULL, 1,
+                               0);
+}
+
+jl_datatype_t * GAP_DeclareBag(jl_sym_t *      name,
+                               jl_module_t *   module,
+                               jl_datatype_t * parent,
+                               int             large)
+{
+    return jl_new_foreign_type(name, module, parent, BagMarkFunc, JFinalizer,
+                               1, large > 0);
+}
+
 // Initialize the integration with Julia's garbage collector; in particular,
 // create Julia types for use in our allocations. The types will be stored
 // in the given 'module', and the MPtr type will be a subtype of 'parent'.
@@ -751,13 +769,15 @@ static uintptr_t BagMarkFunc(jl_ptls_t ptls, jl_value_t * obj)
 void GAP_InitJuliaMemoryInterface(jl_module_t *   module,
                                   jl_datatype_t * parent)
 {
+    jl_sym_t * name;
+
     // HOOK: initialization happens here.
     for (UInt i = 0; i < NUM_TYPES; i++) {
         TabMarkFuncBags[i] = MarkAllSubBagsDefault;
     }
     // These callbacks need to be set before initialization so
     // that we can track objects allocated during `jl_init()`.
-    max_pool_obj_size = jl_gc_max_internal_obj_size();
+    MaxPoolObjSize = jl_gc_max_internal_obj_size();
     jl_gc_enable_conservative_gc_support();
     jl_init();
 
@@ -766,7 +786,7 @@ void GAP_InitJuliaMemoryInterface(jl_module_t *   module,
     SetupGuardPagesSize();
 #endif
 
-    is_threaded = jl_n_threads > 1;
+    IsJuliaMultiThreaded = jl_n_threads > 1;
 
     // These callbacks potentially require access to the Julia
     // TLS and thus need to be installed after initialization.
@@ -784,32 +804,49 @@ void GAP_InitJuliaMemoryInterface(jl_module_t *   module,
         parent = jl_any_type;
     }
 
+// Julia defines HAVE_JL_REINIT_FOREIGN_TYPE if `jl_reinit_foreign_type`
+// is available.
+#ifdef HAVE_JL_REINIT_FOREIGN_TYPE
+    if (jl_boundp(module, jl_symbol("GapObj"))) {
+        datatype_mptr =
+            (jl_datatype_t *)jl_get_global(module, jl_symbol("GapObj"));
+        jl_reinit_foreign_type(datatype_mptr, MPtrMarkFunc, NULL);
+
+        datatype_bag =
+            (jl_datatype_t *)jl_get_global(module, jl_symbol("SmallBag"));
+        jl_reinit_foreign_type(datatype_bag, BagMarkFunc, JFinalizer);
+
+        datatype_largebag =
+            (jl_datatype_t *)jl_get_global(module, jl_symbol("LargeBag"));
+        jl_reinit_foreign_type(datatype_largebag, BagMarkFunc, JFinalizer);
+
+        return;
+    }
+#endif
+
     // create and store data type for master pointers
-    datatype_mptr = jl_new_foreign_type(jl_symbol("GapObj"), module, parent,
-                                        MPtrMarkFunc, NULL, 1, 0);
+    name = jl_symbol("GapObj");
+    datatype_mptr = GAP_DeclareGapObj(name, module, parent);
     GAP_ASSERT(jl_is_datatype(datatype_mptr));
-    jl_set_const(module, jl_symbol("GapObj"), (jl_value_t *)datatype_mptr);
+    jl_set_const(module, name, (jl_value_t *)datatype_mptr);
 
     // create and store data type for small bags
-    datatype_bag = jl_new_foreign_type(jl_symbol("Bag"), module, jl_any_type,
-                                       BagMarkFunc, JFinalizer, 1, 0);
+    name = jl_symbol("SmallBag");
+    datatype_bag = GAP_DeclareBag(name, module, jl_any_type, 0);
     GAP_ASSERT(jl_is_datatype(datatype_bag));
-    jl_set_const(module, jl_symbol("Bag"), (jl_value_t *)datatype_bag);
+    jl_set_const(module, name, (jl_value_t *)datatype_bag);
 
     // create and store data type for large bags
-    datatype_largebag =
-        jl_new_foreign_type(jl_symbol("LargeBag"), module, jl_any_type,
-                            BagMarkFunc, JFinalizer, 1, 1);
+    name = jl_symbol("LargeBag");
+    datatype_largebag = GAP_DeclareBag(name, module, jl_any_type, 1);
     GAP_ASSERT(jl_is_datatype(datatype_largebag));
-    jl_set_const(module, jl_symbol("LargeBag"),
-                 (jl_value_t *)datatype_largebag);
-
+    jl_set_const(module, name, (jl_value_t *)datatype_largebag);
 }
 
 void InitBags(UInt initial_size, Bag * stack_bottom)
 {
     GapStackBottom = stack_bottom;
-    totalTime = 0;
+    TotalTime = 0;
 
     if (!datatype_mptr) {
         GAP_InitJuliaMemoryInterface(0, 0);
@@ -898,7 +935,7 @@ Bag NewBag(UInt type, UInt size)
     if (size == 0)
         alloc_size++;
 
-    if (is_threaded)
+    if (IsJuliaMultiThreaded)
         SetJuliaTLS();
     bag = jl_gc_alloc_typed(JuliaTLS, sizeof(void *), datatype_mptr);
     SET_PTR_BAG(bag, 0);

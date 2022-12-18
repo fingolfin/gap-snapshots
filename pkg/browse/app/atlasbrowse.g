@@ -271,8 +271,8 @@ BrowseData.AtlasInfoGroupTable:= function( conditions, log, replay, t )
 ##  Part of the code is analogous to `AGR.StringAtlasInfoOverview'.
 ##
 BrowseData.AtlasInfoOverview:= function( gapnames, conditions, log, replay )
-    local tocs, rep_rest_funs, only_if_rep, columns, len, type, choice, i,
-          sel_action, header, modes, mode, table;
+    local tocs, rep_rest_funs, only_if_rep, columns, len, type, choice,
+          mark, i, sel_action, header, modes, mode, table;
 
     tocs:= AGR.TablesOfContents( conditions );
 
@@ -319,6 +319,14 @@ BrowseData.AtlasInfoOverview:= function( gapnames, conditions, log, replay )
 
     # Restrict the lists to the nonempty rows.
     choice:= [];
+    mark:= UserPreference( "AtlasRep", "AtlasRepMarkNonCoreData" );
+    if mark = fail then
+      if IsBound( AtlasOfGroupRepresentationsInfo.markprivate ) then
+        mark:= AtlasOfGroupRepresentationsInfo.markprivate;
+      else
+        mark:= "*";
+      fi;
+    fi;
     for i in [ 1 .. Length( gapnames ) ] do
       if ForAny( [ 2 .. len ],
                  c -> columns[c][3][i][1] <> "" ) then
@@ -326,8 +334,7 @@ BrowseData.AtlasInfoOverview:= function( gapnames, conditions, log, replay )
 
         # Evaluate the privacy flag.
         if ForAny( columns, x -> x[3][i][2] ) then
-          columns[1][3][i][1]:= Concatenation( columns[1][3][i][1],
-              AtlasOfGroupRepresentationsInfo.markprivate );
+          columns[1][3][i][1]:= Concatenation( columns[1][3][i][1], mark );
         fi;
       fi;
     od;

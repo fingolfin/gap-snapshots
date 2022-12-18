@@ -10,7 +10,7 @@
 #
 gap> START_TEST("cap04.tst");
 
-# doc/_Chapter_Examples_and_Tests.xml:52-62
+# doc/_Chapter_Examples_and_Tests.xml:61-71
 gap> V1 := TensorUnit( vec );;
 gap> V3 := DirectSum( V1, V1, V1 );;
 gap> pi1 := ProjectionInFactorOfDirectSum( [ V1, V1 ], 1 );;

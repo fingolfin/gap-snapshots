@@ -3,16 +3,8 @@
 #
 # Implementations
 #
-DeclareRepresentation( "IsCapCategoryTwoCellRep",
-                       IsAttributeStoringRep and IsCapCategoryTwoCell,
-                       [ ] );
-
-BindGlobal( "TheFamilyOfCapCategoryTwoCells",
-        NewFamily( "TheFamilyOfCapCategoryTwoCells" ) );
-
-BindGlobal( "TheTypeOfCapCategoryTwoCells",
-        NewType( TheFamilyOfCapCategoryTwoCells,
-                IsCapCategoryTwoCellRep ) );
+# backwards compatibility
+BindGlobal( "IsCapCategoryTwoCellRep", IsCapCategoryTwoCell );
 
 ####################################
 ##

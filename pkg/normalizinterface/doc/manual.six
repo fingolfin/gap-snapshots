@@ -28,7 +28,7 @@ entries :=
       [ 3, 2, 0 ], 22, 29, "system of equations", "X872A3FB37D6D7DFE" ], 
   [ 
       "\033[1X\033[33X\033[0;-2YSystem of inhomogeneous equations\033[133X\033[10\
-1X", "3.3", [ 3, 3, 0 ], 42, 29, "system of inhomogeneous equations", 
+1X", "3.3", [ 3, 3, 0 ], 42, 30, "system of inhomogeneous equations", 
       "X8570F3C87B5B7DD7" ], 
   [ "\033[1X\033[33X\033[0;-2YCombined input\033[133X\033[101X", "3.4", 
       [ 3, 4, 0 ], 58, 30, "combined input", "X7B191A1778012C1D" ], 

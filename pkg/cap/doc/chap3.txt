@@ -143,7 +143,12 @@
   [6XReturns:[106X  [33X[0;10Ya morphism in [23X\mathrm{Hom}(a,b)[123X[133X
   
   [33X[0;0YThe  arguments  are an object [23Xa[123X in a category [23XC[123X and an integer [23Xn[123X. The output
-  is a random morphism [23X\alpha: a \rightarrow b[123X for some object [23Xb[123X in [23XC[123X.[133X
+  is a random morphism [23X\alpha: a \rightarrow b[123X for some object [23Xb[123X in [23XC[123X. If [23XC[123X is
+  equipped      with      the      methods      [10XRandomObjectByInteger[110X      and
+  [10XRandomMorphismWithFixedSourceAndRangeByInteger[110X and [23XC[123X is an Ab-category, then
+  [10XRandomMorphismWithFixedSourceByInteger[110X[23X(C,a,n)[123X     can    be    derived    as
+  [10XRandomMorphismWithFixedSourceAndRangeByInteger[110X([23XC[123X,[23Xa[123X,[23Xb[123X,[23X1[123X+[10XLog2Int[110X([23Xn[123X))  where  [23Xb[123X
+  is computed via [10XRandomObjectByInteger[110X([23XC[123X,[23Xn[123X).[133X
   
   [1X3.4-2 RandomMorphismWithFixedSourceByList[101X
   
@@ -151,7 +156,12 @@
   [6XReturns:[106X  [33X[0;10Ya morphism in [23X\mathrm{Hom}(a,b)[123X[133X
   
   [33X[0;0YThe  arguments are an object [23Xa[123X in a category [23XC[123X and a list [23XL[123X. The output is a
-  random morphism [23X\alpha: a \rightarrow b[123X for some object [23Xb[123X in [23XC[123X.[133X
+  random  morphism  [23X\alpha:  a  \rightarrow  b[123X for some object [23Xb[123X in [23XC[123X. If [23XC[123X is
+  equipped       with       the       methods      [10XRandomObjectByList[110X      and
+  [10XRandomMorphismWithFixedSourceAndRangeByList[110X  and  [23XC[123X  is an Ab-category, then
+  [10XRandomMorphismWithFixedSourceByList[110X[23X(C,a,L)[123X     can     be     derived     as
+  [10XRandomMorphismWithFixedSourceAndRangeByList[110X([23XC,a,b,L[2][123X)  where [23Xb[123X is computed
+  via [10XRandomObjectByList[110X([23XC,L[1][123X).[133X
   
   [1X3.4-3 RandomMorphismWithFixedRangeByInteger[101X
   
@@ -159,7 +169,12 @@
   [6XReturns:[106X  [33X[0;10Ya morphism in [23X\mathrm{Hom}(a,b)[123X[133X
   
   [33X[0;0YThe  arguments  are an object [23Xb[123X in a category [23XC[123X and an integer [23Xn[123X. The output
-  is a random morphism [23X\alpha: a \rightarrow b[123X for some object [23Xa[123X in [23XC[123X.[133X
+  is a random morphism [23X\alpha: a \rightarrow b[123X for some object [23Xa[123X in [23XC[123X. If [23XC[123X is
+  equipped      with      the      methods      [10XRandomObjectByInteger[110X      and
+  [10XRandomMorphismWithFixedSourceAndRangeByInteger[110X and [23XC[123X is an Ab-category, then
+  [10XRandomMorphismWithFixedRangeByInteger[110X[23X(C,b,n)[123X     can     be    derived    as
+  [10XRandomMorphismWithFixedSourceAndRangeByInteger[110X([23XC[123X,[23Xa[123X,[23Xb[123X,[23X1[123X+[10XLog2Int[110X([23Xn[123X))  where  [23Xa[123X
+  is computed via [10XRandomObjectByInteger[110X([23XC[123X,[23Xn[123X).[133X
   
   [1X3.4-4 RandomMorphismWithFixedRangeByList[101X
   
@@ -167,7 +182,12 @@
   [6XReturns:[106X  [33X[0;10Ya morphism in [23X\mathrm{Hom}(a,b)[123X[133X
   
   [33X[0;0YThe  arguments are an object [23Xb[123X in a category [23XC[123X and a list [23XL[123X. The output is a
-  random morphism [23X\alpha: a \rightarrow b[123X for some object [23Xa[123X in [23XC[123X.[133X
+  random  morphism  [23X\alpha:  a  \rightarrow  b[123X for some object [23Xa[123X in [23XC[123X. If [23XC[123X is
+  equipped       with       the       methods      [10XRandomObjectByList[110X      and
+  [10XRandomMorphismWithFixedSourceAndRangeByList[110X  and  [23XC[123X  is an Ab-category, then
+  [10XRandomMorphismWithFixedRangeByList[110X[23X(C,b,L)[123X      can     be     derived     as
+  [10XRandomMorphismWithFixedSourceAndRangeByList[110X([23XC,a,b,L[2][123X)  where [23Xa[123X is computed
+  via [10XRandomObjectByList[110X([23XC,L[1][123X).[133X
   
   [1X3.4-5 RandomMorphismWithFixedSourceAndRangeByInteger[101X
   
@@ -192,11 +212,23 @@
   [6XReturns:[106X  [33X[0;10Ya morphism in [23XC[123X[133X
   
   [33X[0;0YThe  arguments  are  a  category  [23XC[123X and an integer [23Xn[123X. The output is a random
-  morphism   in   [23XC[123X   or   [10Xfail[110X.  If  the  methods  [10XRandomObjectByInteger[110X  and
-  [10XRandomMorphismWithFixedSourceByInteger[110X([10XRandomMorphismWithFixedRangeByInteger[110X)
-  are  added to the category [23XC[123X, then [10XRandomMorphismByInteger[110X can be derived to
-  return  a  random  morphism  of  complexity  [23Xn[123X  with random source(range) of
-  complexity [23Xn[123X.[133X
+  morphism in [23XC[123X. The operation can be derived in three different ways:[133X
+  
+  [30X    [33X[0;6YIf   [23XC[123X   is   equipped  with  the  methods  [10XRandomObjectByInteger[110X  and
+        [10XRandomMorphismWithFixedSourceAndRangeByInteger[110X    and    [23XC[123X    is    an
+        Ab-category,    then    [10XRandomMorphism[110X[23X(C,n)[123X    can   be   derived   as
+        [10XRandomMorphismWithFixedSourceAndRangeByInteger[110X([23XC,a,b[123X,[23X1[123X+[10XLog2Int[110X([23Xn[123X))
+        where [23Xa[123X and [23Xb[123X are computed via [10XRandomObjectByInteger[110X([23XC,n[123X).[133X
+  
+  [30X    [33X[0;6YIf   [23XC[123X   is   equipped  with  the  methods  [10XRandomObjectByInteger[110X  and
+        [10XRandomMorphismWithFixedSourceByInteger[110X,  then  [10XRandomMorphism[110X[23X(C,n)[123X can
+        be derived as [10XRandomMorphismWithFixedSourceByInteger[110X([23XC,a,1[123X+[10XLog2Int[110X([23Xn[123X))
+        where [23Xa[123X is computed via [10XRandomObjectByInteger[110X([23XC,n[123X).[133X
+  
+  [30X    [33X[0;6YIf   [23XC[123X   is   equipped  with  the  methods  [10XRandomObjectByInteger[110X  and
+        [10XRandomMorphismWithFixedRangeByInteger[110X, then [10XRandomMorphism[110X[23X(C,n)[123X can be
+        derived   as   [10XRandomMorphismWithFixedRangeByInteger[110X([23XC,b,1[123X+[10XLog2Int[110X([23Xn[123X))
+        where [23Xb[123X is computed via [10XRandomObjectByInteger[110X([23XC,n[123X).[133X
   
   [1X3.4-8 RandomMorphismByList[101X
   
@@ -204,7 +236,23 @@
   [6XReturns:[106X  [33X[0;10Ya morphism in [23XC[123X[133X
   
   [33X[0;0YThe arguments are a category [23XC[123X and a list [23XL[123X. The output is a random morphism
-  in [23XC[123X.[133X
+  in [23XC[123X. The operation can be derived in three different ways:[133X
+  
+  [30X    [33X[0;6YIf   [23XC[123X   is   equipped   with   the   methods  [10XRandomObjectByList[110X  and
+        [10XRandomMorphismWithFixedSourceAndRangeByList[110X  and  [23XC[123X is an Ab-category,
+        then       [10XRandomMorphism[110X[23X(C,L)[123X       can       be      derived      as
+        [10XRandomMorphismWithFixedSourceAndRangeByList[110X([23XC,a,b,L[3][123X)) where [23Xa[123X and [23Xb[123X
+        are computed via [10XRandomObjectByList[110X([23XC,L[i][123X) for [23Xi=1,2[123X respectively.[133X
+  
+  [30X    [33X[0;6YIf   [23XC[123X   is   equipped   with   the   methods  [10XRandomObjectByList[110X  and
+        [10XRandomMorphismWithFixedSourceByList[110X,  then  [10XRandomMorphism[110X[23X(C,L)[123X can be
+        derived  as  [10XRandomMorphismWithFixedSourceByList[110X([23XC,a,L[2][123X)  where [23Xa[123X is
+        computed via [10XRandomObjectByList[110X([23XC,L[1][123X).[133X
+  
+  [30X    [33X[0;6YIf   [23XC[123X   is   equipped   with   the   methods  [10XRandomObjectByList[110X  and
+        [10XRandomMorphismWithFixedRangeByList[110X,  then  [10XRandomMorphism[110X[23X(C,L)[123X  can be
+        derived  as  [10XRandomMorphismWithFixedRangeByList[110X([23XC,b,L[2][123X)  where  [23Xb[123X is
+        computed via [10XRandomObjectByList[110X([23XC,L[1][123X).[133X
   
   [1X3.4-9 RandomMorphismWithFixedSource[101X
   
@@ -381,9 +429,9 @@
   \cdot  \alpha[123X.  Note:  The  multiplication  has  to  be  compatible with the
   congruence of morphisms.[133X
   
-  [1X3.8-6 \*[101X
+  [1X3.8-6 *[101X
   
-  [33X[1;0Y[29X[2X\*[102X( [3Xr[103X, [3Xalpha[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2X*[102X( [3Xr[103X, [3Xalpha[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya morphism in [23X\mathrm{Hom}(a,b)[123X[133X
   
   [33X[0;0YThis  is  a  convenience method. It has two arguments. The first argument is
@@ -521,6 +569,15 @@
   \alpha_{n-1}:  a_{n-1} \rightarrow a_n, \dots, \alpha_1: a_1 \rightarrow a_2
   )[123X.  The  output  is  the  composition [23X((\alpha_{n} \circ \alpha_{n-1}) \circ
   \dots \alpha_2) \circ \alpha_1[123X.[133X
+  
+  [1X3.10-8 SumOfMorphisms[101X
+  
+  [33X[1;0Y[29X[2XSumOfMorphisms[102X( [3Xs[103X, [3Xmorphisms[103X, [3Xr[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya morphism in [23X\mathrm{Hom}(s,r)[123X[133X
+  
+  [33X[0;0YThe  arguments are two objects [3Xs[103X, [3Xr[103X and a list [3Xmorphisms[103X of morphisms from [3Xs[103X
+  to  [3Xr[103X.  The  output  is  the  sum  of  all  elements  in  [3Xmorphisms[103X,  or the
+  zero-morphism from [3Xs[103X to [3Xr[103X if [3Xmorphisms[103X is empty.[133X
   
   
   [1X3.11 [33X[0;0YWell-Definedness of Morphisms[133X[101X
@@ -672,6 +729,26 @@
   
   [33X[0;0YThe  argument  is  an isomorphism [23X\alpha: a \rightarrow b[123X. The output is its
   inverse [23X\alpha^{-1}: b \rightarrow a[123X.[133X
+  
+  [1X3.13-2 PreInverseForMorphisms[101X
+  
+  [33X[1;0Y[29X[2XPreInverseForMorphisms[102X( [3Xalpha[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya morphism in [23X\mathrm{Hom}(b,a)[123X[133X
+  
+  [33X[0;0YThe argument is a split-epimorphism [23X\alpha: a \rightarrow b[123X. The output is a
+  pre-inverse  [23X\iota:  b \rightarrow a[123X of [23X\alpha[123X, i.e., [23X\iota[123X satisfies [23X\alpha
+  \circ  \iota \sim_{b,b} \mathrm{id}_b[123X. The morphism [23X\iota[123X is also known as a
+  section or a right-inverse of [23X\alpha[123X.[133X
+  
+  [1X3.13-3 PostInverseForMorphisms[101X
+  
+  [33X[1;0Y[29X[2XPostInverseForMorphisms[102X( [3Xalpha[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya morphism in [23X\mathrm{Hom}(b,a)[123X[133X
+  
+  [33X[0;0YThe  argument is a split-monomorphism [23X\alpha: a \rightarrow b[123X. The output is
+  a post-inverse [23X\pi: b \rightarrow a[123X of [23X\alpha[123X, i.e., [23X\pi[123X satisfies [23X\pi \circ
+  \alpha  \sim_{a,a}  \mathrm{id}_a[123X.  The  morphism  [23X\pi[123X  is  also  known as a
+  contraction or a left-inverse of [23X\alpha[123X.[133X
   
   
   [1X3.14 [33X[0;0YTool functions for caches[133X[101X

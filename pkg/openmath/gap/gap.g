@@ -313,7 +313,7 @@ BindGlobal("OMgap_term", x->x );
 ##  Maps a pair ["cd", "name"] to the corresponding OMgap... function
 ##  defined above or immediately in the record
 ##
-InstallValue( OMsymRecord, rec( 
+BindGlobal( "OMsymRecord", rec(
 
 alg1 := rec( 
 	one  := 1, 
@@ -879,7 +879,7 @@ permutation1 := rec(
 			local c, i;
 			c := CycleStructurePerm( x[1] );
 			if ForAny( [ 1 .. Length(c)-1 ], i -> IsBound(c[i])) then
-				Error( "permutation1.lenght requires a cycle, ",
+				Error( "permutation1.length requires a cycle, ",
 				       "not a product of cycles!!!\n");
 			else
 				return Length(c)+1;

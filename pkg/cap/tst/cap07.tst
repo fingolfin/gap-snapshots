@@ -10,7 +10,7 @@
 #
 gap> START_TEST("cap07.tst");
 
-# doc/_Chapter_Examples_and_Tests.xml:86-94
+# doc/_Chapter_Examples_and_Tests.xml:95-103
 gap> InstallFunctor( F, "F_installation" );;
 gap> F_installation( pi1, pi2 );;
 gap> F_installation( input );;

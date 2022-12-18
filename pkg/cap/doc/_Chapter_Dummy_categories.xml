@@ -21,17 +21,7 @@
 
 
 <ManSection>
-  <Filt Arg="arg" Name="IsDummyCategoryCell" Label="for IsCapCategoryCell"/>
- <Returns><K>true</K> or <K>false</K>
-</Returns>
- <Description>
-  The &GAP; category of cells in a dummy CAP category.
- </Description>
-</ManSection>
-
-
-<ManSection>
-  <Filt Arg="arg" Name="IsDummyCategoryObject" Label="for IsDummyCategoryCell and IsCapCategoryObject"/>
+  <Filt Arg="arg" Name="IsDummyCategoryObject" Label="for IsCapCategoryObject"/>
  <Returns><K>true</K> or <K>false</K>
 </Returns>
  <Description>
@@ -41,7 +31,7 @@
 
 
 <ManSection>
-  <Filt Arg="arg" Name="IsDummyCategoryMorphism" Label="for IsDummyCategoryCell and IsCapCategoryMorphism"/>
+  <Filt Arg="arg" Name="IsDummyCategoryMorphism" Label="for IsCapCategoryMorphism"/>
  <Returns><K>true</K> or <K>false</K>
 </Returns>
  <Description>
@@ -62,7 +52,7 @@
 </Returns>
  <Description>
   Creates a dummy category subject to the options given via <A>options</A>, which is a record passed on to <Ref Oper="CategoryConstructor" Label="for IsRecord" />.
-  Note that the options <Code>{category,object,morphism}_filter</Code> will be set to <Code>IsDummyCategory{,Object,Morphism}</Code> and
+  Note that the options <Code>{category,object,morphism}_filter</Code> will be set to <Code>IsDummyCategory{,Object,Morphism}</Code> and the options <Code>{object,morphism}_{constructor,datum}</Code> and
   <Code>create_func_*</Code> will be set to dummy implementations (throwing errors when actually called).
   The dummy category will pretend to support empty limits by default.
  </Description>

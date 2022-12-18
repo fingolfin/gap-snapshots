@@ -21,7 +21,6 @@
 <#Include SYSTEM "others.xml">
 <#Include SYSTEM "obsolete.xml">
 <#Include SYSTEM "transfer.xml">
-<#Include SYSTEM "_AutoDocMainFile.xml">
 </Body>
 <Bibliography Databases="bib.xml"/>
 <TheIndex/>

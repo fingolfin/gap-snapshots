@@ -207,6 +207,7 @@ ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
 ETAGS = @ETAGS@
 EXEEXT = @EXEEXT@
+GAP = @GAP@
 GAPARCH = @GAPARCH@
 GAPROOT = @GAPROOT@
 GAP_CFLAGS = @GAP_CFLAGS@
@@ -1048,7 +1049,7 @@ clean-local:
 	rm -rf $(top_srcdir)/$(BINARCHDIR)
 
 doc:
-	(echo 'Read("makedoc.g");' | $(GAPROOT)/bin/gap.sh -A -q)
+	$(GAP) -A --quitonbreak -b -q < makedoc.g
 
 check:
 	(cd examples; make)

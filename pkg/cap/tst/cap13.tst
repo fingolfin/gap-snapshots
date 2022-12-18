@@ -10,7 +10,7 @@
 #
 gap> START_TEST("cap13.tst");
 
-# doc/_Chapter_Examples_and_Tests.xml:396-415
+# doc/_Chapter_Examples_and_Tests.xml:405-428
 gap> field := HomalgFieldOfRationals( );;
 gap> V := VectorSpaceObject( 1, field );;
 gap> W := VectorSpaceObject( 2, field );;
@@ -28,6 +28,10 @@ true
 gap> IsColiftable( gamma, beta );
 false
 gap> IsColiftableAlongEpimorphism( beta, gamma );
+true
+gap> PreCompose( PreInverseForMorphisms( gamma ), gamma ) = IdentityMorphism( V );
+true
+gap> PreCompose( alpha, PostInverseForMorphisms( alpha ) ) = IdentityMorphism( V );
 true
 
 #

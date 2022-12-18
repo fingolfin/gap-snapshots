@@ -25,10 +25,12 @@ DeclareOperation( "CapInternalInstallAdd",
         "bool",
         "other_object",
         "other_morphism",
+        "list_of_objects",
         "list_of_morphisms",
         "list_of_morphisms_or_fail",
+        "object_datum",
+        "morphism_datum",
         "nonneg_integer_or_infinity",
-        "list_of_objects"
     ]
 ]]></Listing>
 

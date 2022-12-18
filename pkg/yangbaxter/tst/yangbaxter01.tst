@@ -113,5 +113,17 @@ gap> IdSkewbrace(SemidirectProduct(A,B,s[1]));
 gap> IdSkewbrace(DirectProduct(A,B));
 [ 12, 11 ]
 
+# doc/_Chapter_Preliminaries.xml:422-427
+gap> br := SmallBrace(4,2);;
+gap> G:=UnderlyingMultiplicativeGroup(br);;
+gap> StructureDescription(G);
+"C2 x C2"
+
+# doc/_Chapter_Preliminaries.xml:439-444
+gap> br := SmallSkewbrace(6,2);;
+gap> G:=UnderlyingAdditiveGroup(br);;
+gap> IsAbelian(G);
+false
+
 #
 gap> STOP_TEST("yangbaxter01.tst", 1);

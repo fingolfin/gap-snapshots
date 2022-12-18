@@ -171,18 +171,21 @@ installation_name (optional): A string which is the name of the operation for wh
 <List>
 <Item>
 pre_function (optional): A function which is used as the prefunction of the installed methods, as described above.
+  Can also be the name of another operation. In this case the pre function of the referenced operation is used.
 </Item>
 </List>
 <P/>
 <List>
 <Item>
 pre_function_full (optional): A function which is used as the full prefunction of the installed methods, as described above.
+  Can also be the name of another operation. In this case the full pre function of the referenced operation is used.
 </Item>
 </List>
 <P/>
 <List>
 <Item>
 redirect_function (optional): A function which is used as the redirect function of the installed methods, as described above.
+  Can also be the name of another operation. In this case the redirect function of the referenced operation is used.
 </Item>
 </List>
 <P/>
@@ -204,9 +207,6 @@ filter_list: A list containing the basic filters for the methods installed by th
 <C>category</C>,
 </Item>
 <Item>
-<C>cell</C>,
-</Item>
-<Item>
 <C>object</C>,
 </Item>
 <Item>
@@ -223,9 +223,6 @@ filter_list: A list containing the basic filters for the methods installed by th
 </Item>
 <Item>
 <C>other_category</C>,
-</Item>
-<Item>
-<C>other_cell</C>,
 </Item>
 <Item>
 <C>other_object</C>,
@@ -330,8 +327,22 @@ output_source_getter_string (optional): Only valid if the operation returns a mo
 <P/>
 <List>
 <Item>
+can_always_compute_output_source_getter (optional): Only valid if <Code>output_source_getter_string</Code> is also set:
+  Whether the code in <Code>output_source_getter_string</Code> is independent of CAP operations and can thus always be computed without having to check the installed operations of a category.
+</Item>
+</List>
+<P/>
+<List>
+<Item>
 output_range_getter_string (optional): Only valid if the operation returns a morphism: a piece of GAP code which computes the range of the
   returned morphism. The input arguments are available via the names given in <Code>input_arguments_names</Code>.
+</Item>
+</List>
+<P/>
+<List>
+<Item>
+can_always_compute_output_range_getter (optional): Only valid if <Code>output_range_getter_string</Code> is also set:
+  Whether the code in <Code>output_range_getter_string</Code> is independent of CAP operations and can thus always be computed without having to check the installed operations of a category.
 </Item>
 </List>
 <P/>
@@ -389,17 +400,6 @@ WithGiven special case: If the current entry belongs to a WithGiven operation or
 Redirect and post functions are created for all operations belonging to universal constructions (e.g. <Code>KernelLift</Code>) which are not a WithGiven operation.
 </Item>
 </List>
-<P/>
-</Section>
-
-
-<Section Label="Chapter_Add_Functions_Section_Install_All_Adds">
-<Heading>Install All Adds</Heading>
-
-<P/>
-The function CAP_INTERNAL_INSTALL_ALL_ADDS does not take any arguments. It is an auxiliary function which first applies CAP_INTERNAL_ENHANCE_NAME_RECORD to
-CAP_INTERNAL_METHOD_NAME_RECORD. Afterwards it iterates over CAP_INTERNAL_METHOD_NAME_RECORD and calls the CapInternalInstallAdd with the corresponding method record entry
-except if the no_install component of the record is set to true.
 <P/>
 </Section>
 
@@ -589,14 +589,14 @@ except if the no_install component of the record is set to true.
 
 
 <ManSection>
-  <Oper Arg="C, F" Name="AddCoefficientsOfMorphismWithGivenBasisOfExternalHom" Label="for IsCapCategory, IsFunction"/>
+  <Oper Arg="C, F" Name="AddCoefficientsOfMorphism" Label="for IsCapCategory, IsFunction"/>
  <Returns>nothing
 </Returns>
  <Description>
  The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
  This operation adds the given function <Math>F</Math>
- to the category for the basic operation <Code>CoefficientsOfMorphismWithGivenBasisOfExternalHom</Code>.
- <Math>F: ( arg2, arg3 ) \mapsto \mathtt{CoefficientsOfMorphismWithGivenBasisOfExternalHom}(arg2, arg3)</Math>.
+ to the category for the basic operation <Code>CoefficientsOfMorphism</Code>.
+ <Math>F: ( arg2 ) \mapsto \mathtt{CoefficientsOfMorphism}(arg2)</Math>.
  </Description>
 </ManSection>
 
@@ -649,6 +649,32 @@ except if the no_install component of the record is set to true.
  This operation adds the given function <Math>F</Math>
  to the category for the basic operation <Code>CoimageObject</Code>.
  <Math>F: ( arg2 ) \mapsto \mathtt{CoimageObject}(arg2)</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="C, F" Name="AddCoimageObjectFunctorial" Label="for IsCapCategory, IsFunction"/>
+ <Returns>nothing
+</Returns>
+ <Description>
+ The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
+ This operation adds the given function <Math>F</Math>
+ to the category for the basic operation <Code>CoimageObjectFunctorial</Code>.
+ <Math>F: ( alpha, mu, alphap ) \mapsto \mathtt{CoimageObjectFunctorial}(alpha, mu, alphap)</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="C, F" Name="AddCoimageObjectFunctorialWithGivenCoimageObjects" Label="for IsCapCategory, IsFunction"/>
+ <Returns>nothing
+</Returns>
+ <Description>
+ The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
+ This operation adds the given function <Math>F</Math>
+ to the category for the basic operation <Code>CoimageObjectFunctorialWithGivenCoimageObjects</Code>.
+ <Math>F: ( C, alpha, mu, alphap, Cp ) \mapsto \mathtt{CoimageObjectFunctorialWithGivenCoimageObjects}(C, alpha, mu, alphap, Cp)</Math>.
  </Description>
 </ManSection>
 
@@ -1031,6 +1057,32 @@ except if the no_install component of the record is set to true.
 
 
 <ManSection>
+  <Oper Arg="C, F" Name="AddEpimorphismFromProjectiveCoverObject" Label="for IsCapCategory, IsFunction"/>
+ <Returns>nothing
+</Returns>
+ <Description>
+ The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
+ This operation adds the given function <Math>F</Math>
+ to the category for the basic operation <Code>EpimorphismFromProjectiveCoverObject</Code>.
+ <Math>F: ( A ) \mapsto \mathtt{EpimorphismFromProjectiveCoverObject}(A)</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="C, F" Name="AddEpimorphismFromProjectiveCoverObjectWithGivenProjectiveCoverObject" Label="for IsCapCategory, IsFunction"/>
+ <Returns>nothing
+</Returns>
+ <Description>
+ The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
+ This operation adds the given function <Math>F</Math>
+ to the category for the basic operation <Code>EpimorphismFromProjectiveCoverObjectWithGivenProjectiveCoverObject</Code>.
+ <Math>F: ( A, P ) \mapsto \mathtt{EpimorphismFromProjectiveCoverObjectWithGivenProjectiveCoverObject}(A, P)</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
   <Oper Arg="C, F" Name="AddEpimorphismFromSomeProjectiveObject" Label="for IsCapCategory, IsFunction"/>
  <Returns>nothing
 </Returns>
@@ -1304,6 +1356,58 @@ except if the no_install component of the record is set to true.
 
 
 <ManSection>
+  <Oper Arg="C, F" Name="AddImageObjectFunctorial" Label="for IsCapCategory, IsFunction"/>
+ <Returns>nothing
+</Returns>
+ <Description>
+ The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
+ This operation adds the given function <Math>F</Math>
+ to the category for the basic operation <Code>ImageObjectFunctorial</Code>.
+ <Math>F: ( alpha, nu, alphap ) \mapsto \mathtt{ImageObjectFunctorial}(alpha, nu, alphap)</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="C, F" Name="AddImageObjectFunctorialWithGivenImageObjects" Label="for IsCapCategory, IsFunction"/>
+ <Returns>nothing
+</Returns>
+ <Description>
+ The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
+ This operation adds the given function <Math>F</Math>
+ to the category for the basic operation <Code>ImageObjectFunctorialWithGivenImageObjects</Code>.
+ <Math>F: ( I, alpha, nu, alphap, Ip ) \mapsto \mathtt{ImageObjectFunctorialWithGivenImageObjects}(I, alpha, nu, alphap, Ip)</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="C, F" Name="AddIndecomposableInjectiveObjects" Label="for IsCapCategory, IsFunction"/>
+ <Returns>nothing
+</Returns>
+ <Description>
+ The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
+ This operation adds the given function <Math>F</Math>
+ to the category for the basic operation <Code>IndecomposableInjectiveObjects</Code>.
+ <Math>F: (  ) \mapsto \mathtt{IndecomposableInjectiveObjects}()</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="C, F" Name="AddIndecomposableProjectiveObjects" Label="for IsCapCategory, IsFunction"/>
+ <Returns>nothing
+</Returns>
+ <Description>
+ The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
+ This operation adds the given function <Math>F</Math>
+ to the category for the basic operation <Code>IndecomposableProjectiveObjects</Code>.
+ <Math>F: (  ) \mapsto \mathtt{IndecomposableProjectiveObjects}()</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
   <Oper Arg="C, F" Name="AddInitialObject" Label="for IsCapCategory, IsFunction"/>
  <Returns>nothing
 </Returns>
@@ -1447,6 +1551,19 @@ except if the no_install component of the record is set to true.
 
 
 <ManSection>
+  <Oper Arg="C, F" Name="AddInjectiveEnvelopeObject" Label="for IsCapCategory, IsFunction"/>
+ <Returns>nothing
+</Returns>
+ <Description>
+ The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
+ This operation adds the given function <Math>F</Math>
+ to the category for the basic operation <Code>InjectiveEnvelopeObject</Code>.
+ <Math>F: ( arg2 ) \mapsto \mathtt{InjectiveEnvelopeObject}(arg2)</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
   <Oper Arg="C, F" Name="AddInterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure" Label="for IsCapCategory, IsFunction"/>
  <Returns>nothing
 </Returns>
@@ -1480,7 +1597,7 @@ except if the no_install component of the record is set to true.
  The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
  This operation adds the given function <Math>F</Math>
  to the category for the basic operation <Code>InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism</Code>.
- <Math>F: ( arg2, arg3, arg4 ) \mapsto \mathtt{InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism}(arg2, arg3, arg4)</Math>.
+ <Math>F: ( source, range, alpha ) \mapsto \mathtt{InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism}(source, range, alpha)</Math>.
  </Description>
 </ManSection>
 
@@ -2409,6 +2526,32 @@ except if the no_install component of the record is set to true.
 
 
 <ManSection>
+  <Oper Arg="C, F" Name="AddMonomorphismIntoInjectiveEnvelopeObject" Label="for IsCapCategory, IsFunction"/>
+ <Returns>nothing
+</Returns>
+ <Description>
+ The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
+ This operation adds the given function <Math>F</Math>
+ to the category for the basic operation <Code>MonomorphismIntoInjectiveEnvelopeObject</Code>.
+ <Math>F: ( A ) \mapsto \mathtt{MonomorphismIntoInjectiveEnvelopeObject}(A)</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="C, F" Name="AddMonomorphismIntoInjectiveEnvelopeObjectWithGivenInjectiveEnvelopeObject" Label="for IsCapCategory, IsFunction"/>
+ <Returns>nothing
+</Returns>
+ <Description>
+ The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
+ This operation adds the given function <Math>F</Math>
+ to the category for the basic operation <Code>MonomorphismIntoInjectiveEnvelopeObjectWithGivenInjectiveEnvelopeObject</Code>.
+ <Math>F: ( A, I ) \mapsto \mathtt{MonomorphismIntoInjectiveEnvelopeObjectWithGivenInjectiveEnvelopeObject}(A, I)</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
   <Oper Arg="C, F" Name="AddMonomorphismIntoSomeInjectiveObject" Label="for IsCapCategory, IsFunction"/>
  <Returns>nothing
 </Returns>
@@ -2721,6 +2864,19 @@ except if the no_install component of the record is set to true.
 
 
 <ManSection>
+  <Oper Arg="C, F" Name="AddPostInverseForMorphisms" Label="for IsCapCategory, IsFunction"/>
+ <Returns>nothing
+</Returns>
+ <Description>
+ The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
+ This operation adds the given function <Math>F</Math>
+ to the category for the basic operation <Code>PostInverseForMorphisms</Code>.
+ <Math>F: ( alpha ) \mapsto \mathtt{PostInverseForMorphisms}(alpha)</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
   <Oper Arg="C, F" Name="AddPreCompose" Label="for IsCapCategory, IsFunction"/>
  <Returns>nothing
 </Returns>
@@ -2742,6 +2898,19 @@ except if the no_install component of the record is set to true.
  This operation adds the given function <Math>F</Math>
  to the category for the basic operation <Code>PreComposeList</Code>.
  <Math>F: ( list_of_morphisms ) \mapsto \mathtt{PreComposeList}(list_of_morphisms)</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="C, F" Name="AddPreInverseForMorphisms" Label="for IsCapCategory, IsFunction"/>
+ <Returns>nothing
+</Returns>
+ <Description>
+ The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
+ This operation adds the given function <Math>F</Math>
+ to the category for the basic operation <Code>PreInverseForMorphisms</Code>.
+ <Math>F: ( alpha ) \mapsto \mathtt{PreInverseForMorphisms}(alpha)</Math>.
  </Description>
 </ManSection>
 
@@ -2846,6 +3015,19 @@ except if the no_install component of the record is set to true.
  This operation adds the given function <Math>F</Math>
  to the category for the basic operation <Code>ProjectionOntoCoequalizerWithGivenCoequalizer</Code>.
  <Math>F: ( Y, morphisms, P ) \mapsto \mathtt{ProjectionOntoCoequalizerWithGivenCoequalizer}(Y, morphisms, P)</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="C, F" Name="AddProjectiveCoverObject" Label="for IsCapCategory, IsFunction"/>
+ <Returns>nothing
+</Returns>
+ <Description>
+ The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
+ This operation adds the given function <Math>F</Math>
+ to the category for the basic operation <Code>ProjectiveCoverObject</Code>.
+ <Math>F: ( arg2 ) \mapsto \mathtt{ProjectiveCoverObject}(arg2)</Math>.
  </Description>
 </ManSection>
 
@@ -3379,6 +3561,19 @@ except if the no_install component of the record is set to true.
  This operation adds the given function <Math>F</Math>
  to the category for the basic operation <Code>SubtractionForMorphisms</Code>.
  <Math>F: ( a, b ) \mapsto \mathtt{SubtractionForMorphisms}(a, b)</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="C, F" Name="AddSumOfMorphisms" Label="for IsCapCategory, IsFunction"/>
+ <Returns>nothing
+</Returns>
+ <Description>
+ The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
+ This operation adds the given function <Math>F</Math>
+ to the category for the basic operation <Code>SumOfMorphisms</Code>.
+ <Math>F: ( source, list_of_morphisms, range ) \mapsto \mathtt{SumOfMorphisms}(source, list_of_morphisms, range)</Math>.
  </Description>
 </ManSection>
 

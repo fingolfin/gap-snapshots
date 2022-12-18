@@ -60,6 +60,7 @@ pkginclude_HEADERS += include/libsemigroups/constants.hpp
 pkginclude_HEADERS += include/libsemigroups/containers.hpp
 pkginclude_HEADERS += include/libsemigroups/coset.hpp
 pkginclude_HEADERS += include/libsemigroups/debug.hpp
+pkginclude_HEADERS += include/libsemigroups/deprecated.hpp
 pkginclude_HEADERS += include/libsemigroups/digraph-helper.hpp
 pkginclude_HEADERS += include/libsemigroups/digraph-with-sources.hpp
 pkginclude_HEADERS += include/libsemigroups/digraph-with-sources.tpp
@@ -85,6 +86,7 @@ pkginclude_HEADERS += include/libsemigroups/kbe.hpp
 pkginclude_HEADERS += include/libsemigroups/knuth-bendix.hpp
 pkginclude_HEADERS += include/libsemigroups/konieczny.hpp
 pkginclude_HEADERS += include/libsemigroups/libsemigroups.hpp
+pkginclude_HEADERS += include/libsemigroups/make-froidure-pin.hpp
 pkginclude_HEADERS += include/libsemigroups/make-present.hpp
 pkginclude_HEADERS += include/libsemigroups/matrix.hpp
 pkginclude_HEADERS += include/libsemigroups/obvinf.hpp
@@ -147,19 +149,19 @@ endif ## LIBSEMIGROUPS_HPCOMBI_ENABLED
 ## uninstall-hook
 fmtincludedir = $(includedir)/libsemigroups/fmt
 if LIBSEMIGROUPS_WITH_INTERNAL_FMT
-fmtinclude_HEADERS =  extern/fmt-8.0.1/include/fmt/args.h
-fmtinclude_HEADERS += extern/fmt-8.0.1/include/fmt/chrono.h
-fmtinclude_HEADERS += extern/fmt-8.0.1/include/fmt/color.h
-fmtinclude_HEADERS += extern/fmt-8.0.1/include/fmt/compile.h
-fmtinclude_HEADERS += extern/fmt-8.0.1/include/fmt/core.h
-fmtinclude_HEADERS += extern/fmt-8.0.1/include/fmt/format-inl.h
-fmtinclude_HEADERS += extern/fmt-8.0.1/include/fmt/format.h
-fmtinclude_HEADERS += extern/fmt-8.0.1/include/fmt/locale.h
-fmtinclude_HEADERS += extern/fmt-8.0.1/include/fmt/os.h
-fmtinclude_HEADERS += extern/fmt-8.0.1/include/fmt/ostream.h
-fmtinclude_HEADERS += extern/fmt-8.0.1/include/fmt/printf.h
-fmtinclude_HEADERS += extern/fmt-8.0.1/include/fmt/ranges.h
-fmtinclude_HEADERS += extern/fmt-8.0.1/include/fmt/xchar.h
+fmtinclude_HEADERS =  extern/fmt-8.1.1/include/fmt/args.h
+fmtinclude_HEADERS += extern/fmt-8.1.1/include/fmt/chrono.h
+fmtinclude_HEADERS += extern/fmt-8.1.1/include/fmt/color.h
+fmtinclude_HEADERS += extern/fmt-8.1.1/include/fmt/compile.h
+fmtinclude_HEADERS += extern/fmt-8.1.1/include/fmt/core.h
+fmtinclude_HEADERS += extern/fmt-8.1.1/include/fmt/format-inl.h
+fmtinclude_HEADERS += extern/fmt-8.1.1/include/fmt/format.h
+fmtinclude_HEADERS += extern/fmt-8.1.1/include/fmt/locale.h
+fmtinclude_HEADERS += extern/fmt-8.1.1/include/fmt/os.h
+fmtinclude_HEADERS += extern/fmt-8.1.1/include/fmt/ostream.h
+fmtinclude_HEADERS += extern/fmt-8.1.1/include/fmt/printf.h
+fmtinclude_HEADERS += extern/fmt-8.1.1/include/fmt/ranges.h
+fmtinclude_HEADERS += extern/fmt-8.1.1/include/fmt/xchar.h
 endif
 
 ## Define eigenincludedir outside the conditional
@@ -668,6 +670,7 @@ EXTRA_PROGRAMS += test_kambites
 EXTRA_PROGRAMS += test_kbe
 EXTRA_PROGRAMS += test_knuth_bendix
 EXTRA_PROGRAMS += test_konieczny
+EXTRA_PROGRAMS += test_make_froidure_pin
 EXTRA_PROGRAMS += test_make_present
 EXTRA_PROGRAMS += test_matrix
 EXTRA_PROGRAMS += test_obvinf
@@ -764,6 +767,7 @@ test_all_SOURCES += tests/test-konieczny-bmat.cpp
 test_all_SOURCES += tests/test-konieczny-pperm.cpp
 test_all_SOURCES += tests/test-main.cpp
 test_all_SOURCES += tests/test-make-present.cpp
+test_all_SOURCES += tests/test-make-froidure-pin.cpp
 test_all_SOURCES += tests/test-matrix.cpp
 test_all_SOURCES += tests/test-obvinf.cpp
 test_all_SOURCES += tests/test-order.cpp
@@ -892,6 +896,7 @@ test_knuth_bendix_SOURCES += tests/test-knuth-bendix-3.cpp
 test_knuth_bendix_SOURCES += tests/test-knuth-bendix-4.cpp
 test_knuth_bendix_SOURCES += tests/test-knuth-bendix-5.cpp
 test_knuth_bendix_SOURCES += tests/test-knuth-bendix-6.cpp
+test_knuth_bendix_SOURCES += tests/fpsemi-examples.cpp
 test_knuth_bendix_SOURCES += tests/test-main.cpp
 
 test_konieczny_SOURCES =  tests/test-konieczny-bmat8-1.cpp
@@ -902,6 +907,9 @@ test_konieczny_SOURCES += tests/test-konieczny-bmat.cpp
 test_konieczny_SOURCES += tests/test-konieczny-pperm.cpp
 test_konieczny_SOURCES += tests/bmat-data.cpp
 test_konieczny_SOURCES += tests/test-main.cpp
+
+test_make_froidure_pin_SOURCES =  tests/test-make-froidure-pin.cpp
+test_make_froidure_pin_SOURCES += tests/test-main.cpp
 
 test_make_present_SOURCES =  tests/test-make-present.cpp
 test_make_present_SOURCES += tests/test-main.cpp

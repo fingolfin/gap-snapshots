@@ -16,35 +16,54 @@ InstallValue( CAP_INTERNAL_VALID_RETURN_TYPES,
         "bool",
         "other_object",
         "other_morphism",
+        "list_of_objects",
         "list_of_morphisms",
         "list_of_morphisms_or_fail",
+        "object_datum",
+        "morphism_datum",
         "nonneg_integer_or_infinity",
-        "list_of_objects"
     ]
 #! @EndCode
 );
 
+##
+InstallGlobalFunction( CAP_INTERNAL_REVERSE_LISTS_IN_ARGUMENTS_FOR_OPPOSITE,
+  function( args... )
+    local list;
+      
+    list := CAP_INTERNAL_OPPOSITE_RECURSIVE( args );
+      
+    return List( list, function( l )
+        if IsList( l ) then
+            return Reversed( l );
+        else
+            return l;
+        fi;
+    end );
+
+end );
+
 InstallValue( CAP_INTERNAL_METHOD_NAME_RECORD, rec(
 ObjectConstructor := rec(
-  filter_list := [ "category", IsObject ],
+  filter_list := [ "category", "object_datum" ],
   return_type := "object",
   compatible_with_congruence_of_morphisms := false,
 ),
 
 ObjectDatum := rec(
   filter_list := [ "category", "object" ],
-  return_type := IsObject,
+  return_type := "object_datum",
 ),
 
 MorphismConstructor := rec(
-  filter_list := [ "category", "object", IsObject, "object" ],
+  filter_list := [ "category", "object", "morphism_datum", "object" ],
   return_type := "morphism",
   compatible_with_congruence_of_morphisms := false,
 ),
 
 MorphismDatum := rec(
   filter_list := [ "category", "morphism" ],
-  return_type := IsObject,
+  return_type := "morphism_datum",
   compatible_with_congruence_of_morphisms := false,
 ),
 
@@ -176,7 +195,7 @@ Lift := rec(
 LiftOrFail := rec(
   filter_list := [ "category", "morphism", "morphism" ],
   io_type := [ [ "alpha", "beta" ], [ "alpha_source", "beta_source" ] ],
-  pre_function := ~.Lift.pre_function,
+  pre_function := "Lift",
   return_type := "morphism_or_fail",
   dual_operation := "ColiftOrFail",
   dual_arguments_reversed := true,
@@ -186,7 +205,7 @@ LiftOrFail := rec(
 
 IsLiftable := rec(
   filter_list := [ "category", "morphism", "morphism" ],
-  pre_function := ~.Lift.pre_function,
+  pre_function := "Lift",
   return_type := "bool",
   dual_operation := "IsColiftable",
   dual_arguments_reversed := true,
@@ -223,7 +242,7 @@ Colift := rec(
 ColiftOrFail := rec(
   filter_list := [ "category", "morphism", "morphism" ],
   io_type := [ [ "alpha", "beta" ], [ "alpha_range", "beta_range" ] ],
-  pre_function := ~.Colift.pre_function,
+  pre_function := "Colift",
   return_type := "morphism_or_fail",
   dual_operation := "LiftOrFail",
   dual_arguments_reversed := true,
@@ -233,7 +252,7 @@ ColiftOrFail := rec(
 
 IsColiftable := rec(
   filter_list := [ "category", "morphism", "morphism" ],
-  pre_function := ~.Colift.pre_function,
+  pre_function := "Colift",
   return_type := "bool",
   dual_operation := "IsLiftable",
   dual_arguments_reversed := true,
@@ -305,6 +324,22 @@ InverseForMorphisms := rec(
   return_type := "morphism",
   dual_operation := "InverseForMorphisms",
   compatible_with_congruence_of_morphisms := true,
+),
+
+PreInverseForMorphisms := rec(
+  filter_list := [ "category", "morphism" ],
+  io_type := [ [ "alpha" ], [ "alpha_range", "alpha_source" ] ],
+  return_type := "morphism",
+  dual_operation := "PostInverseForMorphisms",
+  is_merely_set_theoretic := true
+),
+
+PostInverseForMorphisms := rec(
+  filter_list := [ "category", "morphism" ],
+  io_type := [ [ "alpha" ], [ "alpha_range", "alpha_source" ] ],
+  return_type := "morphism",
+  dual_operation := "PreInverseForMorphisms",
+  is_merely_set_theoretic := true
 ),
 
 KernelObject := rec(
@@ -451,6 +486,40 @@ PreCompose := rec(
   compatible_with_congruence_of_morphisms := true,
 ),
 
+SumOfMorphisms := rec(
+  filter_list := [ "category", "object", "list_of_morphisms", "object" ],
+  input_arguments_names := [ "cat", "source", "list_of_morphisms", "range" ],
+  pre_function := function( cat, source, list_of_morphisms, range )
+    local m, is_equal_for_sources, is_equal_for_ranges;
+    
+    for m in list_of_morphisms do
+        
+        is_equal_for_sources := IsEqualForObjects( cat, source, Source( m ) );
+        is_equal_for_ranges := IsEqualForObjects( cat, range, Range( m ) );
+        
+        if is_equal_for_sources = fail or is_equal_for_ranges = fail then
+            
+            return [ false, "cannot decide whether morphisms are compatible with the provided source and range objects" ];
+            
+        elif is_equal_for_sources = false or is_equal_for_ranges = false then
+            
+            return [ false, "some of the morphisms are not compatible with the provided source and range objects" ];
+            
+        fi;
+        
+    od;
+    
+    return [ true ];
+    
+  end,
+  return_type := "morphism",
+  output_source_getter_string := "source",
+  output_range_getter_string := "range",
+  dual_operation := "SumOfMorphisms",
+  dual_arguments_reversed := true,
+  compatible_with_congruence_of_morphisms := true,
+),
+
 PreComposeList := rec(
   filter_list := [ "category", "list_of_morphisms" ],
   input_arguments_names := [ "cat", "list_of_morphisms" ],
@@ -484,7 +553,9 @@ PreComposeList := rec(
   end,
   return_type := "morphism",
   output_source_getter_string := "Source( list_of_morphisms[1] )",
+  can_always_compute_output_source_getter := true,
   output_range_getter_string := "Range( Last( list_of_morphisms ) )",
+  can_always_compute_output_range_getter := true,
   dual_operation := "PostComposeList",
   compatible_with_congruence_of_morphisms := true,
 ),
@@ -549,7 +620,9 @@ PostComposeList := rec(
   end,
   return_type := "morphism",
   output_source_getter_string := "Source( Last( list_of_morphisms ) )",
+  can_always_compute_output_source_getter := true,
   output_range_getter_string := "Range( list_of_morphisms[1] )",
+  can_always_compute_output_range_getter := true,
   dual_operation := "PreComposeList",
   compatible_with_congruence_of_morphisms := true,
 ),
@@ -966,7 +1039,7 @@ IsCongruentForMorphisms := rec(
   
   redirect_function := function( cat, morphism_1, morphism_2 )
     
-    if IsIdenticalObj( morphism_1, morphism_2 ) then 
+    if IsIdenticalObj( morphism_1, morphism_2 ) then
       
       return [ true, true ];
       
@@ -1036,7 +1109,7 @@ IsEqualForMorphisms := rec(
   
   redirect_function := function( cat, morphism_1, morphism_2 )
     
-    if IsIdenticalObj( morphism_1, morphism_2 ) then 
+    if IsIdenticalObj( morphism_1, morphism_2 ) then
       
       return [ true, true ];
       
@@ -1059,7 +1132,7 @@ IsEqualForMorphismsOnMor := rec(
   
   redirect_function := function( cat, morphism_1, morphism_2 )
     
-    if IsIdenticalObj( morphism_1, morphism_2 ) then 
+    if IsIdenticalObj( morphism_1, morphism_2 ) then
       
       return [ true, true ];
       
@@ -1450,7 +1523,7 @@ EmbeddingOfEqualizer := rec(
   with_given_object_position := "Source",
   dual_operation := "ProjectionOntoCoequalizer",
   
-  pre_function := ~.Equalizer.pre_function,
+  pre_function := "Equalizer",
   compatible_with_congruence_of_morphisms := false,
 ),
 
@@ -1880,7 +1953,7 @@ ProjectionOntoCoequalizer := rec(
   with_given_object_position := "Range",
   dual_operation := "EmbeddingOfEqualizer",
   
-  pre_function := ~.Coequalizer.pre_function,
+  pre_function := "Coequalizer",
   compatible_with_congruence_of_morphisms := false,
 ),
 
@@ -2260,7 +2333,9 @@ UniversalMorphismFromPushoutWithGivenPushout := rec(
 ImageObject := rec(
   filter_list := [ "category", "morphism" ],
   return_type := "object",
-  dual_operation := "CoimageObject" ),
+  dual_operation := "CoimageObject",
+  functorial := "ImageObjectFunctorial",
+),
 
 ImageEmbedding := rec(
   filter_list := [ "category", "morphism" ],
@@ -2278,7 +2353,9 @@ ImageEmbeddingWithGivenImageObject := rec(
 CoimageObject := rec(
   filter_list := [ "category", "morphism" ],
   return_type := "object",
-  dual_operation := "ImageObject" ),
+  dual_operation := "ImageObject",
+  functorial := "CoimageObjectFunctorial",
+),
 
 CoimageProjection := rec(
   filter_list := [ "category", "morphism" ],
@@ -2401,8 +2478,8 @@ IsWellDefinedForMorphisms := rec(
     
     category := CapCategory( morphism );
     
-    if not ( IsWellDefined( source ) and IsWellDefined( range ) )
-       or not ( IsIdenticalObj( CapCategory( source ), category ) and IsIdenticalObj( CapCategory( range ), category ) ) then
+    if not ( IsWellDefined( source ) and IsWellDefined( range ) ) or
+       not ( IsIdenticalObj( CapCategory( source ), category ) and IsIdenticalObj( CapCategory( range ), category ) ) then
       
       return [ true, false ];
       
@@ -2510,9 +2587,9 @@ IsSplitEpimorphism := rec(
 IsIdempotent := rec(
    pre_function := function( cat, morphism )
     
-    #do not use IsEndomorphism( morphism ) here because you don't know if
-    #the user has given an own IsEndomorphism function
-    if not IsEqualForObjects( Source( morphism ), Range( morphism ) ) then 
+    # do not use IsEndomorphism( morphism ) here because you don't know if
+    # the user has given an own IsEndomorphism function
+    if not IsEqualForObjects( Source( morphism ), Range( morphism ) ) then
       
       return [ false, "the given morphism has to be an endomorphism" ];
       
@@ -2802,8 +2879,8 @@ EqualizerFunctorial := rec(
   filter_list := [ "category", "list_of_morphisms", "morphism", "list_of_morphisms" ],
   input_arguments_names := [ "cat", "morphisms", "mu", "morphismsp" ],
   return_type := "morphism",
-  output_source_getter_string := "Equalizer( cat, morphisms )",
-  output_range_getter_string := "Equalizer( cat, morphismsp )",
+  output_source_getter_string := "Equalizer( cat, Source( mu ), morphisms )",
+  output_range_getter_string := "Equalizer( cat, Range( mu ), morphismsp )",
   with_given_object_position := "both",
   dual_operation := "CoequalizerFunctorial",
   dual_arguments_reversed := true,
@@ -2823,8 +2900,8 @@ CoequalizerFunctorial := rec(
   filter_list := [ "category", "list_of_morphisms", "morphism", "list_of_morphisms" ],
   input_arguments_names := [ "cat", "morphisms", "mu", "morphismsp" ],
   return_type := "morphism",
-  output_source_getter_string := "Coequalizer( cat, morphisms )",
-  output_range_getter_string := "Coequalizer( cat, morphismsp )",
+  output_source_getter_string := "Coequalizer( cat, Source( mu ), morphisms )",
+  output_range_getter_string := "Coequalizer( cat, Range( mu ), morphismsp )",
   with_given_object_position := "both",
   dual_operation := "EqualizerFunctorial",
   dual_arguments_reversed := true,
@@ -2880,6 +2957,44 @@ PushoutFunctorialWithGivenPushouts := rec(
   dual_operation := "FiberProductFunctorialWithGivenFiberProducts",
   dual_arguments_reversed := true,
   compatible_with_congruence_of_morphisms := false,
+),
+
+ImageObjectFunctorial := rec(
+  filter_list := [ "category", "morphism", "morphism", "morphism" ],
+  input_arguments_names := [ "cat", "alpha", "nu", "alphap" ],
+  return_type := "morphism",
+  output_source_getter_string := "ImageObject( cat, alpha )",
+  output_range_getter_string := "ImageObject( cat, alphap )",
+  with_given_object_position := "both",
+  dual_operation := "CoimageObjectFunctorial",
+  dual_arguments_reversed := true,
+),
+
+ImageObjectFunctorialWithGivenImageObjects := rec(
+  filter_list := [ "category", "object", "morphism", "morphism", "morphism", "object" ],
+  io_type := [ [ "I", "alpha", "nu", "alphap", "Ip" ], [ "I", "Ip" ] ],
+  return_type := "morphism",
+  dual_operation := "CoimageObjectFunctorialWithGivenCoimageObjects",
+  dual_arguments_reversed := true,
+),
+
+CoimageObjectFunctorial := rec(
+  filter_list := [ "category", "morphism", "morphism", "morphism" ],
+  input_arguments_names := [ "cat", "alpha", "mu", "alphap" ],
+  return_type := "morphism",
+  output_source_getter_string := "CoimageObject( cat, alpha )",
+  output_range_getter_string := "CoimageObject( cat, alphap )",
+  with_given_object_position := "both",
+  dual_operation := "ImageObjectFunctorial",
+  dual_arguments_reversed := true,
+),
+
+CoimageObjectFunctorialWithGivenCoimageObjects := rec(
+  filter_list := [ "category", "object", "morphism", "morphism", "morphism", "object" ],
+  io_type := [ [ "C", "alpha", "mu", "alphap", "Cp" ], [ "C", "Cp" ] ],
+  return_type := "morphism",
+  dual_operation := "ImageObjectFunctorialWithGivenImageObjects",
+  dual_arguments_reversed := true,
 ),
 
 HorizontalPreCompose := rec(
@@ -3325,9 +3440,9 @@ InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure := rec
 InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructureWithGivenObjects := rec(
   filter_list := [ "category", "object_in_range_category_of_homomorphism_structure", "morphism", "object_in_range_category_of_homomorphism_structure" ],
   input_arguments_names := [ "cat", "source", "alpha", "range" ],
+  return_type := "morphism_in_range_category_of_homomorphism_structure",
   output_source_getter_string := "source",
   output_range_getter_string := "range",
-  return_type := "morphism_in_range_category_of_homomorphism_structure",
   dual_operation := "InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructureWithGivenObjects",
   dual_preprocessor_func := function( cat, distinguished_object, alpha, hom_source_range )
     return NTuple( 4, OppositeCategory( cat ), distinguished_object, Opposite( alpha ), hom_source_range );
@@ -3337,7 +3452,10 @@ InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructureWithGiv
 
 InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism := rec(
   filter_list := [ "category", "object", "object", "morphism_in_range_category_of_homomorphism_structure" ],
+  input_arguments_names := [ "cat", "source", "range", "alpha" ],
   return_type := "morphism",
+  output_source_getter_string := "source",
+  output_range_getter_string := "range",
   dual_operation := "InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism",
   dual_preprocessor_func := function( cat, A, B, morphism )
     return NTuple( 4, OppositeCategory( cat ), Opposite( B ), Opposite( A ), morphism );
@@ -3369,6 +3487,7 @@ SolveLinearSystemInAbCategory := rec(
     
   end,
   pre_function_full := function( cat, left_coeffs, right_coeffs, rhs )
+    local nr_columns_left, nr_columns_right;
     
     if not ForAll( [ 1 .. Length( left_coeffs ) ], i -> ForAll( left_coeffs[i], coeff -> IsEqualForObjects( Source( coeff ), Source( rhs[i] ) ) <> false ) ) then
         return [ false, "the sources of the left coefficients must correspond to the sources of the right hand side" ];
@@ -3378,11 +3497,15 @@ SolveLinearSystemInAbCategory := rec(
         return [ false, "the ranges of the right coefficients must correspond to the ranges of the right hand side" ];
     fi;
     
-    if not ForAll( [ 1 .. Length( left_coeffs[1] ) ], j -> ForAll( left_coeffs, x -> IsEqualForObjects( Range( x[j] ), Range( left_coeffs[1][j] ) ) <> false ) ) then
+    nr_columns_left := Length( left_coeffs[1] );
+    
+    if not ForAll( [ 1 .. nr_columns_left ], j -> ForAll( left_coeffs, x -> IsEqualForObjects( Range( x[j] ), Range( left_coeffs[1][j] ) ) <> false ) ) then
         return [ false, "all ranges in a column of the left coefficients must be equal" ];
     fi;
     
-    if not ForAll( [ 1 .. Length( right_coeffs[1] ) ], j -> ForAll( right_coeffs, x -> IsEqualForObjects( Source( x[j] ), Source( right_coeffs[1][j] ) ) <> false ) ) then
+    nr_columns_right := Length( right_coeffs[1] );
+    
+    if not ForAll( [ 1 .. nr_columns_right ], j -> ForAll( right_coeffs, x -> IsEqualForObjects( Source( x[j] ), Source( right_coeffs[1][j] ) ) <> false ) ) then
         return [ false, "all sources in a column of the right coefficients must be equal" ];
     fi;
     
@@ -3394,15 +3517,15 @@ SolveLinearSystemInAbCategory := rec(
 SolveLinearSystemInAbCategoryOrFail := rec(
   filter_list := [ "category", IsList, IsList, "list_of_morphisms" ],
   return_type := "list_of_morphisms_or_fail",
-  pre_function := ~.SolveLinearSystemInAbCategory.pre_function,
-  pre_function_full := ~.SolveLinearSystemInAbCategory.pre_function_full
+  pre_function := "SolveLinearSystemInAbCategory",
+  pre_function_full := "SolveLinearSystemInAbCategory"
 ),
 
 MereExistenceOfSolutionOfLinearSystemInAbCategory := rec(
   filter_list := [ "category", IsList, IsList, "list_of_morphisms" ],
   return_type := "bool",
-  pre_function := ~.SolveLinearSystemInAbCategory.pre_function,
-  pre_function_full := ~.SolveLinearSystemInAbCategory.pre_function_full
+  pre_function := "SolveLinearSystemInAbCategory",
+  pre_function_full := "SolveLinearSystemInAbCategory"
 ),
 
 BasisOfExternalHom := rec(
@@ -3412,10 +3535,10 @@ BasisOfExternalHom := rec(
   dual_arguments_reversed := true
 ),
 
-CoefficientsOfMorphismWithGivenBasisOfExternalHom := rec(
-  filter_list := [ "category", "morphism", "list_of_morphisms" ],
+CoefficientsOfMorphism := rec(
+  filter_list := [ "category", "morphism" ],
   return_type := IsList,
-  dual_operation := "CoefficientsOfMorphismWithGivenBasisOfExternalHom",
+  dual_operation := "CoefficientsOfMorphism",
   dual_postprocessor_func := IdFunc
 ),
 
@@ -3607,7 +3730,7 @@ SimplifyObject_IsoFromInputObject := rec(
     return [ false ];
     
   end,
-  pre_function := ~.SimplifyObject.pre_function
+  pre_function := "SimplifyObject"
   ),
 
 SimplifyObject_IsoToInputObject := rec(
@@ -3615,8 +3738,8 @@ SimplifyObject_IsoToInputObject := rec(
   io_type := [ [ "A", "n" ], [ "B", "A" ] ],
   return_type := "morphism",
   dual_operation := "SimplifyObject_IsoFromInputObject",
-  redirect_function := ~.SimplifyObject_IsoFromInputObject.redirect_function,
-  pre_function := ~.SimplifyObject.pre_function
+  redirect_function := "SimplifyObject_IsoFromInputObject",
+  pre_function := "SimplifyObject"
   ),
 
 ## SimplifyMorphism
@@ -3625,8 +3748,8 @@ SimplifyMorphism := rec(
   io_type := [ [ "mor", "n" ], [ "mor_source", "mor_range" ] ],
   return_type := "morphism",
   dual_operation := "SimplifyMorphism",
-  redirect_function := ~.SimplifyObject.redirect_function,
-  pre_function := ~.SimplifyObject.pre_function
+  redirect_function := "SimplifyObject",
+  pre_function := "SimplifyObject"
   ),
 
 ## SimplifySource*
@@ -3635,8 +3758,8 @@ SimplifySource := rec(
   io_type := [ [ "mor", "n" ], [ "Ap", "mor_range" ] ],
   return_type := "morphism",
   dual_operation := "SimplifyRange",
-  redirect_function := ~.SimplifyObject.redirect_function,
-  pre_function := ~.SimplifyObject.pre_function
+  redirect_function := "SimplifyObject",
+  pre_function := "SimplifyObject"
   ),
 
 SimplifySource_IsoToInputObject := rec(
@@ -3653,7 +3776,7 @@ SimplifySource_IsoToInputObject := rec(
     return [ false ];
     
   end,
-  pre_function := ~.SimplifyObject.pre_function
+  pre_function := "SimplifyObject"
   ),
   
 SimplifySource_IsoFromInputObject := rec(
@@ -3661,8 +3784,8 @@ SimplifySource_IsoFromInputObject := rec(
   io_type := [ [ "mor", "n" ], [ "mor_source", "Ap" ] ],
   return_type := "morphism",
   dual_operation := "SimplifyRange_IsoToInputObject",
-  redirect_function := ~.SimplifySource_IsoToInputObject.redirect_function,
-  pre_function := ~.SimplifyObject.pre_function
+  redirect_function := "SimplifySource_IsoToInputObject",
+  pre_function := "SimplifyObject"
   ),
 
 ## SimplifyRange*
@@ -3671,8 +3794,8 @@ SimplifyRange := rec(
   io_type := [ [ "mor", "n" ], [ "mor_source", "Bp" ] ],
   return_type := "morphism",
   dual_operation := "SimplifySource",
-  redirect_function := ~.SimplifyObject.redirect_function,
-  pre_function := ~.SimplifyObject.pre_function
+  redirect_function := "SimplifyObject",
+  pre_function := "SimplifyObject"
   ),
 
 SimplifyRange_IsoToInputObject := rec(
@@ -3689,7 +3812,7 @@ SimplifyRange_IsoToInputObject := rec(
     return [ false ];
     
   end,
-  pre_function := ~.SimplifyObject.pre_function
+  pre_function := "SimplifyObject"
   ),
   
 SimplifyRange_IsoFromInputObject := rec(
@@ -3697,8 +3820,8 @@ SimplifyRange_IsoFromInputObject := rec(
   io_type := [ [ "mor", "n" ], [ "mor_range", "Bp" ] ],
   return_type := "morphism",
   dual_operation := "SimplifySource_IsoToInputObject",
-  redirect_function := ~.SimplifySource_IsoToInputObject.redirect_function,
-  pre_function := ~.SimplifyObject.pre_function
+  redirect_function := "SimplifySource_IsoToInputObject",
+  pre_function := "SimplifyObject"
   ),
 
 ## SimplifySourceAndRange*
@@ -3707,8 +3830,8 @@ SimplifySourceAndRange := rec(
   io_type := [ [ "mor", "n" ], [ "Ap", "Bp" ] ],
   return_type := "morphism",
   dual_operation := "SimplifySourceAndRange",
-  redirect_function := ~.SimplifyObject.redirect_function,
-  pre_function := ~.SimplifyObject.pre_function
+  redirect_function := "SimplifyObject",
+  pre_function := "SimplifyObject"
   ),
 
 SimplifySourceAndRange_IsoToInputSource := rec(
@@ -3716,8 +3839,8 @@ SimplifySourceAndRange_IsoToInputSource := rec(
   io_type := [ [ "mor", "n" ], [ "Ap", "mor_source" ] ],
   return_type := "morphism",
   dual_operation := "SimplifySourceAndRange_IsoFromInputRange",
-  redirect_function := ~.SimplifySource_IsoToInputObject.redirect_function,
-  pre_function := ~.SimplifyObject.pre_function
+  redirect_function := "SimplifySource_IsoToInputObject",
+  pre_function := "SimplifyObject"
   ),
   
 SimplifySourceAndRange_IsoFromInputSource := rec(
@@ -3725,8 +3848,8 @@ SimplifySourceAndRange_IsoFromInputSource := rec(
   io_type := [ [ "mor", "n" ], [ "mor_source", "Ap" ] ],
   return_type := "morphism",
   dual_operation := "SimplifySourceAndRange_IsoToInputRange",
-  redirect_function := ~.SimplifySource_IsoToInputObject.redirect_function,
-  pre_function := ~.SimplifyObject.pre_function
+  redirect_function := "SimplifySource_IsoToInputObject",
+  pre_function := "SimplifyObject"
   ),
 
 SimplifySourceAndRange_IsoToInputRange := rec(
@@ -3734,8 +3857,8 @@ SimplifySourceAndRange_IsoToInputRange := rec(
   io_type := [ [ "mor", "n" ], [ "Bp", "mor_range" ] ],
   return_type := "morphism",
   dual_operation := "SimplifySourceAndRange_IsoFromInputSource",
-  redirect_function := ~.SimplifySource_IsoToInputObject.redirect_function,
-  pre_function := ~.SimplifyObject.pre_function
+  redirect_function := "SimplifySource_IsoToInputObject",
+  pre_function := "SimplifyObject"
   ),
   
 SimplifySourceAndRange_IsoFromInputRange := rec(
@@ -3743,8 +3866,8 @@ SimplifySourceAndRange_IsoFromInputRange := rec(
   io_type := [ [ "mor", "n" ], [ "mor_range", "Bp" ] ],
   return_type := "morphism",
   dual_operation := "SimplifySourceAndRange_IsoToInputSource",
-  redirect_function := ~.SimplifySource_IsoToInputObject.redirect_function,
-  pre_function := ~.SimplifyObject.pre_function
+  redirect_function := "SimplifySource_IsoToInputObject",
+  pre_function := "SimplifyObject"
   ),
 
 ## SimplifyEndo*
@@ -3753,7 +3876,7 @@ SimplifyEndo := rec(
   io_type := [ [ "mor", "n" ], [ "Ap", "Ap" ] ],
   return_type := "morphism",
   dual_operation := "SimplifyEndo",
-  redirect_function := ~.SimplifyObject.redirect_function,
+  redirect_function := "SimplifyObject",
   pre_function := function( cat, endo, n )
     
     if not ( IsPosInt( n ) or IsInfinity( n ) ) then
@@ -3774,8 +3897,8 @@ SimplifyEndo_IsoFromInputObject := rec(
   io_type := [ [ "mor", "n" ], [ "mor_source", "Ap" ] ],
   return_type := "morphism",
   dual_operation := "SimplifyEndo_IsoToInputObject",
-  redirect_function := ~.SimplifySource_IsoToInputObject.redirect_function,
-  pre_function := ~.SimplifyEndo.pre_function
+  redirect_function := "SimplifySource_IsoToInputObject",
+  pre_function := "SimplifyEndo"
   ),
 
 SimplifyEndo_IsoToInputObject := rec(
@@ -3783,8 +3906,8 @@ SimplifyEndo_IsoToInputObject := rec(
   io_type := [ [ "mor", "n" ], [ "Ap", "mor_range" ] ],
   return_type := "morphism",
   dual_operation := "SimplifyEndo_IsoFromInputObject",
-  redirect_function := ~.SimplifySource_IsoToInputObject.redirect_function,
-  pre_function := ~.SimplifyEndo.pre_function
+  redirect_function := "SimplifySource_IsoToInputObject",
+  pre_function := "SimplifyEndo"
   ),
 
 SomeReductionBySplitEpiSummand := rec(
@@ -3822,6 +3945,60 @@ AdditiveGenerators := rec(
   return_type := "list_of_objects",
   dual_operation := "AdditiveGenerators",
 ),
+
+IndecomposableProjectiveObjects := rec(
+  filter_list := [ "category" ],
+  return_type := "list_of_objects",
+  dual_operation := "IndecomposableInjectiveObjects",
+),
+
+IndecomposableInjectiveObjects := rec(
+  filter_list := [ "category" ],
+  return_type := "list_of_objects",
+  dual_operation := "IndecomposableProjectiveObjects",
+),
+
+ProjectiveCoverObject := rec(
+  filter_list := [ "category", "object" ],
+  return_type := "object",
+  dual_operation := "InjectiveEnvelopeObject",
+  is_merely_set_theoretic := true ),
+
+EpimorphismFromProjectiveCoverObject := rec(
+  filter_list := [ "category", "object" ],
+  io_type := [ [ "A" ], [ "P", "A" ] ],
+  with_given_object_position := "Source",
+  return_type := "morphism",
+  dual_operation := "MonomorphismIntoInjectiveEnvelopeObject",
+  is_merely_set_theoretic := true ),
+
+EpimorphismFromProjectiveCoverObjectWithGivenProjectiveCoverObject := rec(
+  filter_list := [ "category", "object", "object" ],
+  io_type := [ [ "A", "P" ], [ "P", "A" ] ],
+  return_type := "morphism",
+  dual_operation := "MonomorphismIntoInjectiveEnvelopeObjectWithGivenInjectiveEnvelopeObject",
+  is_merely_set_theoretic := true ),
+
+InjectiveEnvelopeObject := rec(
+  filter_list := [ "category", "object" ],
+  return_type := "object",
+  dual_operation := "ProjectiveCoverObject",
+  is_merely_set_theoretic := true ),
+
+MonomorphismIntoInjectiveEnvelopeObject := rec(
+  filter_list := [ "category", "object" ],
+  io_type := [ [ "A" ], [ "A", "I" ] ],
+  with_given_object_position := "Range",
+  return_type := "morphism",
+  dual_operation := "EpimorphismFromProjectiveCoverObject",
+  is_merely_set_theoretic := true ),
+
+MonomorphismIntoInjectiveEnvelopeObjectWithGivenInjectiveEnvelopeObject := rec(
+  filter_list := [ "category", "object", "object" ],
+  io_type := [ [ "A", "I" ], [ "A", "I" ] ],
+  return_type := "morphism",
+  dual_operation := "EpimorphismFromProjectiveCoverObjectWithGivenProjectiveCoverObject",
+  is_merely_set_theoretic := true ),
 
 ) );
 
@@ -4321,7 +4498,8 @@ InstallGlobalFunction( CAP_INTERNAL_VALIDATE_LIMITS_IN_NAME_RECORD,
             # For the universal morphisms and functorials, this follows from the universal property.
             # All other operations are automatically compatible because they do not have morphisms as input.
             
-            if limit.number_of_targets > 0 then # if limit.number_of_targets = 0, the universal morphism has no test morphism as input anyway
+            # if limit.number_of_targets = 0, the universal morphism has no test morphism as input anyway
+            if limit.number_of_targets > 0 then
                 
                 universal_morphism_record.compatible_with_congruence_of_morphisms := true;
                 functorial_record.compatible_with_congruence_of_morphisms := true;
@@ -4492,15 +4670,13 @@ end );
 BindGlobal( "CAP_INTERNAL_CREATE_REDIRECTION",
   
   function( without_given_name, with_given_name, object_function_name, object_arguments_positions )
-    local object_function, with_given_name_function, is_attribute, record, attribute_tester;
+    local object_function, with_given_name_function, record, attribute_tester;
     
     object_function := ValueGlobal( object_function_name );
     
     with_given_name_function := ValueGlobal( with_given_name );
     
-    is_attribute := IsOperation( object_function ) and Tester( object_function ) <> false;
-    
-    if not is_attribute then
+    if not IsAttribute( object_function ) then
         
         return function( arg )
           local category, without_given_weight, with_given_weight, object_args, cache, cache_value;
@@ -4591,7 +4767,7 @@ end );
 BindGlobal( "CAP_INTERNAL_CREATE_POST_FUNCTION",
   
   function( source_range_object, object_function_name, object_arguments_positions )
-    local object_getter, object_function, setter_function, is_attribute, cache_key_length;
+    local object_getter, object_function, setter_function, cache_key_length;
     
     if source_range_object = "Source" then
         object_getter := Source;
@@ -4603,10 +4779,9 @@ BindGlobal( "CAP_INTERNAL_CREATE_POST_FUNCTION",
     
     object_function := ValueGlobal( object_function_name );
     
-    is_attribute := IsOperation( object_function ) and Setter( object_function ) <> false;
     cache_key_length := Length( object_arguments_positions );
     
-    if not is_attribute then
+    if not IsAttribute( object_function ) then
     
         return function( arg )
             local result, object, category;
@@ -4671,8 +4846,9 @@ InstallGlobalFunction( CAP_INTERNAL_ENHANCE_NAME_RECORD,
   function( record )
     local recnames, current_recname, current_rec, io_type, number_of_arguments, func_string,
           installation_name, output_list, input_list, argument_names, return_list, current_output, input_position, list_position,
-          without_given_name, with_given_names, with_given_name, without_given_rec, with_given_object_position, object_name,
-          object_filter_list, with_given_object_filter, given_source_argument_name, given_range_argument_name, with_given_rec, i;
+          without_given_name, with_given_prefix, with_given_names, with_given_name, without_given_rec, with_given_object_position, object_name,
+          object_filter_list, with_given_object_filter, given_source_argument_name, given_range_argument_name, with_given_rec, i,
+          can_always_compute_output_source_getter, can_always_compute_output_range_getter;
     
     recnames := RecNames( record );
     
@@ -4710,7 +4886,7 @@ InstallGlobalFunction( CAP_INTERNAL_ENHANCE_NAME_RECORD,
             
             io_type := current_rec.io_type;
             
-            if not IsList( io_type ) or not Length( io_type ) = 2 then
+            if not IsList( io_type ) or Length( io_type ) <> 2 then
                 Error( "the io_type of <current_rec> is not a list of length 2" );
             fi;
             
@@ -4728,6 +4904,48 @@ InstallGlobalFunction( CAP_INTERNAL_ENHANCE_NAME_RECORD,
         fi;
         
         current_rec.function_name := current_recname;
+        
+        if IsBound( current_rec.pre_function ) and IsString( current_rec.pre_function ) then
+            
+            if IsBound( record.(current_rec.pre_function) ) and IsBound( record.(current_rec.pre_function).pre_function ) and IsFunction( record.(current_rec.pre_function).pre_function ) then
+                
+                current_rec.pre_function := record.(current_rec.pre_function).pre_function;
+                
+            else
+                
+                Error( "Could not find pre function for ", current_recname, ". ", current_rec.pre_function, " is not the name of an operation in the record, has no pre function, or has itself a string as pre function." );
+                
+            fi;
+            
+        fi;
+        
+        if IsBound( current_rec.pre_function_full ) and IsString( current_rec.pre_function_full ) then
+            
+            if IsBound( record.(current_rec.pre_function_full) ) and IsBound( record.(current_rec.pre_function_full).pre_function_full ) and IsFunction( record.(current_rec.pre_function_full).pre_function_full ) then
+                
+                current_rec.pre_function_full := record.(current_rec.pre_function_full).pre_function_full;
+                
+            else
+                
+                Error( "Could not find full pre function for ", current_recname, ". ", current_rec.pre_function_full, " is not the name of an operation in the record, has no full pre function, or has itself a string as full pre function." );
+                
+            fi;
+            
+        fi;
+        
+        if IsBound( current_rec.redirect_function ) and IsString( current_rec.redirect_function ) then
+            
+            if IsBound( record.(current_rec.redirect_function) ) and IsBound( record.(current_rec.redirect_function).redirect_function ) and IsFunction( record.(current_rec.redirect_function).redirect_function ) then
+                
+                current_rec.redirect_function := record.(current_rec.redirect_function).redirect_function;
+                
+            else
+                
+                Error( "Could not find redirect function for ", current_recname, ". ", current_rec.redirect_function, " is not the name of an operation in the record, has no redirect function, or has itself a string as redirect function." );
+                
+            fi;
+            
+        fi;
         
         number_of_arguments := Length( current_rec.filter_list );
         
@@ -4748,16 +4966,16 @@ InstallGlobalFunction( CAP_INTERNAL_ENHANCE_NAME_RECORD,
         fi;
         
         if IsBound( current_rec.dual_preprocessor_func ) and NumberArgumentsFunction( current_rec.dual_preprocessor_func ) >= 0 and NumberArgumentsFunction( current_rec.dual_preprocessor_func ) <> number_of_arguments then
-            Error( "the dual preprocessor function of <current_rec> has the wrong number of arguments" );
+            Error( "the dual preprocessor function of ", current_recname, " has the wrong number of arguments" );
         fi;
         
         if not ForAll( current_rec.filter_list, x -> IsString( x ) or IsFilter( x ) ) then
-            Error( "the filter list of <current_rec> does not fulfill the requirements" );
+            Error( "the filter list of ", current_recname, " does not fulfill the requirements" );
         fi;
         
         if not IsBound( current_rec.install_convenience_without_category ) then
             
-            if ForAny( [ "object", "morphism", "twocell", "list_of_objects", "list_of_morphisms" ], filter -> filter in current_rec.filter_list ) then
+            if ForAny( [ "object", "morphism", "twocell", "list_of_objects", "list_of_morphisms", "list_of_twocells" ], filter -> filter in current_rec.filter_list ) then
                 
                 current_rec.install_convenience_without_category := true;
                 
@@ -4922,7 +5140,7 @@ InstallGlobalFunction( CAP_INTERNAL_ENHANCE_NAME_RECORD,
             
             output_list := current_rec.io_type[ 2 ];
             
-            if not Length( output_list ) = 2 then
+            if Length( output_list ) <> 2 then
                 
                 Error( "the output type is not a list of length 2" );
                 
@@ -4934,9 +5152,8 @@ InstallGlobalFunction( CAP_INTERNAL_ENHANCE_NAME_RECORD,
             
             argument_names := input_list;
             
-            return_list := [ ];
-            
-            for i in [ 1 .. Length( output_list ) ] do
+            return_list := List( [ 1 .. Length( output_list ) ], function ( i )
+              local current_output, input_position, list_position;
                 
                 current_output := output_list[ i ];
                 
@@ -4944,24 +5161,22 @@ InstallGlobalFunction( CAP_INTERNAL_ENHANCE_NAME_RECORD,
                 
                 if input_position = fail then
                     
-                    return_list[ i ] := fail;
-                    
-                    continue;
+                    return fail;
                     
                 fi;
                 
                 if Length( current_output ) = 1 then
                     
-                   return_list[ i ] := argument_names[ input_position ];
+                   return argument_names[ input_position ];
                    
                 elif Length( current_output ) = 2 then
                     
                     if LowercaseString( current_output[ 2 ] ) = "source" then
-                        return_list[ i ] := Concatenation( "Source( ", argument_names[ input_position ], " )" );
+                        return Concatenation( "Source( ", argument_names[ input_position ], " )" );
                     elif LowercaseString( current_output[ 2 ] ) = "range" then
-                        return_list[ i ] := Concatenation( "Range( ", argument_names[ input_position ], " )" );
+                        return Concatenation( "Range( ", argument_names[ input_position ], " )" );
                     elif Position( input_list, current_output[ 2 ] ) <> fail then
-                        return_list[ i ] := Concatenation( argument_names[ input_position ], "[", argument_names[ Position( input_list, current_output[ 2 ] ) ], "]" );
+                        return Concatenation( argument_names[ input_position ], "[", argument_names[ Position( input_list, current_output[ 2 ] ) ], "]" );
                     else
                         Error( "wrong input type" );
                     fi;
@@ -4983,9 +5198,9 @@ InstallGlobalFunction( CAP_INTERNAL_ENHANCE_NAME_RECORD,
                     fi;
                     
                     if LowercaseString( current_output[ 3 ] ) = "source" then
-                        return_list[ i ] := Concatenation( "Source( ", argument_names[ input_position ], "[", list_position, "] )" );
+                        return Concatenation( "Source( ", argument_names[ input_position ], "[", list_position, "] )" );
                     elif LowercaseString( current_output[ 3 ] ) = "range" then
-                        return_list[ i ] := Concatenation( "Range( ", argument_names[ input_position ], "[", list_position, "] )" );
+                        return Concatenation( "Range( ", argument_names[ input_position ], "[", list_position, "] )" );
                     else
                         Error( "wrong output syntax" );
                     fi;
@@ -4996,17 +5211,19 @@ InstallGlobalFunction( CAP_INTERNAL_ENHANCE_NAME_RECORD,
                     
                 fi;
                 
-            od;
+            end );
             
-            if IsBound( return_list[1] ) and return_list[1] <> fail then
+            if return_list[1] <> fail then
                 
                 current_rec.output_source_getter_string := return_list[1];
+                current_rec.can_always_compute_output_source_getter := true;
                 
             fi;
             
-            if IsBound( return_list[2] ) and return_list[2] <> fail then
+            if return_list[2] <> fail then
                 
                 current_rec.output_range_getter_string := return_list[2];
+                current_rec.can_always_compute_output_range_getter := true;
                 
             fi;
             
@@ -5045,7 +5262,9 @@ InstallGlobalFunction( CAP_INTERNAL_ENHANCE_NAME_RECORD,
             
             without_given_name := current_recname;
             
-            with_given_names := Filtered( recnames, x -> StartsWith( x, Concatenation( without_given_name, "WithGiven" ) ) );
+            with_given_prefix := Concatenation( without_given_name, "WithGiven" );
+            
+            with_given_names := Filtered( recnames, x -> StartsWith( x, with_given_prefix ) );
             
             if Length( with_given_names ) <> 1 then
                 
@@ -5059,7 +5278,7 @@ InstallGlobalFunction( CAP_INTERNAL_ENHANCE_NAME_RECORD,
             
             with_given_object_position := without_given_rec.with_given_object_position;
             
-            object_name := ReplacedString( with_given_name, Concatenation( without_given_name, "WithGiven" ), "" );
+            object_name := ReplacedString( with_given_name, with_given_prefix, "" );
             
             # generate output_source_getter_string resp. output_range_getter_string automatically if possible
             if object_name in recnames then
@@ -5220,7 +5439,7 @@ InstallGlobalFunction( CAP_INTERNAL_ENHANCE_NAME_RECORD,
                 
             fi;
             
-            CAP_INTERNAL_IS_EQUAL_FOR_METHOD_RECORD_ENTRIES( record, with_given_name, with_given_rec : subset_only );
+            CAP_INTERNAL_IS_EQUAL_FOR_METHOD_RECORD_ENTRIES( record, with_given_name, with_given_rec : subset_only := true );
             
             # now enhance the actual with_given_rec
             with_given_rec := record.(with_given_name);
@@ -5329,16 +5548,47 @@ InstallGlobalFunction( CAP_INTERNAL_ENHANCE_NAME_RECORD,
             ) );
             
             # Test if output_source_getter_string contains a CAP operation.
-            # If not, it can always be computed (independent of the conrete category).
-            current_rec.can_always_compute_output_source_getter := IsEmpty(
-                CAP_INTERNAL_FIND_APPEARANCE_OF_SYMBOL_IN_FUNCTION(
-                    current_rec.output_source_getter,
-                    Concatenation( recnames, RecNames( CAP_INTERNAL_METHOD_NAME_RECORD ) ),
-                    2,
-                    CAP_INTERNAL_METHOD_RECORD_REPLACEMENTS,
-                    rec( )
-                )
-            );
+            # If not, it can always be computed (independent of the concrete category).
+            
+            can_always_compute_output_source_getter := fail;
+            
+            if current_rec.output_source_getter_string in current_rec.input_arguments_names then
+                
+                can_always_compute_output_source_getter := true;
+                
+            else
+                
+                #= comment for Julia
+                can_always_compute_output_source_getter := IsEmpty(
+                    CAP_INTERNAL_FIND_APPEARANCE_OF_SYMBOL_IN_FUNCTION(
+                        current_rec.output_source_getter,
+                        Concatenation( recnames, RecNames( CAP_INTERNAL_METHOD_NAME_RECORD ) ),
+                        2,
+                        CAP_INTERNAL_METHOD_RECORD_REPLACEMENTS,
+                        rec( )
+                    )
+                );
+                # =#
+                
+            fi;
+            
+            if can_always_compute_output_source_getter <> fail then
+                
+                if IsBound( current_rec.can_always_compute_output_source_getter ) then
+                    
+                    if current_rec.can_always_compute_output_source_getter <> can_always_compute_output_source_getter then
+                        
+                        Error( "<current_rec.can_always_compute_output_source_getter> does not match the automatically detected value" );
+                        
+                    fi;
+                    
+                else
+                    
+                    current_rec.can_always_compute_output_source_getter := can_always_compute_output_source_getter;
+                    
+                fi;
+                
+            fi;
             
         fi;
         
@@ -5353,16 +5603,47 @@ InstallGlobalFunction( CAP_INTERNAL_ENHANCE_NAME_RECORD,
             ) );
             
             # Test if output_range_getter_string contains a CAP operation.
-            # If not, it can always be computed (independent of the conrete category).
-            current_rec.can_always_compute_output_range_getter := IsEmpty(
-                CAP_INTERNAL_FIND_APPEARANCE_OF_SYMBOL_IN_FUNCTION(
-                    current_rec.output_range_getter,
-                    Concatenation( recnames, RecNames( CAP_INTERNAL_METHOD_NAME_RECORD ) ),
-                    2,
-                    CAP_INTERNAL_METHOD_RECORD_REPLACEMENTS,
-                    rec( )
-                )
-            );
+            # If not, it can always be computed (independent of the concrete category).
+            
+            can_always_compute_output_range_getter := fail;
+            
+            if current_rec.output_range_getter_string in current_rec.input_arguments_names then
+                
+                can_always_compute_output_range_getter := true;
+                
+            else
+                
+                #= comment for Julia
+                can_always_compute_output_range_getter := IsEmpty(
+                    CAP_INTERNAL_FIND_APPEARANCE_OF_SYMBOL_IN_FUNCTION(
+                        current_rec.output_range_getter,
+                        Concatenation( recnames, RecNames( CAP_INTERNAL_METHOD_NAME_RECORD ) ),
+                        2,
+                        CAP_INTERNAL_METHOD_RECORD_REPLACEMENTS,
+                        rec( )
+                    )
+                );
+                # =#
+                
+            fi;
+            
+            if can_always_compute_output_range_getter <> fail then
+                
+                if IsBound( current_rec.can_always_compute_output_range_getter ) then
+                    
+                    if current_rec.can_always_compute_output_range_getter <> can_always_compute_output_range_getter then
+                        
+                        Error( "<current_rec.can_always_compute_output_range_getter> does not match the automatically detected value" );
+                        
+                    fi;
+                    
+                else
+                    
+                    current_rec.can_always_compute_output_range_getter := can_always_compute_output_range_getter;
+                    
+                fi;
+                
+            fi;
             
         fi;
         
@@ -5380,27 +5661,11 @@ CAP_INTERNAL_ENHANCE_NAME_RECORD( CAP_INTERNAL_METHOD_NAME_RECORD );
 BindGlobal( "CAP_INTERNAL_CORE_METHOD_NAME_RECORD", StructuralCopy( CAP_INTERNAL_METHOD_NAME_RECORD ) );
 
 ##
-InstallGlobalFunction( CAP_INTERNAL_REVERSE_LISTS_IN_ARGUMENTS_FOR_OPPOSITE,
-  function( arg )
-    local list;
-      
-    list := CAP_INTERNAL_OPPOSITE_RECURSIVE( arg );
-      
-    return List( list, function( l )
-        if IsList( l ) then
-            return Reversed( l );
-        else
-            return l;
-        fi;
-    end );
-
-end );
-
-##
 InstallGlobalFunction( CAP_INTERNAL_GENERATE_DOCUMENTATION_FROM_METHOD_NAME_RECORD,
   function ( record, package_name, filename, chapter_name, section_name )
     local recnames, output_string, package_info, current_string, current_recname, current_rec, output_path;
     
+    #= comment for Julia
     recnames := SortedList( RecNames( record ) );
     
     output_string := "";
@@ -5491,6 +5756,7 @@ DeclareOperation( "Addfunction_name",
         ) );
         
     fi;
+    # =#
     
 end );
 
@@ -5534,7 +5800,7 @@ CAP_INTERNAL_REGISTER_METHOD_NAME_RECORD_OF_PACKAGE( CAP_INTERNAL_METHOD_NAME_RE
 ##
 InstallGlobalFunction( CAP_INTERNAL_GENERATE_DOCUMENTATION_FOR_CATEGORY_INSTANCES,
   function ( subsections, package_name, filename, chapter_name, section_name )
-    local output_string, package_info, current_string, transitively_needed_other_packages, subsection, category, subsection_title, operations, bookname, info, label, match, nr, res, test_string, test_string_legacy, output_path, i, name;
+    local output_string, package_info, current_string, transitively_needed_other_packages, previous_operations, subsection, category, subsection_title, operations, bookname, info, label, match, nr, res, test_string, test_string_legacy, output_path, i, name;
     
     output_string := "";
     
@@ -5572,6 +5838,8 @@ InstallGlobalFunction( CAP_INTERNAL_GENERATE_DOCUMENTATION_FOR_CATEGORY_INSTANCE
     # We do not want to include operations from optional dependencies because those might not be available.
     transitively_needed_other_packages := TransitivelyNeededOtherPackages( package_name );
     
+    previous_operations := [ ];
+    
     for i in [ 1 .. Length( subsections ) ] do
         
         subsection := subsections[i];
@@ -5596,7 +5864,13 @@ InstallGlobalFunction( CAP_INTERNAL_GENERATE_DOCUMENTATION_FOR_CATEGORY_INSTANCE
             
         else
             
-            operations := AsSortedList( Difference( ListInstalledOperationsOfCategory( category ), ListInstalledOperationsOfCategory( subsections[i - 1][1] ) ) );
+            if not IsSubset( ListInstalledOperationsOfCategory( category ), previous_operations ) then
+                
+                Error( "the operations of the ", i - 1, "-th category are not a subset of the operations of the ", i, "-th category" );
+                
+            fi;
+            
+            operations := AsSortedList( Difference( ListInstalledOperationsOfCategory( category ), previous_operations ) );
             
             current_string := "\n\n# ! The following additional CAP operations are supported:";
             
@@ -5695,6 +5969,8 @@ InstallGlobalFunction( CAP_INTERNAL_GENERATE_DOCUMENTATION_FOR_CATEGORY_INSTANCE
                 )
             );
             output_string := Concatenation( output_string, current_string );
+            
+            Add( previous_operations, name );
             
         od;
         

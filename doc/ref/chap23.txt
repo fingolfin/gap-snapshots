@@ -252,15 +252,25 @@
   
   [33X[1;0Y[29X[2XImmutableVector[102X( [3Xfield[103X, [3Xvector[103X[, [3Xchange[103X] ) [32X operation[133X
   
-  [33X[0;0Yreturns  an  immutable  vector  equal  to  [3Xvector[103X  which  is  in the optimal
-  (concerning  space  and  runtime)  representation  for  vectors defined over
-  [3Xfield[103X.  This means that vectors obtained by several calls of [2XImmutableVector[102X
-  for the same [3Xfield[103X are compatible for fast arithmetic without need for field
+  [33X[0;0YLet  [3Xvector[103X  be  an  object  for  which  [2XIsRowVector[102X ([14X23.1-1[114X) or [2XIsVectorObj[102X
+  ([14X26.2-1[114X)   returns  [9Xtrue[109X.  In  the  former  case,  [3Xvector[103X  is  a  list,  and
+  [2XImmutableVector[102X  returns  an immutable object for which [2XIsRowVector[102X ([14X23.1-1[114X)
+  returns  [9Xtrue[109X  (in  particular  again a list), which is equal to [3Xvector[103X, and
+  which  is  in  the optimal (concerning space and runtime) representation for
+  vectors  defined  over  [3Xfield[103X,  provided  that  the entries of [3Xvector[103X lie in
+  [3Xfield[103X.  In  the  latter  case,  if  [3Xvector[103X  is  not in [2XIsRowVector[102X ([14X23.1-1[114X),
+  [2XImmutableVector[102X  returns  an immutable object that is equal to the result of
+  [2XChangedBaseDomain[102X ([14X26.6-3[114X) when this is called with [3Xvector[103X and [3Xfield[103X.[133X
+  
+  [33X[0;0YThis means that vectors obtained by several calls of [2XImmutableVector[102X for the
+  same  [3Xfield[103X  are  compatible  for  fast  arithmetic  without  need for field
   conversion.[133X
   
-  [33X[0;0YThe  input vector [3Xvector[103X might change its representation as a side effect of
-  this  function,  however  the  result  of [2XImmutableVector[102X is not necessarily
-  [13Xidentical[113X to [3Xvector[103X if a conversion is not possible.[133X
+  [33X[0;0YIf  the  input vector [3Xvector[103X is in [2XIsRowVector[102X ([14X23.1-1[114X) then it might change
+  its  representation  as  a side effect of this function. However, one cannot
+  rely  on  this  side  effect.  Also,  if [3Xvector[103X is already immutable and the
+  result  of  [2XImmutableVector[102X  has the same internal representation as [3Xvector[103X,
+  the result is not necessarily [13Xidentical[113X to [3Xvector[103X.[133X
   
   [33X[0;0YIf [3Xchange[103X is [9Xtrue[109X, then [3Xvector[103X may be changed to become immutable; otherwise
   it is copied first.[133X

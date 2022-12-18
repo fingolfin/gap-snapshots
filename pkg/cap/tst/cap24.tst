@@ -10,29 +10,150 @@
 #
 gap> START_TEST("cap24.tst");
 
-# doc/_Chapter_Examples_and_Tests.xml:1120-1143
-gap> vecspaces := CreateCapCategory( "VectorSpacesForIsWellDefinedTest" );
-VectorSpacesForIsWellDefinedTest 
+# doc/_Chapter_Examples_and_Tests.xml:1154-1298
+gap> vecspaces := CreateCapCategory( "VectorSpacesForGeneralizedMorphismsTest" );
+VectorSpacesForGeneralizedMorphismsTest
 gap> ReadPackage( "CAP", "examples/VectorSpacesAllMethods.g" );
 true
-gap> LoadPackage( "GeneralizedMorphismsForCAP" );
-true
-gap> A := QVectorSpace( 1 );
-<A rational vector space of dimension 1>
-gap> B := QVectorSpace( 2 );
+gap> A := QVectorSpace( 3 );
+<A rational vector space of dimension 3>
+gap> Asub := QVectorSpace( 2 );
 <A rational vector space of dimension 2>
-gap> alpha := VectorSpaceMorphism( A, [ [ 1, 2 ] ], B );
+gap> B := QVectorSpace( 3 );
+<A rational vector space of dimension 3>
+gap> Bfac := QVectorSpace( 1 );
+<A rational vector space of dimension 1>
+gap> Bsub := QVectorSpace( 2 );
+<A rational vector space of dimension 2>
+gap> C := QVectorSpace( 3 );
+<A rational vector space of dimension 3>
+gap> Cfac := QVectorSpace( 1 );
+<A rational vector space of dimension 1>
+gap> Asub_into_A := VectorSpaceMorphism( Asub, [ [ 1, 0, 0 ], [ 0, 1, 0 ] ], A );
 A rational vector space homomorphism with matrix: 
-[ [  1,  2 ] ]
+[ [  1,  0,  0 ],
+  [  0,  1,  0 ] ]
 
-gap> g := GeneralizedMorphism( alpha, alpha, alpha );
-<A morphism in Generalized morphism category of VectorSpacesForIsWellDefinedTest>
-gap> IsWellDefined( alpha );
+gap> Asub_to_Bfac := VectorSpaceMorphism( Asub, [ [ 1 ], [ 1 ] ], Bfac );
+A rational vector space homomorphism with matrix: 
+[ [  1 ],
+  [  1 ] ]
+
+gap> B_onto_Bfac := VectorSpaceMorphism( B, [ [ 1 ], [ 1 ], [ 1 ] ], Bfac );
+A rational vector space homomorphism with matrix: 
+[ [  1 ],
+  [  1 ],
+  [  1 ] ]
+
+gap> Bsub_into_B := VectorSpaceMorphism( Bsub, [ [ 2, 2, 0 ], [ 0, 2, 2 ] ], B );
+A rational vector space homomorphism with matrix: 
+[ [  2,  2,  0 ],
+  [  0,  2,  2 ] ]
+
+gap> Bsub_to_Cfac := VectorSpaceMorphism( Bsub, [ [ 3 ], [ 0 ] ], Cfac );
+A rational vector space homomorphism with matrix: 
+[ [  3 ],
+  [  0 ] ]
+
+gap> C_onto_Cfac := VectorSpaceMorphism( C, [ [ 1 ], [ 2 ], [ 3 ] ], Cfac );
+A rational vector space homomorphism with matrix: 
+[ [  1 ],
+  [  2 ],
+  [  3 ] ]
+
+gap> generalized_morphism1 := GeneralizedMorphism( Asub_into_A, Asub_to_Bfac, B_onto_Bfac );
+<A morphism in Generalized morphism category of VectorSpacesForGeneralizedMorphismsTest>
+gap> generalized_morphism2 := GeneralizedMorphism( Bsub_into_B, Bsub_to_Cfac, C_onto_Cfac );
+<A morphism in Generalized morphism category of VectorSpacesForGeneralizedMorphismsTest>
+gap> IsWellDefined( generalized_morphism1 );
 true
-gap> IsWellDefined( g );
+gap> IsWellDefined( generalized_morphism2 );
 true
-gap> IsEqualForObjects( A, B );
-false
+gap> p := PreCompose( generalized_morphism1, generalized_morphism2 );
+<A morphism in Generalized morphism category of VectorSpacesForGeneralizedMorphismsTest>
+gap> SourceAid( p );
+A rational vector space homomorphism with matrix: 
+[ [  -1,   1,   0 ],
+  [   1,   0,   0 ] ]
+
+gap> Arrow( p );
+A rational vector space homomorphism with matrix: 
+(an empty 2 x 0 matrix)
+
+gap> RangeAid( p );
+A rational vector space homomorphism with matrix: 
+(an empty 3 x 0 matrix)
+gap> A := QVectorSpace( 3 );
+<A rational vector space of dimension 3>
+gap> Asub := QVectorSpace( 2 );
+<A rational vector space of dimension 2>
+gap> B := QVectorSpace( 3 );
+<A rational vector space of dimension 3>
+gap> Bfac := QVectorSpace( 1 );
+<A rational vector space of dimension 1>
+gap> Bsub := QVectorSpace( 2 );
+<A rational vector space of dimension 2>
+gap> C := QVectorSpace( 3 );
+<A rational vector space of dimension 3>
+gap> Cfac := QVectorSpace( 2 );
+<A rational vector space of dimension 2>
+gap> Asub_into_A := VectorSpaceMorphism( Asub, [ [ 1, 0, 0 ], [ 0, 1, 0 ] ], A );
+A rational vector space homomorphism with matrix: 
+[ [  1,  0,  0 ],
+  [  0,  1,  0 ] ]
+
+gap> Asub_to_Bfac := VectorSpaceMorphism( Asub, [ [ 1 ], [ 1 ] ], Bfac );
+A rational vector space homomorphism with matrix: 
+[ [  1 ],
+  [  1 ] ]
+
+gap> B_onto_Bfac := VectorSpaceMorphism( B, [ [ 1 ], [ 1 ], [ 1 ] ], Bfac );
+A rational vector space homomorphism with matrix: 
+[ [  1 ],
+  [  1 ],
+  [  1 ] ]
+
+gap> Bsub_into_B := VectorSpaceMorphism( Bsub, [ [ 2, 2, 0 ], [ 0, 2, 2 ] ], B );
+A rational vector space homomorphism with matrix: 
+[ [  2,  2,  0 ],
+  [  0,  2,  2 ] ]
+
+gap> Bsub_to_Cfac := VectorSpaceMorphism( Bsub, [ [ 3, 3 ], [ 0, 0 ] ], Cfac );
+A rational vector space homomorphism with matrix: 
+[ [  3,  3 ],
+  [  0,  0 ] ]
+
+gap> C_onto_Cfac := VectorSpaceMorphism( C, [ [ 1, 0 ], [ 0, 2 ], [ 3, 3 ] ], Cfac );
+A rational vector space homomorphism with matrix: 
+[ [  1,  0 ],
+  [  0,  2 ],
+  [  3,  3 ] ]
+
+gap> generalized_morphism1 := GeneralizedMorphism( Asub_into_A, Asub_to_Bfac, B_onto_Bfac );
+<A morphism in Generalized morphism category of VectorSpacesForGeneralizedMorphismsTest>
+gap> generalized_morphism2 := GeneralizedMorphism( Bsub_into_B, Bsub_to_Cfac, C_onto_Cfac );
+<A morphism in Generalized morphism category of VectorSpacesForGeneralizedMorphismsTest>
+gap> IsWellDefined( generalized_morphism1 );
+true
+gap> IsWellDefined( generalized_morphism2 );
+true
+gap> p := PreCompose( generalized_morphism1, generalized_morphism2 );
+<A morphism in Generalized morphism category of VectorSpacesForGeneralizedMorphismsTest>
+gap> SourceAid( p );
+A rational vector space homomorphism with matrix: 
+[ [  -1,   1,   0 ],
+  [   1,   0,   0 ] ]
+
+gap> Arrow( p );
+A rational vector space homomorphism with matrix: 
+[ [  0 ],
+  [  0 ] ]
+
+gap> RangeAid( p );
+A rational vector space homomorphism with matrix: 
+[ [  -1 ],
+  [   2 ],
+  [   0 ] ]
 
 #
 gap> STOP_TEST("cap24.tst", 1);

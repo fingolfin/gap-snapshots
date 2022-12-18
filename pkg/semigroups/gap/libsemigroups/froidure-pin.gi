@@ -460,6 +460,90 @@ InstallMethod(Factorization,
 MinimalFactorization);
 
 ###########################################################################
+## Prefixes, Suffixes, etc.
+###########################################################################
+
+InstallMethod(FirstLetter,
+"for a semigroup with CanUseLibsemigroupsFroidurePin and pos. int",
+[IsSemigroup and CanUseLibsemigroupsFroidurePin, IsPosInt],
+function(S, i)
+  local F;
+  F := LibsemigroupsFroidurePin(S);
+  return FroidurePinMemFnRec(S).first_letter(F, i - 1) + 1;
+end);
+
+InstallMethod(FirstLetter,
+"for a semigroup with CanUseLibsemigroupsFroidurePin and mult. element",
+[IsSemigroup and CanUseLibsemigroupsFroidurePin, IsMultiplicativeElement],
+function(S, x)
+  if not x in S then
+    Error("the 2nd argument (a mult. elt.) must belong to the ",
+          "1st argument (a semigroup)");
+  fi;
+  return FirstLetter(S, PositionCanonical(S, x));
+end);
+
+InstallMethod(FinalLetter,
+"for a semigroup with CanUseLibsemigroupsFroidurePin and pos. int",
+[IsSemigroup and CanUseLibsemigroupsFroidurePin, IsPosInt],
+function(S, i)
+  local F;
+  F := LibsemigroupsFroidurePin(S);
+  return FroidurePinMemFnRec(S).final_letter(F, i - 1) + 1;
+end);
+
+InstallMethod(FinalLetter,
+"for a semigroup with CanUseLibsemigroupsFroidurePin and mult. element",
+[IsSemigroup and CanUseLibsemigroupsFroidurePin, IsMultiplicativeElement],
+function(S, x)
+  if not x in S then
+    Error("the 2nd argument (a mult. elt.) must belong to the ",
+          "1st argument (a semigroup)");
+  fi;
+  return FinalLetter(S, PositionCanonical(S, x));
+end);
+
+InstallMethod(Prefix,
+"for a semigroup with CanUseLibsemigroupsFroidurePin and pos. int",
+[IsSemigroup and CanUseLibsemigroupsFroidurePin, IsPosInt],
+function(S, i)
+  local F;
+  F := LibsemigroupsFroidurePin(S);
+  return FroidurePinMemFnRec(S).prefix(F, i - 1) + 1;
+end);
+
+InstallMethod(Prefix,
+"for a semigroup with CanUseLibsemigroupsFroidurePin and mult. element",
+[IsSemigroup and CanUseLibsemigroupsFroidurePin, IsMultiplicativeElement],
+function(S, x)
+  if not x in S then
+    Error("the 2nd argument (a mult. elt.) must belong to the ",
+          "1st argument (a semigroup)");
+  fi;
+  return Prefix(S, PositionCanonical(S, x));
+end);
+
+InstallMethod(Suffix,
+"for a semigroup with CanUseLibsemigroupsFroidurePin and pos. int",
+[IsSemigroup and CanUseLibsemigroupsFroidurePin, IsPosInt],
+function(S, i)
+  local F;
+  F := LibsemigroupsFroidurePin(S);
+  return FroidurePinMemFnRec(S).suffix(F, i - 1) + 1;
+end);
+
+InstallMethod(Suffix,
+"for a semigroup with CanUseLibsemigroupsFroidurePin and mult. element",
+[IsSemigroup and CanUseLibsemigroupsFroidurePin, IsMultiplicativeElement],
+function(S, x)
+  if not x in S then
+    Error("the 2nd argument (a mult. elt.) must belong to the ",
+          "1st argument (a semigroup)");
+  fi;
+  return Suffix(S, PositionCanonical(S, x));
+end);
+
+###########################################################################
 ## Enumerate
 ###########################################################################
 
@@ -724,7 +808,7 @@ function(S)
   if IsFpSemigroup(S) or IsFpMonoid(S) or IsQuotientSemigroup(S) then
     pos_to_pos_sorted := {T, i} -> i;
     product := FroidurePinMemFnRec(S).product_by_reduction;
-    FroidurePinMemFnRec(S).enumerate(T, N);
+    FroidurePinMemFnRec(S).enumerate(T, N + 1);
   else
     pos_to_pos_sorted := FroidurePinMemFnRec(S).position_to_sorted_position;
     product := FroidurePinMemFnRec(S).fast_product;

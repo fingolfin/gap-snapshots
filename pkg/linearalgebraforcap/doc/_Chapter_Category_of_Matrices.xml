@@ -22,6 +22,20 @@
 
 
 <ManSection>
+  <Oper Arg="F" Name="MatrixCategoryAsCategoryOfRows" Label="for IsFieldForHomalg"/>
+ <Returns>a category
+</Returns>
+ <Description>
+ The argument is a homalg field <Math>F</Math>.
+ The output is the matrix category over <Math>F</Math>,
+ constructed internally as a wrapper category of
+ the <Code>CategoryOfRows</Code> of <Math>F</Math>.
+ Only available if the package <Code>FreydCategoriesForCAP</Code> is available.
+ </Description>
+</ManSection>
+
+
+<ManSection>
   <Oper Arg="S, M, R" Name="VectorSpaceMorphism" Label="for IsVectorSpaceObject, IsHomalgMatrix, IsVectorSpaceObject"/>
  <Returns>a morphism in <Math>\mathrm{Hom}(S,R)</Math>
 </Returns>

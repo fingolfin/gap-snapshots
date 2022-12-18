@@ -947,13 +947,6 @@ DeclareOperation( "DirectSumFunctorial",
 DeclareOperation( "DirectSumFunctorialWithGivenDirectSums",
                   [ IsCapCategoryObject, IsList, IsList, IsList, IsCapCategoryObject ] );
 
-#! @Chapter Technical Details
-
-#! @Section Universal Objects
-
-DeclareProperty( "IS_IMPLIED_DIRECT_SUM", 
-                 IsCapCategoryObject );
-
 #! @Chapter Universal Objects
 
 ####################################
@@ -1708,9 +1701,9 @@ DeclareOperation( "IsomorphismFromEqualizerOfDirectProductDiagramToFiberProduct"
 #! @Description
 #! The argument is a list of morphisms $D = ( \beta_i: P_i \rightarrow B )_{i = 1 \dots n}$.
 #! The output is a morphism
-#! $\bigoplus_{i=1}^n P_i \rightarrow B$
+#! $\bigoplus_{i=1}^n P_i \rightarrow \bigoplus_{i=1}^{n-1} B$
 #! such that its kernel equalizes the $\beta_i$.
-#! @Returns a morphism in $\mathrm{Hom}( \bigoplus_{i=1}^n P_i, B )$
+#! @Returns a morphism in $\mathrm{Hom}( \bigoplus_{i=1}^n P_i, \bigoplus_{i=1}^{n-1} B )$
 #! @Arguments D
 DeclareOperation( "DirectSumDiagonalDifference",
                   [ IsList ] );
@@ -1937,9 +1930,9 @@ DeclareOperation( "IsomorphismFromCoequalizerOfCoproductDiagramToPushout",
 #! @Description
 #! The argument is a list of morphisms $D = ( \beta_i: B \rightarrow I_i )_{i = 1 \dots n}$.
 #! The output is a morphism
-#! $B \rightarrow \bigoplus_{i=1}^n I_i$
+#! $\bigoplus_{i=1}^{n-1} B \rightarrow \bigoplus_{i=1}^n I_i$
 #! such that its cokernel coequalizes the $\beta_i$.
-#! @Returns a morphism in $\mathrm{Hom}(B, \bigoplus_{i=1}^n I_i)$
+#! @Returns a morphism in $\mathrm{Hom}(\bigoplus_{i=1}^{n-1} B, \bigoplus_{i=1}^n I_i)$
 #! @Arguments D
 DeclareOperation( "DirectSumCodiagonalDifference",
                   [ IsList ] );
@@ -2208,6 +2201,30 @@ DeclareOperation( "UniversalMorphismFromImage",
 DeclareOperation( "UniversalMorphismFromImageWithGivenImageObject",
                   [ IsCapCategoryMorphism, IsList, IsCapCategoryObject ] );
 
+#! @Description
+#! The arguments are three morphisms
+#! $\alpha: A \rightarrow B$, $\nu: B \rightarrow B'$, $\alpha': A' \rightarrow B'$.
+#! The output is the morphism
+#! $\mathrm{ImageObject}( \alpha ) \rightarrow \mathrm{ImageObject}( \alpha' )$
+#! given by the functoriality of the image.
+#! @Returns a morphism in $\mathrm{Hom}( \mathrm{ImageObject}( \alpha ), \mathrm{ImageObject}( \alpha' ) )$
+#! @Arguments alpha, nu, alpha_prime
+DeclareOperation( "ImageObjectFunctorial",
+        [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ] );
+
+#! @Description
+#! The arguments are an object $s = \mathrm{ImageObject}( \alpha )$,
+#! three morphisms
+#! $\alpha: A \rightarrow B$, $\nu: B \rightarrow B'$, $\alpha': A' \rightarrow B'$,
+#! and an object $r = \mathrm{ImageObject}( \alpha' )$.
+#! The output is the morphism
+#! $\mathrm{ImageObject}( \alpha ) \rightarrow \mathrm{ImageObject}( \alpha' )$
+#! given by the functoriality of the image.
+#! @Returns a morphism in $\mathrm{Hom}( s, r )$
+#! @Arguments s, alpha, nu, alpha_prime, r
+DeclareOperation( "ImageObjectFunctorialWithGivenImageObjects",
+        [ IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject ] );
+
 #! @Chapter Universal Objects
 
 ####################################
@@ -2407,6 +2424,31 @@ DeclareAttribute( "CanonicalIdentificationFromImageObjectToCoimage",
 DeclareAttribute( "CanonicalIdentificationFromCoimageToImageObject",
                   IsCapCategoryMorphism );
 
+#! @Description
+#! The arguments are three morphisms
+#! $\alpha: A \rightarrow B, \mu: A \rightarrow A', \alpha': A' \rightarrow B'$.
+#! The output is the morphism
+#! $\mathrm{CoimageObject}( \alpha ) \rightarrow \mathrm{CoimageObject}( \alpha' )$
+#! given by the functoriality of the coimage.
+#! @Returns a morphism in $\mathrm{Hom}(\mathrm{CoimageObject}( \alpha ), \mathrm{CoimageObject}( \alpha' ))$
+#! @Arguments alpha, mu, alpha_prime
+DeclareOperation( "CoimageObjectFunctorial",
+        [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ] );
+
+
+#! @Description
+#! The arguments are an object $s = \mathrm{CoimageObject}( \alpha )$,
+#! three morphisms
+#! $\alpha: A \rightarrow B, \mu: A \rightarrow A', \alpha': A' \rightarrow B'$,
+#! and an object $r = \mathrm{CoimageObject}( \alpha' )$.
+#! The output is the morphism
+#! $\mathrm{CoimageObject}( \alpha ) \rightarrow \mathrm{CoimageObject}( \alpha' )$
+#! given by the functoriality of the coimage.
+#! @Returns a morphism in $\mathrm{Hom}(s, r)$
+#! @Arguments s, alpha, mu, alpha_prime, r
+DeclareOperation( "CoimageObjectFunctorialWithGivenCoimageObjects",
+        [ IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject ] );
+
 #! @Chapter Universal Objects
 
 ####################################
@@ -2495,6 +2537,62 @@ DeclareOperation( "IsomorphismFromHomologyObjectToItsConstructionAsAnImageObject
 #! @Arguments alpha, beta
 DeclareOperation( "IsomorphismFromItsConstructionAsAnImageObjectToHomologyObject",
                   [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
+
+#! @Chapter Universal Objects
+
+###################################
+##
+#! @Section Projective covers and injective envelopes
+##
+###################################
+
+#! @Description
+#!  The argument is an object $A$.
+#!  The output is a projective cover of $A$.
+#! @Arguments A
+#! @Returns an object
+DeclareAttribute( "ProjectiveCoverObject",
+        IsCapCategoryObject );
+
+#! @Description
+#!  The argument is an object $A$.
+#!  The output is an epimorphism from a projective cover of $A$.
+#! @Arguments A
+#! @Returns an epimorphism
+DeclareAttribute( "EpimorphismFromProjectiveCoverObject",
+        IsCapCategoryObject );
+
+#! @Description
+#!  The argument is an object $A$.
+#!  The output is the epimorphism from the projective cover $P$ of $A$.
+#! @Arguments A, P
+#! @Returns an epimorphism
+DeclareOperation( "EpimorphismFromProjectiveCoverObjectWithGivenProjectiveCoverObject",
+        [ IsCapCategoryObject, IsCapCategoryObject ] );
+
+#! @Description
+#!  The argument is an object $A$.
+#!  The output is an injective envelope of $A$.
+#! @Arguments A
+#! @Returns an object
+DeclareAttribute( "InjectiveEnvelopeObject",
+        IsCapCategoryObject );
+
+#! @Description
+#!  The argument is an object $A$.
+#!  The output is a monomorphism into an injective envelope of $A$.
+#! @Arguments A
+#! @Returns a monomorphism
+DeclareAttribute( "MonomorphismIntoInjectiveEnvelopeObject",
+        IsCapCategoryObject );
+
+#! @Description
+#!  The argument is an object $A$.
+#!  The output is a monomorphism into an injective envelope $I$ of $A$.
+#! @Arguments A, I
+#! @Returns a monomorphism
+DeclareOperation( "MonomorphismIntoInjectiveEnvelopeObjectWithGivenInjectiveEnvelopeObject",
+        [ IsCapCategoryObject, IsCapCategoryObject ] );
 
 #! @Chapter Universal Objects
 

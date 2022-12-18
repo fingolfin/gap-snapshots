@@ -10,16 +10,8 @@
 ##
 ######################################
 
-DeclareRepresentation( "IsCapCategoryMorphismRep",
-                       IsAttributeStoringRep and IsCapCategoryMorphism,
-                       [ ] );
-
-BindGlobal( "TheFamilyOfCapCategoryMorphisms",
-        NewFamily( "TheFamilyOfCapCategoryMorphisms" ) );
-
-BindGlobal( "TheTypeOfCapCategoryMorphisms",
-        NewType( TheFamilyOfCapCategoryMorphisms,
-                IsCapCategoryMorphismRep ) );
+# backwards compatibility
+BindGlobal( "IsCapCategoryMorphismRep", IsCapCategoryMorphism );
 
 ######################################
 ##
@@ -201,7 +193,7 @@ end );
 
 ##
 InstallMethod( \*,
-               [ IsRingElement and IsRat, IsCapCategoryMorphism ],
+               [ IsRat, IsCapCategoryMorphism ],
                
 function( q, mor )
     local cat, ring, r;
@@ -242,7 +234,7 @@ end );
 InstallMethod( IsEqualForCache,
                [ IsCapCategoryMorphism, IsCapCategoryMorphism ],
                
-  IsEqualForCacheForMorphisms );
+  { mor1, mor2 } -> IsEqualForCacheForMorphisms( CapCategory( mor1 ), mor1, mor2 ) );
 
 ##
 # generic fallback to IsIdenticalObj
@@ -264,7 +256,7 @@ InstallMethod( AddMorphismRepresentation,
     fi;
     
     category!.morphism_representation := representation;
-    category!.morphism_type := NewType( TheFamilyOfCapCategoryMorphisms, representation and MorphismFilter( category ) and IsCapCategoryMorphismRep and HasSource and HasRange and HasCapCategory );
+    category!.morphism_type := NewType( TheFamilyOfCapCategoryMorphisms, representation and MorphismFilter( category ) and HasSource and HasRange and HasCapCategory );
     
 end );
 
@@ -358,33 +350,23 @@ InstallMethod( Simplify,
     
 end );
 
+##
+InstallOtherMethod( CoefficientsOfMorphismWithGivenBasisOfExternalHom,
+          [ IsCapCategory, IsCapCategoryMorphism, IsList ],
+
+  function( cat, morphism, basis )
+    
+    Display( "WARNING: CoefficientsOfMorphismWithGivenBasisOfExternalHom is deprecated and will not be supported after 2023.10.30. Please use CoefficientsOfMorphism instead!\n" );
+    
+    return CoefficientsOfMorphism( cat, morphism );
+    
+end );
 
 ##
-CAP_INTERNAL_ADD_REPLACEMENTS_FOR_METHOD_RECORD(
-  rec(
-    CoefficientsOfMorphism := [
-        [ "BasisOfExternalHom", 1 ],
-        [ "CoefficientsOfMorphismWithGivenBasisOfExternalHom", 1 ],
-    ],
-  )
- );
+InstallMethod( CoefficientsOfMorphismWithGivenBasisOfExternalHom,
+          [ IsCapCategoryMorphism, IsList ],
 
-InstallMethod( CoefficientsOfMorphism,
-              [ IsCapCategoryMorphism ],
-  function( alpha )
-    
-    return CoefficientsOfMorphism( CapCategory( alpha ), alpha );
-    
-end );
-
-InstallOtherMethod( CoefficientsOfMorphism,
-              [ IsCapCategory, IsCapCategoryMorphism ],
-  function( cat, alpha )
-    
-    return CoefficientsOfMorphismWithGivenBasisOfExternalHom( cat, alpha, BasisOfExternalHom( cat, Source( alpha ), Range( alpha ) ) );
-    
-end );
-
+  { morphism, basis } -> CoefficientsOfMorphismWithGivenBasisOfExternalHom( CapCategory( morphism ), morphism, basis ) );
 
 ######################################
 ##
@@ -393,10 +375,10 @@ end );
 ######################################
 
 # This method should usually not be selected when the two morphisms belong to the same category
-InstallMethod( IsEqualForMorphisms,
-                [ IsCapCategoryMorphism, IsCapCategoryMorphism ],
+InstallOtherMethod( IsEqualForMorphisms,
+                    [ IsCapCategory, IsCapCategoryMorphism, IsCapCategoryMorphism ],
 
-  function( morphism_1, morphism_2 )
+  function( cat, morphism_1, morphism_2 )
     
     if not HasCapCategory( morphism_1 ) then
         Error( Concatenation( "the morphism \"", String( morphism_1 ), "\" has no CAP category" ) );
@@ -414,10 +396,10 @@ InstallMethod( IsEqualForMorphisms,
 end );
 
 # This method should usually not be selected when the two morphisms belong to the same category
-InstallMethod( IsCongruentForMorphisms,
-                [ IsCapCategoryMorphism, IsCapCategoryMorphism ],
+InstallOtherMethod( IsCongruentForMorphisms,
+                    [ IsCapCategory, IsCapCategoryMorphism, IsCapCategoryMorphism ],
 
-  function( morphism_1, morphism_2 )
+  function( cat, morphism_1, morphism_2 )
     
     if not HasCapCategory( morphism_1 ) then
         Error( Concatenation( "the morphism \"", String( morphism_1 ), "\" has no CAP category" ) );
@@ -523,16 +505,6 @@ InstallDeprecatedAlias( "AddIsIdenticalToZeroMorphism", "AddIsEqualToZeroMorphis
 #     return ZeroMorphism( Source( mor ), Range( mor ) );
 #     
 # end );
-
-##
-InstallMethod( \-,
-               [ IsCapCategoryMorphism, IsCapCategoryMorphism ],
-               
-  function( alpha, beta )
-    
-    return alpha + AdditiveInverse( beta );
-    
-end );
 
 ##
 InstallMethod( PreCompose,
@@ -771,6 +743,27 @@ InstallMethod( IsWellDefined,
 ##
 ###########################
 
+# fallback methods for Julia
+InstallMethod( ViewObj,
+               [ IsCapCategoryMorphism ],
+               
+  function ( morphism )
+    
+    # avoid space in front of "in" to distinguish it from the keyword "in"
+    Print( "<A morphism ", "in ", Name( CapCategory( morphism ) ), ">" );
+    
+end );
+
+InstallMethod( Display,
+               [ IsCapCategoryMorphism ],
+               
+  function ( morphism )
+    
+    # avoid space in front of "in" to distinguish it from the keyword "in"
+    Print( "A morphism ", "in ", Name( CapCategory( morphism ) ), ".\n" );
+    
+end );
+
 ##
 InstallGlobalFunction( CAP_INTERNAL_CREATE_MORPHISM_PRINT,
                        
@@ -847,10 +840,12 @@ InstallGlobalFunction( CAP_INTERNAL_CREATE_MORPHISM_PRINT,
     
 end );
 
+#= comment for Julia
 CAP_INTERNAL_CREATE_MORPHISM_PRINT( );
+# =#
 
 InstallMethod( String,
-               [ IsCapCategoryMorphism and HasCapCategory ],
+               [ IsCapCategoryMorphism ],
                
   function( morphism )
     

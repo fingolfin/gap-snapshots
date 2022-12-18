@@ -1399,18 +1399,29 @@
   
   [33X[1;0Y[29X[2XImmutableMatrix[102X( [3Xfield[103X, [3Xmatrix[103X[, [3Xchange[103X] ) [32X operation[133X
   
-  [33X[0;0Yreturns  an  immutable  matrix  equal  to  [3Xmatrix[103X  which  is  in the optimal
-  (concerning  space  and  runtime)  representation  for matrices defined over
-  [3Xfield[103X. This means that matrices obtained by several calls of [2XImmutableMatrix[102X
-  for the same [3Xfield[103X are compatible for fast arithmetic without need for field
+  [33X[0;0YLet  [3Xmatrix[103X  be  an object for which either [2XIsMatrix[102X ([14X24.2-1[114X) or [2XIsMatrixObj[102X
+  ([14X26.2-2[114X)  returns  [9Xtrue[109X.  In the former case, [3Xmatrix[103X is a list of lists, and
+  [2XImmutableMatrix[102X  returns  an  immutable  object  for which [2XIsMatrix[102X ([14X24.2-1[114X)
+  returns  [9Xtrue[109X  (in  particular  again  a  list  of lists), which is equal to
+  [3Xmatrix[103X,  and  which  is  in  the  optimal  (concerning  space  and  runtime)
+  representation for matrices defined over [3Xfield[103X, provided that the entries of
+  [3Xmatrix[103X  lie  in  [3Xfield[103X.  In  the  latter  case,  [2XImmutableMatrix[102X  returns an
+  immutable  object  that is equal to the result of [2XChangedBaseDomain[102X ([14X26.6-3[114X)
+  when this is called with [3Xmatrix[103X and [3Xfield[103X.[133X
+  
+  [33X[0;0YThis  means  that  matrices obtained by several calls of [2XImmutableMatrix[102X for
+  the  same  [3Xfield[103X  are  compatible for fast arithmetic without need for field
   conversion.[133X
   
-  [33X[0;0YThe  input  matrix [3Xmatrix[103X or its rows might change their representation as a
-  side  effect  of this function, however the result of [2XImmutableMatrix[102X is not
-  necessarily [13Xidentical[113X to [3Xmatrix[103X if a conversion is not possible.[133X
+  [33X[0;0YIf the input matrix [3Xmatrix[103X is in [2XIsMatrix[102X ([14X24.2-1[114X) then it or its rows might
+  change  their representation as a side effect of this function. However, one
+  cannot  rely  on  this side effect. Also, if [3Xmatrix[103X is already immutable and
+  the  result  of  [2XImmutableMatrix[102X  has  the  same  internal representation as
+  [3Xmatrix[103X, the result is not necessarily [13Xidentical[113X to [3Xmatrix[103X.[133X
   
-  [33X[0;0YIf  [3Xchange[103X  is [9Xtrue[109X, the rows of [3Xmatrix[103X (or [3Xmatrix[103X itself) may be changed to
-  become immutable; otherwise they are copied first.[133X
+  [33X[0;0YIf  [3Xchange[103X  is  [9Xtrue[109X,  [3Xmatrix[103X  or  its  rows  (if  there are subobjects that
+  represent  rows)  may  be changed to become immutable; otherwise the rows of
+  [3Xmatrix[103X are copied first.[133X
   
   [1X24.14-2 ConvertToMatrixRep[101X
   

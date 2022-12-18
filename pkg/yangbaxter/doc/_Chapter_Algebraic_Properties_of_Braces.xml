@@ -164,7 +164,7 @@ gap> DehornoyClass(yb);
 
 <ManSection>
   <Oper Arg="obj,variable" Name="DehornoyRepresentationOfStructureGroup" Label="for IsYB, IsObject"/>
- <Returns>A faithful linear representaiton of the structure group of <A>obj</A>
+ <Returns>A faithful linear representation of the structure group of <A>obj</A>
 </Returns>
  <Description>
 <P/>

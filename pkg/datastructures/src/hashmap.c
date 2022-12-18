@@ -9,10 +9,7 @@
 
 #include "hashmap.h"
 
-#include "src/debug.h"
-#include "src/ariths.h"
-#include "src/intfuncs.h"
-#include "src/objects.h"
+#include "compiled.h"
 
 enum {
     // offsets in the hashmap positional object

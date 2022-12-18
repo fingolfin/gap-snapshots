@@ -861,7 +861,7 @@
   unique such list.[133X
   
   [33X[0;0YIf  the  optional  second argument [3Xn[103X is not present, then the degree of [3Xf[103X is
-  used by defualt.[133X
+  used by default.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xf := Transformation( [ 10, 3, 7, 10, 1, 5, 9, 2, 6, 10 ] );;[127X[104X

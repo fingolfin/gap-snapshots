@@ -20,7 +20,7 @@
   such a concept.[133X
   
   [33X[0;0YThe  first  argument  [3Xdir[103X  is a directory object (see [14X9.3[114X) which will be the
-  current  directory  (in  the  usual UNIX or MSDOS sense) when the program is
+  current  directory  (in  the usual UNIX or MS-DOS sense) when the program is
   run.  This will only matter if the program accesses files (including running
   other programs) via relative path names. In particular, it has nothing to do
   with finding the binary to run.[133X

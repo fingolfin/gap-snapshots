@@ -63,7 +63,7 @@ For all <Math>a,b,c,d \in \mathrm{Obj}_{\mathbf{C}}</Math>,
 <Heading>Categories</Heading>
 
 <ManSection>
-  <Filt Arg="object" Name="IsCapCategory" Label="for IsObject"/>
+  <Filt Arg="object" Name="IsCapCategory" Label="for IsAttributeStoringRep"/>
  <Returns><K>true</K> or <K>false</K>
 </Returns>
  <Description>
@@ -123,6 +123,12 @@ For all <Math>a,b,c,d \in \mathrm{Obj}_{\mathbf{C}}</Math>,
 </ManSection>
 
 
+</Section>
+
+
+<Section Label="Chapter_CAP_Categories_Section_Categorical_properties">
+<Heading>Categorical properties</Heading>
+
 <ManSection>
   <Func Arg="list" Name="AddCategoricalProperty" />
  <Description>
@@ -133,6 +139,146 @@ For all <Math>a,b,c,d \in \mathrm{Obj}_{\mathbf{C}}</Math>,
   If the first entry of the list is empty and the second
   is a property name, the property is assumed to have no
   dual.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="C" Name="IsEquippedWithHomomorphismStructure" Label="for IsCapCategory"/>
+ <Returns><K>true</K> or <K>false</K>
+</Returns>
+ <Description>
+  The property of the category <A>C</A> being equipped with a homomorphism structure.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="C" Name="IsCategoryWithDecidableLifts" Label="for IsCapCategory"/>
+ <Returns><K>true</K> or <K>false</K>
+</Returns>
+ <Description>
+  The property of the category <A>C</A> having decidable lifts.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="C" Name="IsCategoryWithDecidableColifts" Label="for IsCapCategory"/>
+ <Returns><K>true</K> or <K>false</K>
+</Returns>
+ <Description>
+  The property of the category <A>C</A> having decidable colifts.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="C" Name="IsEnrichedOverCommutativeRegularSemigroup" Label="for IsCapCategory"/>
+ <Returns><K>true</K> or <K>false</K>
+</Returns>
+ <Description>
+  The property of the category <A>C</A> being enriched over a commutative regular semigroup.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="C" Name="IsSkeletalCategory" Label="for IsCapCategory"/>
+ <Returns><K>true</K> or <K>false</K>
+</Returns>
+ <Description>
+  The property of the category <A>C</A> being skeletal.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="C" Name="IsAbCategory" Label="for IsCapCategory"/>
+ <Returns><K>true</K> or <K>false</K>
+</Returns>
+ <Description>
+  The property of the category <A>C</A> being preadditive.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="C" Name="IsLinearCategoryOverCommutativeRing" Label="for IsCapCategory"/>
+ <Returns><K>true</K> or <K>false</K>
+</Returns>
+ <Description>
+  The property of the category <A>C</A> being linear over a commutative ring.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="C" Name="IsAdditiveCategory" Label="for IsCapCategory"/>
+ <Returns><K>true</K> or <K>false</K>
+</Returns>
+ <Description>
+  The property of the category <A>C</A> being additive.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="C" Name="IsPreAbelianCategory" Label="for IsCapCategory"/>
+ <Returns><K>true</K> or <K>false</K>
+</Returns>
+ <Description>
+  The property of the category <A>C</A> being preabelian.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="C" Name="IsAbelianCategory" Label="for IsCapCategory"/>
+ <Returns><K>true</K> or <K>false</K>
+</Returns>
+ <Description>
+  The property of the category <A>C</A> being abelian.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="C" Name="IsAbelianCategoryWithEnoughProjectives" Label="for IsCapCategory"/>
+ <Returns><K>true</K> or <K>false</K>
+</Returns>
+ <Description>
+  The property of the category <A>C</A> being abelian with enough projectives.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="C" Name="IsAbelianCategoryWithEnoughInjectives" Label="for IsCapCategory"/>
+ <Returns><K>true</K> or <K>false</K>
+</Returns>
+ <Description>
+  The property of the category <A>C</A> being abelian with enough injectives.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="C" Name="IsLocallyOfFiniteProjectiveDimension" Label="for IsCapCategory"/>
+ <Returns><K>true</K> or <K>false</K>
+</Returns>
+ <Description>
+  The property of the category <A>C</A> being locally of finite projective dimension.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="C" Name="IsLocallyOfFiniteInjectiveDimension" Label="for IsCapCategory"/>
+ <Returns><K>true</K> or <K>false</K>
+</Returns>
+ <Description>
+  The property of the category <A>C</A> being locally of finite injective dimension.
  </Description>
 </ManSection>
 
@@ -166,11 +312,51 @@ For all <Math>a,b,c,d \in \mathrm{Obj}_{\mathbf{C}}</Math>,
 </ManSection>
 
 
+<ManSection>
+  <Oper Arg="s, category_filter, object_filter, morphism_filter, two_cell_filter" Name="CreateCapCategory" Label="for IsString, IsFunction, IsFunction, IsFunction, IsFunction"/>
+ <Returns>a category
+</Returns>
+ <Description>
+ The argument is a string <Math>s</Math>.
+ This operation creates a new CAP category from scratch.
+ Its name is set to <Math>s</Math>.
+ The category, its objects, its morphisms, and its two cells will lie in the corresponding given filters.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="s, category_filter, object_filter, morphism_filter, two_cell_filter, object_datum_type, morphism_datum_type, two_cell_datum_type" Name="CreateCapCategoryWithDataTypes" />
+ <Returns>a category
+</Returns>
+ <Description>
+ The argument is a string <Math>s</Math>.
+ This operation creates a new CAP category from scratch.
+ Its name is set to <Math>s</Math>.
+ The category, its objects, its morphisms, and its two cells will lie in the corresponding given filters.
+ The data types of the object/morphism/two cell datum can be given as described in <Ref BookName="CompilerForCAP" Func="CapJitInferredDataTypes" />.
+ As a convenience, simply a filter can be given if this suffices to fully determine the data type.
+ If a data type is not specified, pass <Code>fail</Code> instead.
+ </Description>
+</ManSection>
+
+
 </Section>
 
 
 <Section Label="Chapter_CAP_Categories_Section_Internal_Attributes">
 <Heading>Internal Attributes</Heading>
+
+<ManSection>
+  <Attr Arg="C" Name="Name" Label="for IsCapCategory"/>
+ <Returns>a string
+</Returns>
+ <Description>
+ The argument is a category <Math>C</Math>.
+ The output is its name.
+ </Description>
+</ManSection>
+
 
  Each category <Math>C</Math> stores various filters.
  They are used to apply the right functions in the method selection.
@@ -181,18 +367,6 @@ For all <Math>a,b,c,d \in \mathrm{Obj}_{\mathbf{C}}</Math>,
  <Description>
  The argument is a category <Math>C</Math>.
  The output is a filter in which <Math>C</Math> lies.
- </Description>
-</ManSection>
-
-
-<ManSection>
-  <Attr Arg="C" Name="CellFilter" Label="for IsCapCategory"/>
- <Returns>a filter
-</Returns>
- <Description>
- The argument is a category <Math>C</Math>.
- The output is a filter in which all cells
- of <Math>C</Math> shall lie.
  </Description>
 </ManSection>
 
@@ -234,6 +408,42 @@ For all <Math>a,b,c,d \in \mathrm{Obj}_{\mathbf{C}}</Math>,
 
 
 <ManSection>
+  <Attr Arg="C" Name="ObjectDatumType" Label="for IsCapCategory"/>
+ <Returns>a data type or <Code>fail</Code>
+</Returns>
+ <Description>
+ The argument is a category <Math>C</Math>.
+ The output is the data type (see <Ref BookName="CompilerForCAP" Func="CapJitInferredDataTypes" />)
+ of object data of <Math>C</Math> (or <Code>fail</Code> if this data type is not specified).
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="C" Name="MorphismDatumType" Label="for IsCapCategory"/>
+ <Returns>a data type or <Code>fail</Code>
+</Returns>
+ <Description>
+ The argument is a category <Math>C</Math>.
+ The output is the data type (see <Ref BookName="CompilerForCAP" Func="CapJitInferredDataTypes" />)
+ of morphism data of <Math>C</Math> (or <Code>fail</Code> if this data type is not specified).
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="C" Name="TwoCellDatumType" Label="for IsCapCategory"/>
+ <Returns>a data type or <Code>fail</Code>
+</Returns>
+ <Description>
+ The argument is a category <Math>C</Math>.
+ The output is the data type (see <Ref BookName="CompilerForCAP" Func="CapJitInferredDataTypes" />)
+ of two cell data of <Math>C</Math> (or <Code>fail</Code> if this data type is not specified).
+ </Description>
+</ManSection>
+
+
+<ManSection>
   <Attr Arg="C" Name="CommutativeRingOfLinearCategory" Label="for IsCapCategory"/>
  <Returns>a ring
 </Returns>
@@ -265,6 +475,30 @@ For all <Math>a,b,c,d \in \mathrm{Obj}_{\mathbf{C}}</Math>,
  <Description>
  The argument is an additive category <Math>C</Math>.
  The output is a list <Math>L</Math> of objects in <Math>C</Math> such that every object in <Math>C</Math> is a finite direct sum of objects in <Math>L</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="C" Name="IndecomposableProjectiveObjects" Label="for IsCapCategory"/>
+ <Returns>a list of objects
+</Returns>
+ <Description>
+  The argument is an Abelian category <Math>C</Math> with enough projectives.
+  The output is the set of indecomposable projective objects in <Math>C</Math> up to isomorphism.
+  That is every projective object in <Math>C</Math> is isomorphic to a finite direct sum over these objects.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="C" Name="IndecomposableInjectiveObjects" Label="for IsCapCategory"/>
+ <Returns>a list of objects
+</Returns>
+ <Description>
+  The argument is an Abelian category <Math>C</Math> with enough injectives.
+  The output is the set of indecomposable injective objects in <Math>C</Math> up to isomorphism.
+  That is every injective object in <Math>C</Math> is isomorphic to a finite direct sum over these objects.
  </Description>
 </ManSection>
 

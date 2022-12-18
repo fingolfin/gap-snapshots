@@ -170,6 +170,10 @@ DeclareProperty( "IsIdempotent",
 #! @Description
 #! The arguments are an object $a$ in a category $C$ and an integer $n$.
 #! The output is a random morphism $\alpha: a \rightarrow b$ for some object $b$ in $C$.
+#! If $C$ is equipped with the methods <C>RandomObjectByInteger</C> and <C>RandomMorphismWithFixedSourceAndRangeByInteger</C>
+#! and $C$ is an Ab-category, then <C>RandomMorphismWithFixedSourceByInteger</C>$(C,a,n)$ can be derived as
+#! <C>RandomMorphismWithFixedSourceAndRangeByInteger</C>($C$,$a$,$b$,$1$+<C>Log2Int</C>($n$)) where
+#! $b$ is computed via <C>RandomObjectByInteger</C>($C$,$n$).
 #! @Returns a morphism in $\mathrm{Hom}(a,b)$
 #! @Arguments a, n
 DeclareOperation( "RandomMorphismWithFixedSourceByInteger",
@@ -178,6 +182,10 @@ DeclareOperation( "RandomMorphismWithFixedSourceByInteger",
 #! @Description
 #! The arguments are an object $a$ in a category $C$ and a list $L$.
 #! The output is a random morphism $\alpha: a \rightarrow b$ for some object $b$ in $C$.
+#! If $C$ is equipped with the methods <C>RandomObjectByList</C> and <C>RandomMorphismWithFixedSourceAndRangeByList</C>
+#! and $C$ is an Ab-category, then <C>RandomMorphismWithFixedSourceByList</C>$(C,a,L)$ can be derived as
+#! <C>RandomMorphismWithFixedSourceAndRangeByList</C>($C,a,b,L[2]$) where
+#! $b$ is computed via <C>RandomObjectByList</C>($C,L[1]$).
 #! @Returns a morphism in $\mathrm{Hom}(a,b)$
 #! @Arguments a, L
 DeclareOperation( "RandomMorphismWithFixedSourceByList",
@@ -186,6 +194,10 @@ DeclareOperation( "RandomMorphismWithFixedSourceByList",
 #! @Description
 #! The arguments are an object $b$ in a category $C$ and an integer $n$.
 #! The output is a random morphism $\alpha: a \rightarrow b$ for some object $a$ in $C$.
+#! If $C$ is equipped with the methods <C>RandomObjectByInteger</C> and <C>RandomMorphismWithFixedSourceAndRangeByInteger</C>
+#! and $C$ is an Ab-category, then <C>RandomMorphismWithFixedRangeByInteger</C>$(C,b,n)$ can be derived as
+#! <C>RandomMorphismWithFixedSourceAndRangeByInteger</C>($C$,$a$,$b$,$1$+<C>Log2Int</C>($n$)) where
+#! $a$ is computed via <C>RandomObjectByInteger</C>($C$,$n$).
 #! @Returns a morphism in $\mathrm{Hom}(a,b)$
 #! @Arguments b, n
 DeclareOperation( "RandomMorphismWithFixedRangeByInteger",
@@ -194,6 +206,10 @@ DeclareOperation( "RandomMorphismWithFixedRangeByInteger",
 #! @Description
 #! The arguments are an object $b$ in a category $C$ and a list $L$.
 #! The output is a random morphism $\alpha: a \rightarrow b$ for some object $a$ in $C$.
+#! If $C$ is equipped with the methods <C>RandomObjectByList</C> and <C>RandomMorphismWithFixedSourceAndRangeByList</C>
+#! and $C$ is an Ab-category, then <C>RandomMorphismWithFixedRangeByList</C>$(C,b,L)$ can be derived as
+#! <C>RandomMorphismWithFixedSourceAndRangeByList</C>($C,a,b,L[2]$) where
+#! $a$ is computed via <C>RandomObjectByList</C>($C,L[1]$).
 #! @Returns a morphism in $\mathrm{Hom}(a,b)$
 #! @Arguments b, L
 DeclareOperation( "RandomMorphismWithFixedRangeByList",
@@ -218,12 +234,20 @@ DeclareOperation( "RandomMorphismWithFixedSourceAndRangeByList",
 
 #! @Description
 #! The arguments are a category $C$ and an integer $n$.
-#! The output is a random morphism in $C$ or <C>fail</C>.
-#! If the methods <C>RandomObjectByInteger</C> and
-#! <C>RandomMorphismWithFixedSourceByInteger</C>(<C>RandomMorphismWithFixedRangeByInteger</C>)
-#! are added to the category $C$, then <C>RandomMorphismByInteger</C> can be
-#! derived to return a random morphism of complexity $n$ with random
-#! source(range) of complexity $n$.
+#! The output is a random morphism in $C$.
+#! The operation can be derived in three different ways:
+#! - If $C$ is equipped with the methods <C>RandomObjectByInteger</C> and <C>RandomMorphismWithFixedSourceAndRangeByInteger</C>
+#!   and $C$ is an Ab-category, then <C>RandomMorphism</C>$(C,n)$ can be derived as
+#!   <C>RandomMorphismWithFixedSourceAndRangeByInteger</C>($C,a,b$,$1$+<C>Log2Int</C>($n$)) where
+#!   $a$ and $b$ are computed via <C>RandomObjectByInteger</C>($C,n$).
+#! - If $C$ is equipped with the methods <C>RandomObjectByInteger</C> and <C>RandomMorphismWithFixedSourceByInteger</C>,
+#!   then <C>RandomMorphism</C>$(C,n)$ can be derived as
+#!   <C>RandomMorphismWithFixedSourceByInteger</C>($C,a,1$+<C>Log2Int</C>($n$)) where
+#!   $a$ is computed via <C>RandomObjectByInteger</C>($C,n$).
+#! - If $C$ is equipped with the methods <C>RandomObjectByInteger</C> and <C>RandomMorphismWithFixedRangeByInteger</C>,
+#!   then <C>RandomMorphism</C>$(C,n)$ can be derived as
+#!   <C>RandomMorphismWithFixedRangeByInteger</C>($C,b,1$+<C>Log2Int</C>($n$)) where
+#!   $b$ is computed via <C>RandomObjectByInteger</C>($C,n$).
 #! @Returns a morphism in $C$
 #! @Arguments C, n
 DeclareOperation( "RandomMorphismByInteger",
@@ -232,6 +256,19 @@ DeclareOperation( "RandomMorphismByInteger",
 #! @Description
 #! The arguments are a category $C$ and a list $L$.
 #! The output is a random morphism in $C$.
+#! The operation can be derived in three different ways:
+#! - If $C$ is equipped with the methods <C>RandomObjectByList</C> and <C>RandomMorphismWithFixedSourceAndRangeByList</C>
+#!   and $C$ is an Ab-category, then <C>RandomMorphism</C>$(C,L)$ can be derived as
+#!   <C>RandomMorphismWithFixedSourceAndRangeByList</C>($C,a,b,L[3]$)) where
+#!   $a$ and $b$ are computed via <C>RandomObjectByList</C>($C,L[i]$) for $i=1,2$ respectively.
+#! - If $C$ is equipped with the methods <C>RandomObjectByList</C> and <C>RandomMorphismWithFixedSourceByList</C>,
+#!   then <C>RandomMorphism</C>$(C,L)$ can be derived as
+#!   <C>RandomMorphismWithFixedSourceByList</C>($C,a,L[2]$) where
+#!   $a$ is computed via <C>RandomObjectByList</C>($C,L[1]$).
+#! - If $C$ is equipped with the methods <C>RandomObjectByList</C> and <C>RandomMorphismWithFixedRangeByList</C>,
+#!   then <C>RandomMorphism</C>$(C,L)$ can be derived as
+#!   <C>RandomMorphismWithFixedRangeByList</C>($C,b,L[2]$) where
+#!   $b$ is computed via <C>RandomObjectByList</C>($C,L[1]$).
 #! @Returns a morphism in $C$
 #! @Arguments C, L
 DeclareOperation( "RandomMorphismByList",
@@ -419,9 +456,9 @@ DeclareProperty( "IsZeroForMorphisms",
 
 DeclareProperty( "IsZero", IsCapCategoryMorphism );
 
-DeclareOperation( "\+", [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
+DeclareOperation( "+", [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
-DeclareOperation( "\-", [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
+DeclareOperation( "-", [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
 #! @Description
 #! The arguments are two morphisms $\alpha, \beta: a \rightarrow b$.
@@ -475,10 +512,10 @@ DeclareOperation( "MultiplyWithElementOfCommutativeRingForMorphisms",
 #! The output is the multiplication with the ring element $r \cdot \alpha$.
 #! @Returns a morphism in $\mathrm{Hom}(a,b)$
 #! @Arguments r, alpha
-DeclareOperation( "\*",
+DeclareOperation( "*",
                   [ IsRingElement, IsCapCategoryMorphism ] );
 
-DeclareOperation( "\*",
+DeclareOperation( "*",
                   [ IsCapCategoryMorphism, IsRingElement ] );
 
 
@@ -668,6 +705,14 @@ DeclareOperation( "PostCompose",
 DeclareOperation( "PostComposeList",
                   [ IsList ] );
 
+#! @Description
+#! The arguments are two objects <A>s</A>, <A>r</A> and a list <A>morphisms</A> of morphisms from <A>s</A> to <A>r</A>.
+#! The output is the sum of all elements in <A>morphisms</A>, or the zero-morphism from <A>s</A> to <A>r</A> 
+#! if <A>morphisms</A> is empty.
+#! @Returns a morphism in $\mathrm{Hom}(s,r)$
+#! @Arguments s, morphisms, r
+DeclareOperation( "SumOfMorphisms",
+                  [ IsCapCategoryObject, IsList, IsCapCategoryObject ] );
 
 ###################################
 ##
@@ -876,6 +921,26 @@ DeclareOperation( "IsColiftable",
 #! @Returns a morphism in $\mathrm{Hom}(b,a)$
 #! @Arguments alpha
 DeclareOperation( "InverseForMorphisms",
+                  [ IsCapCategoryMorphism ] );
+
+#! @Description
+#! The argument is a split-epimorphism $\alpha: a \rightarrow b$.
+#! The output is a pre-inverse $\iota: b \rightarrow a$ of $\alpha$,
+#! i.e., $\iota$ satisfies $\alpha \circ \iota \sim_{b,b} \mathrm{id}_b$.
+#! The morphism $\iota$ is also known as a section or a right-inverse of $\alpha$.
+#! @Returns a morphism in $\mathrm{Hom}(b,a)$
+#! @Arguments alpha
+DeclareOperation( "PreInverseForMorphisms",
+                  [ IsCapCategoryMorphism ] );
+
+#! @Description
+#! The argument is a split-monomorphism $\alpha: a \rightarrow b$.
+#! The output is a post-inverse $\pi: b \rightarrow a$ of $\alpha$,
+#! i.e., $\pi$ satisfies $\pi \circ \alpha \sim_{a,a} \mathrm{id}_a$.
+#! The morphism $\pi$ is also known as a contraction or a left-inverse of $\alpha$.
+#! @Returns a morphism in $\mathrm{Hom}(b,a)$
+#! @Arguments alpha
+DeclareOperation( "PostInverseForMorphisms",
                   [ IsCapCategoryMorphism ] );
 
 ###################################

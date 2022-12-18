@@ -526,8 +526,9 @@ function(S)
   return DClasses(S){DigraphSources(D)};
 end);
 
-InstallMethod(MaximalDClasses, "for a finite monoid as semigroup",
-[IsFinite and IsMonoidAsSemigroup],
+InstallMethod(MaximalDClasses,
+"for a finite monoid as semigroup with mult. neutral elt",
+[IsFinite and IsMonoidAsSemigroup and HasMultiplicativeNeutralElement],
 S -> [DClass(S, MultiplicativeNeutralElement(S))]);
 
 InstallMethod(MaximalLClasses,
@@ -1103,4 +1104,64 @@ function(S, x)
   fi;
   result := EvaluateWord(GeneratorsOfSemigroup(S), p[2]);
   return result ^ SmallestIdempotentPower(result);
+end);
+
+InstallMethod(MultiplicationTableWithCanonicalPositions,
+"for a semigroup with CanUseFroidurePin",
+[IsSemigroup and CanUseFroidurePin],
+function(S)
+  local n, sortedlist, t, tinv, M;
+  n          := Size(S);
+  sortedlist := AsSortedList(S);
+
+  t    := PermList(List([1 .. n], i -> PositionCanonical(S, sortedlist[i])));
+  tinv := t ^ -1;
+  M    := MultiplicationTable(S);
+
+  return List([1 .. n], i -> List([1 .. n], j -> M[i ^ tinv][j ^ tinv] ^ t));
+end);
+
+InstallMethod(TransposedMultiplicationTableWithCanonicalPositions,
+"for a semigroup with CanUseFroidurePin",
+[IsSemigroup and CanUseFroidurePin],
+function(S)
+  return TransposedMat(MultiplicationTableWithCanonicalPositions(S));
+end);
+
+InstallMethod(MinimalFaithfulTransformationDegree, "for a right zero semigroup",
+[IsRightZeroSemigroup],
+function(S)
+  local max, deg;
+
+  max := 0;
+  deg := 0;
+  while max < Size(S) do
+    deg := deg + 1;
+    if (deg mod 3) = 0 then
+      max := 3 ^ (deg / 3);
+    elif (deg mod 3) = 1 then
+      max := 4 * 3 ^ ((deg - 4) / 3);
+    else
+      max := 2 * 3 ^ ((deg - 2) / 3);
+    fi;
+  od;
+  return deg;
+end);
+
+InstallMethod(MinimalFaithfulTransformationDegree, "for a left zero semigroup",
+[IsLeftZeroSemigroup],
+function(S)
+  local max, deg, N, r;
+  max := 0;
+  deg := 0;
+  while max < Size(S) do
+    deg := deg + 1;
+    for r in [1 .. deg - 1] do
+      N := r ^ (deg - r);
+      if N > max then
+        max := N;
+      fi;
+    od;
+  od;
+  return deg;
 end);

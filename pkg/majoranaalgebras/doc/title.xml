@@ -9,7 +9,7 @@
     A package for constructing Majorana algebras and representations
   </Subtitle>
   <Version>
-    1.5
+    1.5.1
   </Version>
   <Author>
     Markus Pfeiffer<Alt Only="LaTeX"><Br/></Alt>
@@ -27,7 +27,7 @@ Department of Mathematics, Imperial College, South Kensington, SW7 2AZ<Br/>
 
   </Author>
   <Date>
-    20 October 2022
+    9 December 2022
   </Date>
   <Copyright>
     &copyright; 2018 by Markus Pfeiffer and Madeleine Whybrow<P/>

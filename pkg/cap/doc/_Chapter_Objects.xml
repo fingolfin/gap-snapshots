@@ -297,7 +297,7 @@
 
 
 <ManSection>
-  <Oper Arg="a, C" Name="\/" Label="for IsObject, IsCapCategory"/>
+  <Oper Arg="a, C" Name="/" Label="for IsObject, IsCapCategory"/>
  <Returns>an object
 </Returns>
  <Description>

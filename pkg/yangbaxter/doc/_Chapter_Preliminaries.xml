@@ -414,6 +414,40 @@ gap> IdSkewbrace(DirectProduct(A,B));
 </ManSection>
 
 
+<ManSection>
+  <Attr Arg="A" Name="UnderlyingAdditiveGroup" Label="for IsSkewbrace"/>
+ <Returns>the underlying multiplicative group of the skew brace
+</Returns>
+ <Description>
+<Example><![CDATA[
+gap> br := SmallBrace(4,2);;
+gap> G:=UnderlyingMultiplicativeGroup(br);;
+gap> StructureDescription(G);
+"C2 x C2"
+]]></Example>
+
+
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="A" Name="UnderlyingMultiplicativeGroup" Label="for IsSkewbrace"/>
+ <Returns>the underlying additive group of the skew brace
+</Returns>
+ <Description>
+<Example><![CDATA[
+gap> br := SmallSkewbrace(6,2);;
+gap> G:=UnderlyingAdditiveGroup(br);;
+gap> IsAbelian(G);
+false
+]]></Example>
+
+
+ </Description>
+</ManSection>
+
+
 </Section>
 
 

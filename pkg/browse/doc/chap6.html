@@ -1392,8 +1392,10 @@ a*b;
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">dirs := DirectoriesPackageLibrary("Browse");;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">demofile := Filename(dirs, "../app/demo.demo");;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoadDemoFile("My first demo", demofile);</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoadDemoFile("My first demo (single lines)", demofile, true);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">if IsBound(GAPInfo.UseReadline) and GAPInfo.UseReadline = true then</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  LoadDemoFile("My first demo", demofile);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  LoadDemoFile("My first demo (single lines)", demofile, true);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">fi;</span>
 </pre></div>
 
 <p>Many demos can be loaded at the same time. They are used with the <strong class="button">PageDown</strong> and <strong class="button">PageUp</strong> keys.</p>

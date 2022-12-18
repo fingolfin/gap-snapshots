@@ -5,23 +5,19 @@
 #
 #! @Chapter Managing Derived Methods
 
-DeclareRepresentation( "IsDerivedMethodRep",
-                       IsAttributeStoringRep and IsDerivedMethod,
-                       [] );
-DeclareRepresentation( "IsDerivedMethodGraphRep",
-                       IsAttributeStoringRep and IsDerivedMethodGraph,
-                       [] );
-DeclareRepresentation( "IsOperationWeightListRep",
-                       IsAttributeStoringRep and IsOperationWeightList,
-                       [] );
-
 BindGlobal( "TheFamilyOfDerivations",
             NewFamily( "TheFamilyOfDerivations" ) );
 BindGlobal( "TheFamilyOfDerivationGraphs",
             NewFamily( "TheFamilyOfDerivationGraphs" ) );
 BindGlobal( "TheFamilyOfOperationWeightLists",
             NewFamily( "TheFamilyOfOperationWeightLists" ) );
+BindGlobal( "TheFamilyOfStringMinHeaps",
+            NewFamily( "TheFamilyOfStringMinHeaps" ) );
 
+BindGlobal( "TheTypeOfDerivedMethods", NewType( TheFamilyOfDerivations, IsDerivedMethod ) );
+BindGlobal( "TheTypeOfDerivationsGraphs", NewType( TheFamilyOfDerivationGraphs, IsDerivedMethodGraph ) );
+BindGlobal( "TheTypeOfOperationWeightLists", NewType( TheFamilyOfOperationWeightLists, IsOperationWeightList ) );
+BindGlobal( "TheTypeOfStringMinHeaps", NewType( TheFamilyOfStringMinHeaps, IsStringMinHeap ) );
 
 InstallGlobalFunction( "ActivateDerivationInfo",
   function( )
@@ -44,8 +40,20 @@ function( name, target_op, used_op_names_with_multiples_and_category_getters, we
         
     fi;
     
+    if NumberArgumentsFunction( category_filter ) = 0 or NumberArgumentsFunction( category_filter ) > 1 then
+        
+        Error( "the CategoryFilter of a derivation must accept exactly one argument" );
+        
+    fi;
+    
+    if IsProperty( category_filter ) then
+        
+        category_filter := Tester( category_filter ) and category_filter;
+        
+    fi;
+    
     return ObjectifyWithAttributes(
-        rec( ), NewType( TheFamilyOfDerivations, IsDerivedMethodRep ),
+        rec( ), TheTypeOfDerivedMethods,
         DerivationName, name,
         DerivationWeight, weight,
         DerivationFunction, func,
@@ -72,15 +80,7 @@ end );
 InstallMethod( IsApplicableToCategory,
                [ IsDerivedMethod, IsCapCategory ],
 function( d, C )
-  local filter;
-  filter := CategoryFilter( d );
-  if IsFilter( filter ) then
-      return Tester( filter )( C ) and filter( C );
-  elif IsFunction( filter ) then
-      return filter( C );
-  else
-      Error( "Category filter is not a filter or function" );
-  fi;
+  return CategoryFilter( d )( C );
 end );
 
 InstallMethod( InstallDerivationForCategory,
@@ -138,10 +138,7 @@ function( operations )
   local G, op_name;
   G := rec( derivations_by_target := rec(),
               derivations_by_used_ops := rec() );
-  ObjectifyWithAttributes
-    ( G,
-      NewType( TheFamilyOfDerivationGraphs,
-               IsDerivedMethodGraphRep ) );
+  G := ObjectifyWithAttributes( G, TheTypeOfDerivationsGraphs );
   
   SetOperations( G, operations );
   
@@ -186,9 +183,9 @@ function( G )
 end );
 
 InstallMethod( AddDerivation,
-               [ IsDerivedMethodGraphRep, IsDerivedMethod ],
+               [ IsDerivedMethodGraph, IsDerivedMethod ],
 function( G, d )
-  local method_name, filter_list, number_of_proposed_arguments, current_function_argument_number, x;
+  local method_name, filter_list, number_of_proposed_arguments, current_function_argument_number, target_op, x;
   
   if IsIdenticalObj( G, CAP_INTERNAL_DERIVATION_GRAPH ) then
     
@@ -211,15 +208,11 @@ function( G, d )
                " arguments but should have ", String( number_of_proposed_arguments ) );
     fi;
     
-    if NumberArgumentsFunction( CategoryFilter( d ) ) = 0 or NumberArgumentsFunction( CategoryFilter( d ) ) > 1 then
-        
-        Error( "the CategoryFilter of a derivation must accept exactly one argument" );
-        
-    fi;
-    
   fi;
   
-  Add( G!.derivations_by_target.( TargetOperation( d ) ), d );
+  target_op := TargetOperation( d );
+  
+  Add( G!.derivations_by_target.( target_op ), d );
   for x in UsedOperationsWithMultiplesAndCategoryGetters( d ) do
     # We add all operations, even those with category getters: In case the category getter
     # returns the category itself, this allows to recursively trigger derivations correctly.
@@ -239,15 +232,19 @@ InstallMethod( AddDerivation,
                
   function( graph, target_op, func )
     
-    AddDerivation( graph, target_op, [ ], func );
-                   
+    AddDerivation( graph, target_op, fail, func );
+    
 end );
 
-InstallMethod( AddDerivation,
-               [ IsDerivedMethodGraph, IsFunction, IsDenseList, IsFunction ],
+# Contrary to the documentation, for internal code we allow used_ops_with_multiples_and_category_getters to be equal to fail
+# to distinguish the case of no preconditions given
+InstallOtherMethod( AddDerivation,
+               [ IsDerivedMethodGraph, IsFunction, IsObject, IsFunction ],
                
   function( graph, target_op, used_ops_with_multiples_and_category_getters, func )
     local weight, category_filter, description, loop_multiplier, category_getters, function_called_before_installation, operations_in_graph, collected_list, used_op_names_with_multiples_and_category_getters, derivation, x;
+    
+    Assert( 0, used_ops_with_multiples_and_category_getters = fail or IsList( used_ops_with_multiples_and_category_getters ) );
     
     weight := CAP_INTERNAL_RETURN_OPTION_OR_DEFAULT( "Weight", 1 );
     category_filter := CAP_INTERNAL_RETURN_OPTION_OR_DEFAULT( "CategoryFilter", IsCapCategory );
@@ -259,13 +256,19 @@ InstallMethod( AddDerivation,
     ## get used ops
     operations_in_graph := Operations( graph );
     
+    used_op_names_with_multiples_and_category_getters := fail;
+    
+    #= comment for Julia
     collected_list := CAP_INTERNAL_FIND_APPEARANCE_OF_SYMBOL_IN_FUNCTION( func, operations_in_graph, loop_multiplier, CAP_INTERNAL_METHOD_RECORD_REPLACEMENTS, category_getters );
     
-    if IsEmpty( used_ops_with_multiples_and_category_getters ) then
+    if used_ops_with_multiples_and_category_getters = fail then
         
         used_op_names_with_multiples_and_category_getters := collected_list;
         
-    else
+    fi;
+    # =#
+    
+    if used_ops_with_multiples_and_category_getters <> fail then
         
         used_op_names_with_multiples_and_category_getters := [ ];
         
@@ -305,6 +308,7 @@ InstallMethod( AddDerivation,
             
         od;
         
+        #= comment for Julia
         if Length( collected_list ) <> Length( used_op_names_with_multiples_and_category_getters ) or not ForAll( collected_list, c -> c in used_op_names_with_multiples_and_category_getters ) then
             
             SortBy( used_op_names_with_multiples_and_category_getters, x -> x[1] );
@@ -317,6 +321,13 @@ InstallMethod( AddDerivation,
             );
             
         fi;
+        # =#
+        
+    fi;
+    
+    if used_op_names_with_multiples_and_category_getters = fail then
+        
+        return;
         
     fi;
     
@@ -381,13 +392,13 @@ InstallGlobalFunction( AddWithGivenDerivationPairToCAP,
 end );
 
 InstallMethod( DerivationsUsingOperation,
-               [ IsDerivedMethodGraphRep, IsString ],
+               [ IsDerivedMethodGraph, IsString ],
 function( G, op_name )
   return G!.derivations_by_used_ops.( op_name );
 end );
 
 InstallMethod( DerivationsOfOperation,
-               [ IsDerivedMethodGraphRep, IsString ],
+               [ IsDerivedMethodGraph, IsString ],
 function( G, op_name )
   return G!.derivations_by_target.( op_name );
 end );
@@ -406,7 +417,7 @@ function( C, G )
     od;
     
     owl := ObjectifyWithAttributes(
-        rec( operation_weights := operation_weights, operation_derivations := operation_derivations ), NewType( TheFamilyOfOperationWeightLists, IsOperationWeightListRep ),
+        rec( operation_weights := operation_weights, operation_derivations := operation_derivations ), TheTypeOfOperationWeightLists,
         DerivationGraph, G,
         CategoryOfOperationWeightList, C
     );
@@ -429,7 +440,7 @@ function( owl )
 end );
 
 InstallMethod( CurrentOperationWeight,
-               [ IsOperationWeightListRep, IsString ],
+               [ IsOperationWeightList, IsString ],
 function( owl, op_name )
   if IsBound( owl!.operation_weights.( op_name ) ) then
       return owl!.operation_weights.( op_name );
@@ -484,7 +495,7 @@ function( owl, d )
 end );
 
 InstallMethod( DerivationOfOperation,
-               [ IsOperationWeightListRep, IsString ],
+               [ IsOperationWeightList, IsString ],
 function( owl, op_name )
   return owl!.operation_derivations.( op_name );
 end );
@@ -541,7 +552,7 @@ BindGlobal( "TryToInstallDerivation", function ( owl, d )
 end );
 
 InstallMethod( InstallDerivationsUsingOperation,
-               [ IsOperationWeightListRep, IsString ],
+               [ IsOperationWeightList, IsString ],
 function( owl, op_name )
   local Q, derivations_to_install, node, new_weight, target, d;
     
@@ -619,7 +630,7 @@ InstallMethod( Saturate,
 end );
 
 InstallMethod( AddPrimitiveOperation,
-               [ IsOperationWeightListRep, IsString, IsInt ],
+               [ IsOperationWeightList, IsString, IsInt ],
 function( owl, op_name, weight )
     
     Info( DerivationInfo, 1, Concatenation( "install(",
@@ -687,17 +698,9 @@ function( owl, op_name )
 end );
 
 
-DeclareRepresentation( "IsStringMinHeapRep",
-                       IsComponentObjectRep and IsStringMinHeap,
-                       [] );
-
-BindGlobal( "TheFamilyOfStringMinHeaps",
-            NewFamily( "TheFamilyOfStringMinHeaps" ) );
-
 InstallGlobalFunction( StringMinHeap,
 function()
-  return Objectify( NewType( TheFamilyOfStringMinHeaps,
-                             IsStringMinHeapRep ),
+  return Objectify( TheTypeOfStringMinHeaps,
                     rec( key := function(n) return n[2]; end,
                          str := function(n) return n[1]; end,
                          array := [],
@@ -718,37 +721,37 @@ function( H )
 end );
 
 InstallMethod( HeapSize,
-               [ IsStringMinHeapRep ],
+               [ IsStringMinHeap ],
 function( H )
   return Length( H!.array );
 end );
 
 InstallMethod( Add,
-               [ IsStringMinHeapRep, IsString, IsInt ],
+               [ IsStringMinHeap, IsString, IsInt ],
 function( H, string, key )
-  local array, i;
+  local array;
   array := H!.array;
-  i := Length( array ) + 1;
-  H!.node_indices.( string ) := i;
-  array[ i ] := [ string, key ];
+  Add( array, [ string, key ] );
+  H!.node_indices.( string ) := Length( array );
   DecreaseKey( H, string, key );
 end );
 
 InstallMethod( IsEmptyHeap,
-               [ IsStringMinHeapRep ],
+               [ IsStringMinHeap ],
 function( H )
   return IsEmpty( H!.array );
 end );
 
 InstallMethod( ExtractMin,
-               [ IsStringMinHeapRep ],
+               [ IsStringMinHeap ],
 function( H )
-  local array, node;
+  local array, node, key;
   array := H!.array;
   node := array[ 1 ];
   Swap( H, 1, Length( array ) );
-  Unbind( array[ Length( array ) ] );
-  Unbind( H!.node_indices.( H!.str( node ) ) );
+  Remove( array );
+  key := H!.str( node );
+  Unbind( H!.node_indices.( key ) );
   if not IsEmpty( array ) then
     Heapify( H, 1 );
   fi;
@@ -756,7 +759,7 @@ function( H )
 end );
 
 InstallMethod( DecreaseKey,
-               [ IsStringMinHeapRep, IsString, IsInt ],
+               [ IsStringMinHeap, IsString, IsInt ],
 function( H, string, key )
   local array, i, parent;
   array := H!.array;
@@ -771,27 +774,29 @@ function( H, string, key )
 end );
 
 InstallMethod( Swap,
-               [ IsStringMinHeapRep, IsPosInt, IsPosInt ],
+               [ IsStringMinHeap, IsPosInt, IsPosInt ],
 function( H, i, j )
-  local tmp, array, node_indices, str;
+  local array, node_indices, str, tmp, key;
   array := H!.array;
   node_indices := H!.node_indices;
   str := H!.str;
   tmp := array[ i ];
   array[ i ] := array[ j ];
   array[ j ] := tmp;
-  node_indices.( str( array[ i ] ) ) := i;
-  node_indices.( str( array[ j ] ) ) := j;
+  key := str( array[ i ] );
+  node_indices.( key ) := i;
+  key := str( array[ j ] );
+  node_indices.( key ) := j;
 end );
 
 InstallMethod( Contains,
-               [ IsStringMinHeapRep, IsString ],
+               [ IsStringMinHeap, IsString ],
 function( H, string )
   return IsBound( H!.node_indices.( string ) );
 end );
 
 InstallMethod( Heapify,
-               [ IsStringMinHeapRep, IsPosInt ],
+               [ IsStringMinHeap, IsPosInt ],
 function( H, i )
   local key, array, left, right, smallest;
   key := H!.key;
@@ -892,35 +897,35 @@ end );
 InstallGlobalFunction( DerivationsOfMethodByCategory,
   
   function( category, name )
-    local string, category_weight_list, current_weight, current_derivation, currently_installed_funcs, to_delete, weight_list, category_getter_string, possible_derivations, category_filter, weight, i, x;
+    local category_weight_list, current_weight, current_derivation, currently_installed_funcs, to_delete, weight_list, category_getter_string, possible_derivations, category_filter, weight, i, x;
     
     if IsFunction( name ) then
-        string := NameFunction( name );
-    elif IsString( name ) then
-        string := name;
-    else
+        name := NameFunction( name );
+    fi;
+    
+    if not IsString( name ) then
         Error( "Usage is <category>,<string> or <category>,<CAP operation>\n" );
         return;
     fi;
     
-    if not IsBoundGlobal( string ) then
-        Error( Concatenation( string, " is not bound globally." ) );
+    if not IsBound( CAP_INTERNAL_METHOD_NAME_RECORD.(name) ) then
+        Error( name, " is not the name of a CAP operation." );
         return;
     fi;
     
     category_weight_list := category!.derivations_weight_list;
     
-    current_weight := CurrentOperationWeight( category_weight_list, string );
+    current_weight := CurrentOperationWeight( category_weight_list, name );
     
     if current_weight < infinity then
     
-        current_derivation := DerivationOfOperation( category_weight_list, string );
+        current_derivation := DerivationOfOperation( category_weight_list, name );
         
-        Print( Name( category ), " can already compute ", TextAttr.b4, string, TextAttr.reset, " with weight " , String( current_weight ), ".\n" );
+        Print( Name( category ), " can already compute ", TextAttr.b4, name, TextAttr.reset, " with weight " , current_weight, ".\n" );
         
         if current_derivation = fail then
             
-            if IsBound( category!.primitive_operations.( string ) ) and category!.primitive_operations.( string ) = true then
+            if IsBound( category!.primitive_operations.( name ) ) and category!.primitive_operations.( name ) = true then
                 
                 Print( "It was given as a primitive operation.\n" );
                 
@@ -930,7 +935,7 @@ InstallGlobalFunction( DerivationsOfMethodByCategory,
                 
             fi;
             
-            currently_installed_funcs := category!.added_functions.( string );
+            currently_installed_funcs := category!.added_functions.( name );
             
             # delete overwritten funcs
             to_delete := [ ];
@@ -1001,27 +1006,27 @@ InstallGlobalFunction( DerivationsOfMethodByCategory,
         
     else
         
-        Print( TextAttr.b4, string, TextAttr.reset, " is currently not installed for ", Name( category ), ".\n\n" );
+        Print( TextAttr.b4, name, TextAttr.reset, " is currently not installed for ", Name( category ), ".\n\n" );
         
     fi;
     
     Print( "Possible derivations are:\n\n" );
     
-    possible_derivations := DerivationsOfOperation( CAP_INTERNAL_DERIVATION_GRAPH, string );
+    possible_derivations := DerivationsOfOperation( CAP_INTERNAL_DERIVATION_GRAPH, name );
     
     for current_derivation in possible_derivations do
         
         category_filter := CategoryFilter( current_derivation );
         
-        if IsFilter( category_filter ) and Tester( category_filter )( category ) and not category_filter( category ) then
+        if IsProperty( category_filter ) and Tester( category_filter )( category ) and not category_filter( category ) then
             continue;
-        elif IsFilter( category_filter ) and not Tester( category_filter )( category ) then
+        elif IsProperty( category_filter ) and not Tester( category_filter )( category ) then
             Print( "If ", Name( category ), " would be ", JoinStringsWithSeparator( Filtered( NamesFilter( category_filter ), name -> not StartsWith( name, "Has" ) ), " and " ), " then\n" );
-            Print( TextAttr.b4, string, TextAttr.reset, " could be derived by\n" );
+            Print( TextAttr.b4, name, TextAttr.reset, " could be derived by\n" );
         elif IsFunction( category_filter ) and not category_filter( category ) then
             continue;
         else
-            Print( TextAttr.b4, string, TextAttr.reset, " can be derived by\n" );
+            Print( TextAttr.b4, name, TextAttr.reset, " can be derived by\n" );
         fi;
         
         for x in UsedOperationsWithMultiplesAndCategoryGetters( current_derivation ) do
@@ -1050,7 +1055,7 @@ InstallGlobalFunction( DerivationsOfMethodByCategory,
             
         od;
         
-        Print( "with additional weight ", String( DerivationWeight( current_derivation ) ), ".\n\n" );
+        Print( "with additional weight ", DerivationWeight( current_derivation ), ".\n\n" );
         
     od;
     

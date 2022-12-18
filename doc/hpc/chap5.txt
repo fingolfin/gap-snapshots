@@ -233,7 +233,7 @@
   [1X5.4 [33X[0;0YThread-local records[133X[101X
   
   [33X[0;0YThread-local  records  allow an easy way to have a separate copy of a record
-  for each indvidual thread that is accessed by the same name in each thread.[133X
+  for each individual thread that is accessed by the same name in each thread.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xr := ThreadLocalRecord();; # create new thread-local record[127X[104X

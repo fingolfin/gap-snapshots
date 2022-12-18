@@ -695,7 +695,7 @@ false
 <h5>21.5-3 Unbind</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Unbind</code>( <var class="Arg">list</var>[, <var class="Arg">n</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p><code class="func">Unbind</code> deletes the element with index <var class="Arg">n</var> in the mutable list <var class="Arg">list</var>. That is, after execution of <code class="func">Unbind</code>, <var class="Arg">list</var> no longer has an assigned value with index <var class="Arg">n</var>. Thus <code class="func">Unbind</code> can be used to produce holes in a list. Note that it is not an error to unbind a nonexistant list element. <var class="Arg">list</var> must evaluate to a list, or to an object for which a suitable method for <code class="code">Unbind\[\]</code> has been installed, otherwise an error is signalled.</p>
+<p><code class="func">Unbind</code> deletes the element with index <var class="Arg">n</var> in the mutable list <var class="Arg">list</var>. That is, after execution of <code class="func">Unbind</code>, <var class="Arg">list</var> no longer has an assigned value with index <var class="Arg">n</var>. Thus <code class="func">Unbind</code> can be used to produce holes in a list. Note that it is not an error to unbind a nonexistent list element. <var class="Arg">list</var> must evaluate to a list, or to an object for which a suitable method for <code class="code">Unbind\[\]</code> has been installed, otherwise an error is signalled.</p>
 
 
 <div class="example"><pre>

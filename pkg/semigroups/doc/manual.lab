@@ -145,6 +145,18 @@
 \makelabel{semigroups:IO}{17}{X80CDCB927B3E5BB9}
 \makelabel{semigroups:Reading and writing elements to a file}{17.1}{X7CE72BB17F2D49F8}
 \makelabel{semigroups:Reading and writing multiplication tables to a file}{17.2}{X7AB8E281795A4964}
+\makelabel{semigroups:Translations}{18}{X7EC01B437CC2B2C9}
+\makelabel{semigroups:Methods for translations}{18.1}{X864C64877E5714AC}
+\makelabel{semigroups:IsXTranslation}{18.1.1}{X849F15607B774B90}
+\makelabel{semigroups:IsXTranslationCollection}{18.1.3}{X7F536B1B85978B63}
+\makelabel{semigroups:XPartOfBitranslation}{18.1.4}{X7D52D17E7A28CE0E}
+\makelabel{semigroups:XTranslation}{18.1.5}{X7ACCBAB57E910910}
+\makelabel{semigroups:UnderlyingSemigroup}{18.1.7}{X7B5BB0BA8683A021}
+\makelabel{semigroups:XTranslationsSemigroupOfFamily}{18.1.8}{X857C28C8790A35F6}
+\makelabel{semigroups:TypeXTranslationSemigroupElements}{18.1.9}{X7AA681A283A22C28}
+\makelabel{semigroups:XTranslations}{18.1.10}{X7D5CC8A48371410D}
+\makelabel{semigroups:NrXTranslations}{18.1.12}{X7C826FBA78739FA4}
+\makelabel{semigroups:InnerXTranslations}{18.1.13}{X7E9306DF79587A33}
 \makelabel{semigroups:Bibliography}{Bib}{X7A6F98FD85F02BFE}
 \makelabel{semigroups:References}{Bib}{X7A6F98FD85F02BFE}
 \makelabel{semigroups:Index}{Ind}{X83A0356F839C696F}
@@ -373,6 +385,8 @@
 \makelabel{semigroups:IsomorphismReesZeroMatrixSemigroup}{6.5.8}{X7E2ECC577A1CF7CA}
 \makelabel{semigroups:IsomorphismReesMatrixSemigroupOverPermGroup}{6.5.8}{X7E2ECC577A1CF7CA}
 \makelabel{semigroups:IsomorphismReesZeroMatrixSemigroupOverPermGroup}{6.5.8}{X7E2ECC577A1CF7CA}
+\makelabel{semigroups:AntiIsomorphismDualFpSemigroup}{6.5.9}{X820BB66381737F2D}
+\makelabel{semigroups:AntiIsomorphismDualFpMonoid}{6.5.9}{X820BB66381737F2D}
 \makelabel{semigroups:RandomSemigroup}{6.6.1}{X789DE9AB79FCFEB5}
 \makelabel{semigroups:RandomMonoid}{6.6.1}{X789DE9AB79FCFEB5}
 \makelabel{semigroups:RandomInverseSemigroup}{6.6.1}{X789DE9AB79FCFEB5}
@@ -692,6 +706,7 @@
 \makelabel{semigroups:IsZeroRectangularBand}{12.1.26}{X7C6787D07B95B450}
 \makelabel{semigroups:IsZeroSemigroup}{12.1.27}{X81A1882181B75CC9}
 \makelabel{semigroups:IsZeroSimpleSemigroup}{12.1.28}{X8193A60F839C064E}
+\makelabel{semigroups:IsSelfDualSemigroup}{12.1.29}{X846FC6247EE31607}
 \makelabel{semigroups:IsCliffordSemigroup}{12.2.1}{X81DE11987BB81017}
 \makelabel{semigroups:IsBrandtSemigroup}{12.2.2}{X7EFDBA687DCDA6FA}
 \makelabel{semigroups:IsEUnitaryInverseSemigroup}{12.2.3}{X843EA0E37C968BBF}
@@ -755,6 +770,18 @@
 \makelabel{semigroups:JoinSemilatticeOfCongruences for a congruence poset and a function}{13.4.10}{X7C5BAC8D82ABEBBE}
 \makelabel{semigroups:MinimalCongruences for a list or collection}{13.4.11}{X780E2B3F8509CE32}
 \makelabel{semigroups:MinimalCongruences for a congruence poset}{13.4.11}{X780E2B3F8509CE32}
+\makelabel{semigroups:NumberOfRightCongruences for a semigroup, positive integer, and list or collection}{13.4.12}{X7AE16F237E862934}
+\makelabel{semigroups:NumberOfLeftCongruences for a semigroup, positive integer, and list or collection}{13.4.12}{X7AE16F237E862934}
+\makelabel{semigroups:NumberOfRightCongruences for a semigroup, and a positive integer}{13.4.12}{X7AE16F237E862934}
+\makelabel{semigroups:NumberOfLeftCongruences for a semigroup, and a positive integer}{13.4.12}{X7AE16F237E862934}
+\makelabel{semigroups:NumberOfRightCongruences for a semigroup}{13.4.12}{X7AE16F237E862934}
+\makelabel{semigroups:NumberOfLeftCongruences for a semigroup}{13.4.12}{X7AE16F237E862934}
+\makelabel{semigroups:IteratorOfRightCongruences for a semigroup, positive integer, and list or collection}{13.4.13}{X807A5FCC87661FA4}
+\makelabel{semigroups:IteratorOfLeftCongruences for a semigroup, positive integer, and list or collection}{13.4.13}{X807A5FCC87661FA4}
+\makelabel{semigroups:IteratorOfRightCongruences for a semigroup, and a positive integer}{13.4.13}{X807A5FCC87661FA4}
+\makelabel{semigroups:IteratorOfLeftCongruences for a semigroup, and a positive integer}{13.4.13}{X807A5FCC87661FA4}
+\makelabel{semigroups:IteratorOfRightCongruences for a semigroup}{13.4.13}{X807A5FCC87661FA4}
+\makelabel{semigroups:IteratorOfLeftCongruences for a semigroup}{13.4.13}{X807A5FCC87661FA4}
 \makelabel{semigroups:IsSubrelation}{13.5.1}{X85075F1D878512F5}
 \makelabel{semigroups:IsSuperrelation}{13.5.2}{X83878AED7A8E75BE}
 \makelabel{semigroups:MeetSemigroupCongruences}{13.5.3}{X7952A5A5789C6F60}
@@ -815,6 +842,8 @@
 \makelabel{semigroups:SemigroupIsomorphismByFunction}{14.2.9}{X7B44408D8309C3DC}
 \makelabel{semigroups:IsSemigroupIsomorphismByFunction}{14.2.10}{X7EFDBD2C7A4FB6AF}
 \makelabel{semigroups:AsSemigroupIsomorphismByFunction for a semigroup homomorphism by images}{14.2.11}{X86C4FC857AF125BD}
+\makelabel{semigroups:SmallerDegreeTransformationRepresentation}{14.2.12}{X794E5DA4872989E4}
+\makelabel{semigroups:MinimalFaithfulTransformationDegree}{14.2.13}{X867264587CFD0013}
 \makelabel{semigroups:IsRMSIsoByTriple}{14.3.1}{X82FCB1E585429FEA}
 \makelabel{semigroups:IsRZMSIsoByTriple}{14.3.1}{X82FCB1E585429FEA}
 \makelabel{semigroups:RMSIsoByTriple}{14.3.2}{X82B0BDCD7CBDCC2E}
@@ -837,6 +866,8 @@
 \makelabel{semigroups:ParseRelations}{15.2.1}{X7C2FCCA487DFC84C}
 \makelabel{semigroups:ElementOfFpSemigroup}{15.2.2}{X847012347856C55E}
 \makelabel{semigroups:ElementOfFpMonoid}{15.2.3}{X82B7A51B7FE90486}
+\makelabel{semigroups:FreeMonoidAndAssignGeneratorVars}{15.2.4}{X7C3837FA83BE9CD9}
+\makelabel{semigroups:FreeSemigroupAndAssignGeneratorVars}{15.2.4}{X7C3837FA83BE9CD9}
 \makelabel{semigroups:StzPresentation}{15.3.1}{X7B505DA083E2EC0C}
 \makelabel{semigroups:IsStzPresentation}{15.3.2}{X7B86C70F84BCF8BD}
 \makelabel{semigroups:GeneratorsOfStzPresentation}{15.3.3}{X7F399C5982227D31}
@@ -876,3 +907,35 @@
 \makelabel{semigroups:ReadMultiplicationTable}{17.2.1}{X805058C07F9373B4}
 \makelabel{semigroups:WriteMultiplicationTable}{17.2.2}{X868B824B7E24FA96}
 \makelabel{semigroups:IteratorFromMultiplicationTableFile}{17.2.3}{X85708F5B7FBE3549}
+\makelabel{semigroups:IsSemigroupTranslation for IsAssociativeElement and IsMultiplicativeElementWithOne}{18.1.1}{X849F15607B774B90}
+\makelabel{semigroups:IsLeftTranslation for IsSemigroupTranslation}{18.1.1}{X849F15607B774B90}
+\makelabel{semigroups:IsRightTranslation for IsSemigroupTranslation}{18.1.1}{X849F15607B774B90}
+\makelabel{semigroups:IsBitranslation for IsAssociativeElement and IsMultiplicativeElementWithOne}{18.1.2}{X7F6689E885982816}
+\makelabel{semigroups:IsSemigroupTranslationCollection}{18.1.3}{X7F536B1B85978B63}
+\makelabel{semigroups:IsLeftTranslationCollection}{18.1.3}{X7F536B1B85978B63}
+\makelabel{semigroups:IsRightTranslationCollection}{18.1.3}{X7F536B1B85978B63}
+\makelabel{semigroups:IsBitranslationCollection}{18.1.3}{X7F536B1B85978B63}
+\makelabel{semigroups:LeftPartOfBitranslation}{18.1.4}{X7D52D17E7A28CE0E}
+\makelabel{semigroups:RightPartOfBitranslation}{18.1.4}{X7D52D17E7A28CE0E}
+\makelabel{semigroups:LeftTranslation for IsLeftTranslationsSemigroup, IsGeneralMapping}{18.1.5}{X7ACCBAB57E910910}
+\makelabel{semigroups:RightTranslation for IsRightTranslationsSemigroup, IsGeneralMapping}{18.1.5}{X7ACCBAB57E910910}
+\makelabel{semigroups:Bitranslation for IsBitranslationsSemigroup, IsLeftTranslation, IsRightTranslation}{18.1.6}{X8664424983C3281F}
+\makelabel{semigroups:UnderlyingSemigroup for IsTranslationsSemigroup}{18.1.7}{X7B5BB0BA8683A021}
+\makelabel{semigroups:UnderlyingSemigroup for IsBitranslationsSemigroup}{18.1.7}{X7B5BB0BA8683A021}
+\makelabel{semigroups:LeftTranslationsSemigroupOfFamily for IsFamily}{18.1.8}{X857C28C8790A35F6}
+\makelabel{semigroups:RightTranslationsSemigroupOfFamily for IsFamily}{18.1.8}{X857C28C8790A35F6}
+\makelabel{semigroups:TranslationalHullOfFamily for IsFamily}{18.1.8}{X857C28C8790A35F6}
+\makelabel{semigroups:TypeLeftTranslationsSemigroupElements for IsLeftTranslationsSemigroup}{18.1.9}{X7AA681A283A22C28}
+\makelabel{semigroups:TypeRightTranslationsSemigroupElements for IsRightTranslationsSemigroup}{18.1.9}{X7AA681A283A22C28}
+\makelabel{semigroups:TypeBitranslations for IsBitranslationsSemigroup}{18.1.9}{X7AA681A283A22C28}
+\makelabel{semigroups:LeftTranslations for IsSemigroup and CanUseFroidurePin and IsFinite}{18.1.10}{X7D5CC8A48371410D}
+\makelabel{semigroups:RightTranslations for IsSemigroup and CanUseFroidurePin and IsFinite}{18.1.10}{X7D5CC8A48371410D}
+\makelabel{semigroups:TranslationalHull for IsSemigroup and CanUseFroidurePin and IsFinite}{18.1.11}{X8231194386449BD4}
+\makelabel{semigroups:NrLeftTranslations for IsSemigroup and CanUseFroidurePin and IsFinite}{18.1.12}{X7C826FBA78739FA4}
+\makelabel{semigroups:NrRightTranslations for IsSemigroup and CanUseFroidurePin and IsFinite}{18.1.12}{X7C826FBA78739FA4}
+\makelabel{semigroups:NrBitranslations for IsSemigroup and CanUseFroidurePin and IsFinite}{18.1.12}{X7C826FBA78739FA4}
+\makelabel{semigroups:InnerLeftTranslations for IsSemigroup and CanUseFroidurePin and IsFinite}{18.1.13}{X7E9306DF79587A33}
+\makelabel{semigroups:InnerRightTranslations for IsSemigroup and CanUseFroidurePin and IsFinite}{18.1.13}{X7E9306DF79587A33}
+\makelabel{semigroups:InnerTranslationalHull for IsSemigroup and CanUseFroidurePin and IsFinite}{18.1.14}{X7C109DF080E72F68}
+\makelabel{semigroups:UnderlyingRepresentatives for IsTranslationsSemigroup}{18.1.15}{X87E30C387BE79FB8}
+\makelabel{semigroups:ImageSetOfTranslation for IsSemigroupTranslation}{18.1.16}{X7E81252986BB72BB}

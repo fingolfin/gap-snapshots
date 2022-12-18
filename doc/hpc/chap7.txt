@@ -279,5 +279,5 @@
     [4X[28X[ 2, 3, 5 ][128X[104X
   [4X[32X[104X
   
-  [33X[0;0YThis function is primarly intended for debugging purposes.[133X
+  [33X[0;0YThis function is primarily intended for debugging purposes.[133X
   

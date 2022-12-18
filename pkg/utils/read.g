@@ -19,4 +19,6 @@ ReadPackage( "utils", "lib/number.gi" );
 ReadPackage( "utils", "lib/print.gi" );
 ReadPackage( "utils", "lib/record.gi" );
 ReadPackage( "utils", "lib/string.gi" );
-ReadPackage( "utils", "lib/download.gi" );
+if IsBound(DOWNLOAD_FROM_UTILS) then
+    ReadPackage( "utils", "lib/download.gi" );
+fi;

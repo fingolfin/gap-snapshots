@@ -10,7 +10,7 @@
 #
 gap> START_TEST("cap03.tst");
 
-# doc/_Chapter_Examples_and_Tests.xml:45-48
+# doc/_Chapter_Examples_and_Tests.xml:54-57
 gap> InputSignature( F );
 [ [ Category of left presentations of Q, false ], [ Category of left presentations of Q, true ] ]
 

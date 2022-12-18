@@ -14,17 +14,17 @@ PackageName := "IRREDSOL",
 Subtitle := "A library of irreducible soluble linear groups over finite fields and of finite primivite soluble groups",
 ##  See '?Extending: Version Numbers' in GAP help for an explanation
 ##  of valid version numbers.
-Version := "1.4.3",
+Version := "1.4.4",
 
 ##  Release date of the current version in dd/mm/yyyy format.
-Date := "01/07/2021",
+Date := "16/11/2022",
 
 ##  Machine readable license information (as an SPDX identifier)
 License := "BSD-2-Clause",
 
 BannerString := "\
 ----------------------------------------------------------------------\n\
-                          IRREDSOL Version 1.4.3\n\
+                          IRREDSOL Version 1.4.4\n\
   A library of irreducible soluble linear groups over finite fields\n\
                 and of finite primivite soluble groups\n\
                          by Burkhard Höfling\n\
@@ -33,7 +33,7 @@ BannerString := "\
 ##  the format extension(s), like '.zoo', which are given next.
 ##  The archive file name *must be changed* with each version of the archive
 ##  (and probably somehow contain the package name and version).
-ArchiveURL := "https://github.com/bh11/irredsol/releases/latest/download/irredsol-1.4.3",
+ArchiveURL := "https://github.com/bh11/irredsol/releases/download/IRREDSOL-1.4.4/irredsol-1.4.4",
 
 ArchiveFormats := ".tar.bz2", # the others are generated automatically
 
@@ -77,9 +77,6 @@ PackageDoc := rec(
   # a longer title of the book, this together with the book name should
   # fit on a single text line (appears with the '?books' command in GAP)
   LongTitle := "A library of irreducible soluble linear groups over finite fields",
-  # Should this help book be autoloaded when GAP starts up? This should
-  # usually be 'true', otherwise say 'false'. 
-  Autoload := true
 ),
 
 
@@ -94,8 +91,6 @@ Dependencies := rec(
 ),
 
 AvailabilityTest := ReturnTrue,
-
-Autoload := true,
 
 TestFile := "tst/testall.g",
 

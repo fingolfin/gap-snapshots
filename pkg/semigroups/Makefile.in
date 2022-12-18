@@ -89,19 +89,18 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 target_triplet = @target@
-@HPCOMBI_CONSTEXPR_FUN_ARGS_TRUE@am__append_1 =  \
-@HPCOMBI_CONSTEXPR_FUN_ARGS_TRUE@	-DHPCOMBI_CONSTEXPR_FUN_ARGS \
-@HPCOMBI_CONSTEXPR_FUN_ARGS_TRUE@	-I$(top_srcdir)/libsemigroups/extern
+@HPCOMBI_CONSTEXPR_FUN_ARGS_TRUE@am__append_1 = -DHPCOMBI_CONSTEXPR_FUN_ARGS
+@LIBSEMIGROUPS_HPCOMBI_ENABLED_TRUE@am__append_2 = $(HPCOMBI_CXXFLAGS)
 
 # FIXME(later) all the include paths should point into bin/include/ and not to
 # the sources, or otherwise we should stop make installing into bin
-@WITH_INCLUDED_LIBSEMIGROUPS_TRUE@am__append_2 = -I$(top_srcdir)/libsemigroups/extern/HPCombi/include \
-@WITH_INCLUDED_LIBSEMIGROUPS_TRUE@	-I$(top_srcdir)/libsemigroups/extern/HPCombi/include/fallback \
-@WITH_INCLUDED_LIBSEMIGROUPS_TRUE@	-I$(top_srcdir)/libsemigroups/extern/fmt-8.0.1/include \
+@LIBSEMIGROUPS_HPCOMBI_ENABLED_TRUE@@WITH_INCLUDED_LIBSEMIGROUPS_TRUE@am__append_3 = -I$(top_srcdir)/libsemigroups/extern/HPCombi/include \
+@LIBSEMIGROUPS_HPCOMBI_ENABLED_TRUE@@WITH_INCLUDED_LIBSEMIGROUPS_TRUE@	-I$(top_srcdir)/libsemigroups/extern/HPCombi/include/fallback
+@WITH_INCLUDED_LIBSEMIGROUPS_TRUE@am__append_4 = -I$(top_srcdir)/libsemigroups/extern/fmt-8.0.1/include \
 @WITH_INCLUDED_LIBSEMIGROUPS_TRUE@	-I$(top_srcdir)/libsemigroups/include
-@KERNEL_DEBUG_TRUE@am__append_3 = -DDEBUG
-@KERNEL_DEBUG_FALSE@am__append_4 = -DNDEBUG
-@SYS_IS_CYGWIN_TRUE@am__append_5 = -no-undefined -version-info 0:0:0 -Wl,$(GAPROOT)/bin/$(GAPARCH)/gap.dll
+@KERNEL_DEBUG_TRUE@am__append_5 = -DDEBUG
+@KERNEL_DEBUG_FALSE@am__append_6 = -DNDEBUG
+@SYS_IS_CYGWIN_TRUE@am__append_7 = -no-undefined -version-info 0:0:0 -Wl,$(GAPROOT)/bin/$(GAPARCH)/gap.dll
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/ax_append_flag.m4 \
@@ -362,7 +361,6 @@ GAPROOT = @GAPROOT@
 GAP_CFLAGS = @GAP_CFLAGS@
 GAP_CPPFLAGS = @GAP_CPPFLAGS@
 GAP_LDFLAGS = @GAP_LDFLAGS@
-GAP_LIBS = @GAP_LIBS@
 GREP = @GREP@
 HAVE_CXX14 = @HAVE_CXX14@
 HPCOMBI_CXXFLAGS = @HPCOMBI_CXXFLAGS@
@@ -494,14 +492,14 @@ semigroups_la_SOURCES = src/bipart.cpp src/cong.cpp \
 	src/froidure-pin-pperm.cpp src/froidure-pin-transf.cpp \
 	src/pkg.cpp src/to_gap.cpp gapbind14/src/gapbind14.cpp
 semigroups_la_CXXFLAGS = $(GAP_CFLAGS) @LIBSEMIGROUPS_CFLAGS@ \
-	-std=gnu++14 -O3 $(HPCOMBI_CXXFLAGS)
+	-std=gnu++14 -O3 $(am__append_2)
 semigroups_la_CPPFLAGS = $(GAP_CPPFLAGS) @LIBSEMIGROUPS_CFLAGS@ \
 	-I$(top_srcdir)/gapbind14/include $(am__append_1) \
-	$(am__append_2) -DFMT_HEADER_ONLY $(am__append_3) \
-	$(am__append_4)
+	$(am__append_3) $(am__append_4) -DFMT_HEADER_ONLY \
+	$(am__append_5) $(am__append_6)
 semigroups_la_CFLAGS = $(GAP_CFLAGS)
 semigroups_la_LDFLAGS = $(GAP_LDFLAGS) -module -avoid-version \
-	$(am__append_5)
+	$(am__append_7)
 semigroups_la_LIBADD = @LIBSEMIGROUPS_LIBS@
 all: $(BUILT_SOURCES)
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive

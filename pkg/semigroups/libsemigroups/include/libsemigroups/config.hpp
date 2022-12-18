@@ -181,7 +181,7 @@
 
 /* Define to the full name and version of this package. */
 #ifndef LIBSEMIGROUPS_PACKAGE_STRING
-#define LIBSEMIGROUPS_PACKAGE_STRING "libsemigroups 2.2.1"
+#define LIBSEMIGROUPS_PACKAGE_STRING "libsemigroups 2.3.2"
 #endif
 
 /* Define to the one symbol short name of this package. */
@@ -196,7 +196,7 @@
 
 /* Define to the version of this package. */
 #ifndef LIBSEMIGROUPS_PACKAGE_VERSION
-#define LIBSEMIGROUPS_PACKAGE_VERSION "2.2.1"
+#define LIBSEMIGROUPS_PACKAGE_VERSION "2.3.2"
 #endif
 
 /* Define to necessary symbol if this constant uses a non-standard name on
@@ -232,7 +232,7 @@
 
 /* Version number of package */
 #ifndef LIBSEMIGROUPS_VERSION
-#define LIBSEMIGROUPS_VERSION "2.2.1"
+#define LIBSEMIGROUPS_VERSION "2.3.2"
 #endif
 
 /* Define for Solaris 2.5.1 so the uint64_t typedef from <sys/synch.h>,

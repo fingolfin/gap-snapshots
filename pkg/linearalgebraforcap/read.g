@@ -11,4 +11,8 @@ ReadPackage( "LinearAlgebraForCAP", "gap/MatrixCategoryObject.gi" );
 
 ReadPackage( "LinearAlgebraForCAP", "gap/MatrixCategoryMorphism.gi" );
 
-ReadPackage( "LinearAlgebraForCAP", "gap/DerivedMethodsForMatrixCategories.gi" );
+if IsPackageMarkedForLoading( "FreydCategoriesForCAP", ">= 2022.10-14" ) then
+    
+    ReadPackage( "LinearAlgebraForCAP", "gap/MatrixCategoryAsCategoryOfRows.gi" );
+    
+fi;

@@ -9,7 +9,7 @@
     Crossed Modules and Cat1-Algebras
   </Subtitle>
   <Version>
-    1.22
+    1.23
   </Version>
   <Author>
     Zekeriya Arvasi<Alt Only="LaTeX"><Br/></Alt>
@@ -38,18 +38,16 @@ Turkey<Br/>
 
   </Author>
   <Date>
-    29 April 2022
+    3 December 2022
   </Date>
   <Abstract>
     The &XModAlg; package provides functions for computation with crossed modules of commutative algebras and cat<M>^{1}</M>-algebras.<P/>
 Bug reports, suggestions and comments are, of course, welcome. Please submit an issue on GitHub at <URL>https://github.com/gap-packages/xmodalg/issues/</URL> or contact the second author at <Email>aodabas@ogu.edu.tr</Email>. 
 <P/>
-
   </Abstract>
   <Copyright>
     &copyright; 2014-2022, Zekeriya Arvasi and Alper Odabas. <P/>
 The &XModAlg; package is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
-
   </Copyright>
   <Acknowledgements>
     This documentation was prepared with the &GAPDoc; <Cite Key='GAPDoc'/> and &AutoDoc; <Cite Key='AutoDoc'/> packages.<P/>

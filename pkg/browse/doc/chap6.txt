@@ -1772,8 +1772,10 @@
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xdirs := DirectoriesPackageLibrary("Browse");;[127X[104X
     [4X[25Xgap>[125X [27Xdemofile := Filename(dirs, "../app/demo.demo");;[127X[104X
-    [4X[25Xgap>[125X [27XLoadDemoFile("My first demo", demofile);[127X[104X
-    [4X[25Xgap>[125X [27XLoadDemoFile("My first demo (single lines)", demofile, true);[127X[104X
+    [4X[25Xgap>[125X [27Xif IsBound(GAPInfo.UseReadline) and GAPInfo.UseReadline = true then[127X[104X
+    [4X[25X>[125X [27X  LoadDemoFile("My first demo", demofile);[127X[104X
+    [4X[25X>[125X [27X  LoadDemoFile("My first demo (single lines)", demofile, true);[127X[104X
+    [4X[25X>[125X [27Xfi;[127X[104X
   [4X[32X[104X
   
   [33X[0;0YMany  demos  can be loaded at the same time. They are used with the [12XPageDown[112X

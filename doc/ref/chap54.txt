@@ -332,8 +332,8 @@
   
   [33X[0;0YThe  meet of partial permutations [3Xf[103X and [3Xg[103X is just the meet, or infimum, of [3Xf[103X
   and  [3Xg[103X  under the natural partial ordering of partial permutations. In other
-  words, the meet is the greatest partial permuation which is a restriction of
-  both [3Xf[103X and [3Xg[103X.[133X
+  words,  the  meet is the greatest partial permutation which is a restriction
+  of both [3Xf[103X and [3Xg[103X.[133X
   
   [33X[0;0YNote that unlike the join of partial permutations, the meet always exists.[133X
   
@@ -399,7 +399,7 @@
   image  contained  in the set of positive integers [3Ximg[103X. The arguments [3Xdom[103X and
   [3Ximg[103X do not have to have equal length.[133X
   
-  [33X[0;0YNote  that  it  is  not  guarenteed  in  either  of these cases that partial
+  [33X[0;0YNote  that  it  is  not  guaranteed  in  either  of these cases that partial
   permutations are chosen with a uniform distribution.[133X
   
   

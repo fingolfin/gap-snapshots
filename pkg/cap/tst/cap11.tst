@@ -10,7 +10,7 @@
 #
 gap> START_TEST("cap11.tst");
 
-# doc/_Chapter_Examples_and_Tests.xml:210-309
+# doc/_Chapter_Examples_and_Tests.xml:219-318
 gap> ReadPackage( "CAP", "examples/StringsAsCategory.g" );;
 gap> C := StringsAsCategory();;
 gap> obj1 := StringsAsCategoryObject( "qaeiou", C );;

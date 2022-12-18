@@ -17,73 +17,8 @@ provided by &CAP; or any &CAP;-based package.
 <Heading>Constructors</Heading>
 
 <P/>
-<ManSection>
-  <Func Arg="" Name="TerminalCategory" />
- <Description>
-  Construct a terminal category possibly with multiple objects.
- </Description>
-</ManSection>
-
-
-<#Include Label="TerminalCategory">
-
-<ManSection>
-  <Func Arg="" Name="TerminalCategoryWithMultipleObjects" />
- <Description>
-  Construct a terminal category with multiple objects.
- </Description>
-</ManSection>
-
-
-<#Include Label="TerminalCategoryWithMultipleObjects">
-
 </Section>
 
-
-<Section Label="Chapter_The_terminal_category_with_multiple_objects_Section_GAP_Categories">
-<Heading>&GAP; Categories</Heading>
-
-<ManSection>
-  <Filt Arg="T" Name="IsTerminalCategoryWithMultipleObjects" Label="for IsCapCategory"/>
- <Returns><K>true</K> or <K>false</K>
-</Returns>
- <Description>
-  The &GAP; type of a terminal category with multiple objects.
- </Description>
-</ManSection>
-
-
-<ManSection>
-  <Filt Arg="T" Name="IsCellInTerminalCategoryWithMultipleObjects" Label="for IsCapCategoryCell"/>
- <Returns><K>true</K> or <K>false</K>
-</Returns>
- <Description>
-  The &GAP; type of a cell in a terminal category with multiple objects.
- </Description>
-</ManSection>
-
-
-<ManSection>
-  <Filt Arg="T" Name="IsObjectInTerminalCategoryWithMultipleObjects" Label="for IsCellInTerminalCategoryWithMultipleObjects andIsCapTerminalCategoryObjectRep"/>
- <Returns><K>true</K> or <K>false</K>
-</Returns>
- <Description>
-  The &GAP; type of an object in a terminal category with multiple objects.
- </Description>
-</ManSection>
-
-
-<ManSection>
-  <Filt Arg="T" Name="IsMorphismInTerminalCategoryWithMultipleObjects" Label="for IsCellInTerminalCategoryWithMultipleObjects andIsCapTerminalCategoryMorphismRep"/>
- <Returns><K>true</K> or <K>false</K>
-</Returns>
- <Description>
-  The &GAP; type of a morphism in a terminal category with multiple objects.
- </Description>
-</ManSection>
-
-
-</Section>
 
 
 </Chapter>

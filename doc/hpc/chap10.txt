@@ -59,7 +59,7 @@
   
   [33X[1;0Y[29X[2XInstallSerializer[102X( [3Xdescription[103X, [3Xfilters[103X, [3Xmethod[103X ) [32X function[133X
   
-  [33X[0;0YThe   more   general   [2XInstallSerializer[102X   allows   for  arbitarily  complex
+  [33X[0;0YThe   more   general   [2XInstallSerializer[102X   allows  for  arbitrarily  complex
   serialization  code.  It  installs [3Xmethod[103X as the method to serialize objects
   matching  [3Xfilters[103X;  [3Xdescription[103X  has  the  same  role  as  for [2XInstallMethod[102X
   ([14XReference: InstallMethod[114X).[133X

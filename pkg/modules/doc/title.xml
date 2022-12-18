@@ -9,7 +9,7 @@
     A homalg based package for the Abelian category of finitely presented modules over computable rings
   </Subtitle>
   <Version>
-    2022.09-01
+    2022.11-01
   </Version>
   <Author>
     Thomas Bächler<Alt Only="LaTeX"><Br/></Alt>
@@ -87,7 +87,7 @@ India<Br/>
 
   </Author>
   <Date>
-    7 September 2022
+    23 November 2022
   </Date>
   <Copyright>
     &copyright; 2007-2015 by Mohamed Barakat and Markus Lange-Hegermann

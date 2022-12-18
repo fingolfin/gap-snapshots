@@ -41,7 +41,7 @@
 <Heading>Derivation Objects</Heading>
 
 <ManSection>
-  <Filt Arg="arg" Name="IsDerivedMethod" Label="for IsObject"/>
+  <Filt Arg="arg" Name="IsDerivedMethod" Label="for IsAttributeStoringRep"/>
  <Returns><K>true</K> or <K>false</K>
 </Returns>
  <Description>
@@ -183,7 +183,7 @@
 <Heading>Derivation Graphs</Heading>
 
 <ManSection>
-  <Filt Arg="arg" Name="IsDerivedMethodGraph" Label="for IsObject"/>
+  <Filt Arg="arg" Name="IsDerivedMethodGraph" Label="for IsAttributeStoringRep"/>
  <Returns><K>true</K> or <K>false</K>
 </Returns>
  <Description>
@@ -302,7 +302,7 @@ Adds a list of operation names <A>operations</A> to a given derivation graph <A>
 <Heading>Managing Derivations in a Category</Heading>
 
 <ManSection>
-  <Filt Arg="arg" Name="IsOperationWeightList" Label="for IsObject"/>
+  <Filt Arg="arg" Name="IsOperationWeightList" Label="for IsAttributeStoringRep"/>
  <Returns><K>true</K> or <K>false</K>
 </Returns>
  <Description>
@@ -452,7 +452,7 @@ Adds a list of operation names <A>operations</A> to a given derivation graph <A>
  This section describes an implementation of min heaps for storing strings with
  associated integer keys, used internally by operation weight lists.
 <ManSection>
-  <Filt Arg="arg" Name="IsStringMinHeap" Label="for IsObject"/>
+  <Filt Arg="arg" Name="IsStringMinHeap" Label="for IsAttributeStoringRep"/>
  <Returns><K>true</K> or <K>false</K>
 </Returns>
  <Description>

@@ -122,6 +122,8 @@ InstallValue( HOMALG_TOOLS,
             
             minus_infinity := -999999,
             
+            ReadPackageOnce := [ ],
+            
             ## ContainersForWeakPointers "will be added below",
             
             )
@@ -1741,17 +1743,14 @@ end );
 ##
 InstallGlobalFunction( WriteFileForHomalg,
   function( path, string )
-    local fs;
+    local nr_bytes_written;
     
-    fs := IO_File( path, "w" );
-    if fs = fail then
-        Error( "unable to open the file ", path, " for writing\n" );
-    fi;
-    if IO_WriteFlush( fs, string ) = fail then
-        Error( "unable to write in the file ", path, "\n" );
-    fi;
-    if IO_Close( fs ) = fail then
-        Error( "unable to close the file ", path, "\n" );
+    nr_bytes_written := FileString( path, string );
+    
+    if nr_bytes_written = fail then
+        
+        Error( "could not write to file ", path );
+        
     fi;
     
 end );
@@ -1759,21 +1758,17 @@ end );
 ##
 InstallGlobalFunction( ReadFileForHomalg,
   function( path )
-    local fs, string;
+    local content;
     
-    fs := IO_File( path, "r" );
-    if fs = fail then
-        Error( "unable to open the file ", path, " for reading\n" );
-    fi;
-    string := IO_ReadUntilEOF( fs );
-    if IO_Close( fs ) = fail then
-        Error( "unable to close the file ", path, "\n" );
-    fi;
-    if string = fail then
-        Error( "unable to read lines from the file ", path, "\n" );
+    content := StringFile( path );
+    
+    if content = fail then
+        
+        Error( "could not read file ", path );
+        
     fi;
     
-    return string;
+    return content;
     
 end );
 
@@ -2818,6 +2813,39 @@ InstallGlobalFunction( Breakpoint, function( name, args... )
         
         Print( "Breakpoint ", name, ": ", TOOLS_FOR_HOMALG_INTERNAL_BREAKPOINTS.(name), "\n" );
         
+    fi;
+    
+end );
+
+##
+InstallGlobalFunction( ReadPackageOnce,
+  function( arg... )
+    local pos, relpath, pkgname, namespace, filename;
+    
+    if Length( arg ) = 1 then
+        pos := Position( arg[1], '/' );
+        if pos = fail then
+            ErrorNoReturn( arg[1], " is not a filename in the form 'package/filepath'" );
+        fi;
+        relpath := arg[1]{[ pos + 1 .. Length( arg[1] ) ]};
+        pkgname := LowercaseString( arg[1]{[ 1 .. pos - 1 ]} );
+        namespace := GAPInfo.PackagesInfo.(pkgname)[1].PackageName;
+    elif Length( arg ) = 2 then
+        pkgname := LowercaseString( arg[1] );
+        namespace := GAPInfo.PackagesInfo.(pkgname)[1].PackageName;
+        relpath := arg[2];
+    else
+        Error( "expected 1 or 2 arguments" );
+    fi;
+    filename := Filename( DirectoriesPackageLibrary( pkgname, "" ), relpath );
+    if filename <> fail and IsReadableFile( filename ) then
+        if filename in HOMALG_TOOLS.ReadPackageOnce then
+            return true;
+        fi;
+        Add( HOMALG_TOOLS.ReadPackageOnce, filename );
+        return CallFuncList( ReadPackage, arg );
+    else
+        return false;
     fi;
     
 end );

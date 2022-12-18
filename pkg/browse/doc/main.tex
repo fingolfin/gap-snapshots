@@ -95,8 +95,8 @@
 
 \hypersetup{pdftitle=\textsf{Browse}}
 \markright{\scriptsize \mbox{}\hfill \textsf{Browse} \hfill\mbox{}}
-{\Huge ( Version 1.8.18 ) \mbox{}}\\[1cm]
-{October 2022\mbox{}}\\[1cm]
+{\Huge ( Version 1.8.19 ) \mbox{}}\\[1cm]
+{December 2022\mbox{}}\\[1cm]
 \mbox{}\\[2cm]
 {\Large \textbf{ Thomas Breuer   \mbox{}}}\\
 {\Large \textbf{ Frank L{\"u}beck   \mbox{}}}\\
@@ -3780,8 +3780,10 @@ displayed.
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@dirs := DirectoriesPackageLibrary("Browse");;|
   !gapprompt@gap>| !gapinput@demofile := Filename(dirs, "../app/demo.demo");;|
-  !gapprompt@gap>| !gapinput@LoadDemoFile("My first demo", demofile);|
-  !gapprompt@gap>| !gapinput@LoadDemoFile("My first demo (single lines)", demofile, true);|
+  !gapprompt@gap>| !gapinput@if IsBound(GAPInfo.UseReadline) and GAPInfo.UseReadline = true then|
+  !gapprompt@>| !gapinput@  LoadDemoFile("My first demo", demofile);|
+  !gapprompt@>| !gapinput@  LoadDemoFile("My first demo (single lines)", demofile, true);|
+  !gapprompt@>| !gapinput@fi;|
 \end{Verbatim}
  }
 

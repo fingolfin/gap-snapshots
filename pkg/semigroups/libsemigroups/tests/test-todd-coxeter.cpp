@@ -2153,14 +2153,14 @@ namespace libsemigroups {
       REQUIRE(!tc.stats_string().empty());
     }
 
-    // Takes about 1m7s
+    // Takes about 6m
     LIBSEMIGROUPS_TEST_CASE("ToddCoxeter",
                             "042",
                             "SymmetricGroup1",
                             "[todd-coxeter][extreme]") {
       auto        rg = ReportGuard(true);
       ToddCoxeter tc(twosided);
-      tc.set_number_of_generators(4);
+      tc.set_number_of_generators(3);
       for (auto const& w : SymmetricGroup1(10)) {
         tc.add_pair(w.first, w.second);
       }
@@ -2354,7 +2354,7 @@ namespace libsemigroups {
       auto         rg = ReportGuard(REPORT);
       size_t const n  = 4;
       ToddCoxeter  tc(congruence_kind::twosided);
-      setup(tc, 5, PartitionMonoidEast41, n);
+      setup(tc, 5, PartitionMonoid, n, author::East);
       check_hlt(tc);
       check_felsch(tc);
       check_random(tc);
@@ -2445,7 +2445,7 @@ namespace libsemigroups {
       auto rg = ReportGuard(false);
       for (size_t n = 4; n <= 6; ++n) {
         ToddCoxeter tc(congruence_kind::twosided);
-        setup(tc, 5, PartitionMonoidEast41, n);
+        setup(tc, 5, PartitionMonoid, n, author::East);
         tc.save(true);
         output_gap_benchmark_file("partition-" + std::to_string(n) + ".g", tc);
       }
@@ -2577,6 +2577,87 @@ namespace libsemigroups {
       setup(tc, 2 * n - 1, Brauer, n);
       tc.sort_generating_pairs().remove_duplicate_generating_pairs();
       REQUIRE(tc.number_of_classes() == 105);
+    }
+
+    LIBSEMIGROUPS_TEST_CASE("ToddCoxeter",
+                            "113",
+                            "SymmetricInverseMonoid",
+                            "[todd-coxeter][quick]") {
+      auto rg = ReportGuard(REPORT);
+      auto s  = SymmetricInverseMonoid(5, author::Sutov);
+      for (auto& rel : s) {
+        if (rel.first.empty()) {
+          rel.first = {5};
+        }
+        if (rel.second.empty()) {
+          rel.second = {5};
+        }
+      }
+      auto p = make<Presentation<word_type>>(s);
+      p.alphabet(6);
+      presentation::add_identity_rules(p, 5);
+      p.validate();
+
+      ToddCoxeter tc(congruence_kind::twosided);
+      tc.set_number_of_generators(6);
+      for (size_t i = 0; i < p.rules.size() - 1; i += 2) {
+        tc.add_pair(p.rules[i], p.rules[i + 1]);
+      }
+      REQUIRE(tc.number_of_classes() == 1546);
+    }
+    LIBSEMIGROUPS_TEST_CASE("ToddCoxeter",
+                            "114",
+                            "PartialTransformationMonoid",
+                            "[todd-coxeter][standard]") {
+      auto   rg = ReportGuard(REPORT);
+      size_t n  = 5;
+      auto   s  = PartialTransformationMonoid(n, author::Sutov);
+      for (auto& rel : s) {
+        if (rel.first.empty()) {
+          rel.first = {n + 1};
+        }
+        if (rel.second.empty()) {
+          rel.second = {n + 1};
+        }
+      }
+      auto p = make<Presentation<word_type>>(s);
+      p.alphabet(n + 2);
+      presentation::add_identity_rules(p, n + 1);
+      p.validate();
+
+      ToddCoxeter tc(congruence_kind::twosided);
+      tc.set_number_of_generators(n + 2);
+      for (size_t i = 0; i < p.rules.size() - 1; i += 2) {
+        tc.add_pair(p.rules[i], p.rules[i + 1]);
+      }
+      REQUIRE(tc.number_of_classes() == 7776);
+    }
+    LIBSEMIGROUPS_TEST_CASE("ToddCoxeter",
+                            "115",
+                            "FullTransformationMonoid5",
+                            "[todd-coxeter][extreme]") {
+      auto   rg = ReportGuard(REPORT);
+      size_t n  = 7;
+      auto   s  = FullTransformationMonoid(n, author::Iwahori);
+      for (auto& rel : s) {
+        if (rel.first.empty()) {
+          rel.first = {n};
+        }
+        if (rel.second.empty()) {
+          rel.second = {n};
+        }
+      }
+      auto p = make<Presentation<word_type>>(s);
+      p.alphabet(n + 1);
+      presentation::add_identity_rules(p, n);
+      p.validate();
+
+      ToddCoxeter tc(congruence_kind::twosided);
+      tc.set_number_of_generators(n + 1);
+      for (size_t i = 0; i < p.rules.size() - 1; i += 2) {
+        tc.add_pair(p.rules[i], p.rules[i + 1]);
+      }
+      REQUIRE(tc.number_of_classes() == 823543);
     }
 
   }  // namespace congruence
@@ -4143,7 +4224,6 @@ namespace libsemigroups {
                 << std::endl;
       REQUIRE(tc.size() == 5'040 / 2);
     }
-
   }  // namespace fpsemigroup
 
 }  // namespace libsemigroups

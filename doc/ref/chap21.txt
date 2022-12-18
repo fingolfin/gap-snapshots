@@ -549,7 +549,7 @@
   [33X[0;0Y[2XUnbind[102X  deletes  the element with index [3Xn[103X in the mutable list [3Xlist[103X. That is,
   after  execution  of [2XUnbind[102X, [3Xlist[103X no longer has an assigned value with index
   [3Xn[103X.  Thus  [2XUnbind[102X can be used to produce holes in a list. Note that it is not
-  an error to unbind a nonexistant list element. [3Xlist[103X must evaluate to a list,
+  an error to unbind a nonexistent list element. [3Xlist[103X must evaluate to a list,
   or  to  an  object  for  which  a  suitable  method  for [10XUnbind\[\][110X has been
   installed, otherwise an error is signalled.[133X
   

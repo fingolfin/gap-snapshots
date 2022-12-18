@@ -3,8 +3,8 @@ dnl Setup autoconf
 dnl
 AC_PREREQ([2.68])
 
-m4_define([gap_version], [4.12.1])
-m4_define([gap_releaseday], [2022-10-20])
+m4_define([gap_version], [4.12.2])
+m4_define([gap_releaseday], [2022-12-18])
 m4_define([gap_releaseyear], [2022])
 
 m4_define([gap_tarname], [gap-gap_version])
@@ -155,7 +155,7 @@ dnl
 dnl Check for properties of the host system and compiler
 dnl
 
-dnl endianess
+dnl endianness
 AC_C_BIGENDIAN
 
 dnl C/C++ attributes with GNU syntax (i.e., `__attribute__(FOO)`)

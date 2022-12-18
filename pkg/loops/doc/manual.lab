@@ -80,7 +80,7 @@
 \makelabel{loops:Isotopisms}{6.12}{X7E996BDD81E594F9}
 \makelabel{loops:Testing Properties of Quasigroups and Loops}{7}{X7910E575825C713E}
 \makelabel{loops:Associativity, Commutativity and Generalizations}{7.1}{X7960E3FB7A7F0F00}
-\makelabel{loops:Inverse Propeties}{7.2}{X853841C5820BFEA4}
+\makelabel{loops:Inverse Properties}{7.2}{X8748BA2187604B24}
 \makelabel{loops:HasLeftInverseProperty, HasRightInverseProperty and HasInverseProperty}{7.2.1}{X85EDD10586596458}
 \makelabel{loops:Some Properties of Quasigroups}{7.3}{X7D8CB6DA828FD744}
 \makelabel{loops:IsLeftDistributive, IsRightDistributive, IsDistributive}{7.3.6}{X7B76FD6E878ED4F1}
@@ -90,7 +90,7 @@
 \makelabel{loops:IsLeftPowerAlternative, IsRightPowerAlternative and IsPowerAlternative}{7.5.1}{X875C3DF681B3FAE2}
 \makelabel{loops:Conjugacy Closed Loops and Related Properties}{7.6}{X8176B2C47A4629CD}
 \makelabel{loops:Automorphic Loops}{7.7}{X793B22EA8643C667}
-\makelabel{loops:Additonal Varieties of Loops}{7.8}{X846F363879BAB349}
+\makelabel{loops:Additional Varieties of Loops}{7.8}{X878C9D247FB0D56E}
 \makelabel{loops:IsLeftBruckLoop and IsLeftKLoop}{7.8.3}{X85F1BD4280E44F5B}
 \makelabel{loops:IsRightBruckLoop and IsRightKLoop}{7.8.4}{X857B373E7B4E0519}
 \makelabel{loops:Specific Methods}{8}{X85AFC9C47FD3C03F}
@@ -346,8 +346,8 @@
 \makelabel{loops:IsDiassociative}{7.1.4}{X872DCA027E1A4A1D}
 \makelabel{loops:quasigroup diassociative}{7.1.4}{X872DCA027E1A4A1D}
 \makelabel{loops:diassociative quasigroup}{7.1.4}{X872DCA027E1A4A1D}
-\makelabel{loops:inverse left}{7.2}{X853841C5820BFEA4}
-\makelabel{loops:inverse right}{7.2}{X853841C5820BFEA4}
+\makelabel{loops:inverse left}{7.2}{X8748BA2187604B24}
+\makelabel{loops:inverse right}{7.2}{X8748BA2187604B24}
 \makelabel{loops:HasLeftInverseProperty}{7.2.1}{X85EDD10586596458}
 \makelabel{loops:HasRightInverseProperty}{7.2.1}{X85EDD10586596458}
 \makelabel{loops:HasInverseProperty}{7.2.1}{X85EDD10586596458}

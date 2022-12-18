@@ -4,7 +4,7 @@
 ##                                                           Alexander Hulpke
 ##                                                               Frank Lübeck
 ##                                                          
-#Y  Copyright (C) 2015-2017, The GAP Group 
+#Y  Copyright (C) 2015-2022, The GAP Group 
 
 #############################################################################
 ##
@@ -73,17 +73,10 @@ end );
 InstallMethod( PcGroupToMagmaFormat, "pc-group", true, [IsPcGroup], 0, 
     function(G)
     local str, g, n, r, gens, rels, i, j;
-    if IsPcpGroup(G) then
-        g := Pcp(G);
-        r := RelativeOrders(Collector(G));
-        n := Length(r);
-        gens := List(g,String);
-    else
-        g := Pcgs(G);
-        n := Length(g);
-        r := RelativeOrders(g);
-        gens := List(g,String);
-    fi;
+    g := Pcgs(G);
+    n := Length(g);
+    r := RelativeOrders(g);
+    gens := List(g,String);
     str := "PolycyclicGroup< ";
     Append(str, JoinStringsWithSeparator(gens));
     Append(str, " |\n");

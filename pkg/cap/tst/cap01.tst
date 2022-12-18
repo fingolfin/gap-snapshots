@@ -10,14 +10,23 @@
 #
 gap> START_TEST("cap01.tst");
 
-# doc/_Chapter_Examples_and_Tests.xml:10-21
+# doc/_Chapter_Examples_and_Tests.xml:10-30
 gap> LoadPackage( "CAP", false );
 true
+gap> list_of_operations_to_install := [
+>     "ObjectConstructor",
+>     "MorphismConstructor",
+>     "ObjectDatum",
+>     "MorphismDatum",
+>     "PreCompose",
+>     "IdentityMorphism",
+>     "DirectSum",
+> ];;
 gap> dummy := DummyCategory( rec(
->     list_of_operations_to_install := [ "PreCompose", "IdentityMorphism", "DirectSum" ],
+>     list_of_operations_to_install := list_of_operations_to_install,
 >     properties := [ "IsAdditiveCategory" ],
 > ) );;
-gap> CanCompute( dummy, "DirectSum" );
+gap> ForAll( list_of_operations_to_install, o -> CanCompute( dummy, o ) );
 true
 gap> IsAdditiveCategory( dummy );
 true

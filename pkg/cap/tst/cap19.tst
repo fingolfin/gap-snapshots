@@ -10,81 +10,144 @@
 #
 gap> START_TEST("cap19.tst");
 
-# doc/_Chapter_Examples_and_Tests.xml:747-822
-gap> vecspaces := CreateCapCategory( "VectorSpacesForGeneralizedMorphismsTest" );
-VectorSpacesForGeneralizedMorphismsTest
-gap> ReadPackage( "CAP", "examples/VectorSpacesAllMethods.g" );
+# doc/_Chapter_Examples_and_Tests.xml:760-898
+gap> LoadPackage( "MonoidalCategories" );
 true
-gap> LoadPackage( "GeneralizedMorphismsForCAP" );
+gap> T := TerminalCategoryWithMultipleObjects( );
+TerminalCategoryWithMultipleObjects( )
+gap> Display( T );
+A CAP category with name TerminalCategoryWithMultipleObjects( ):
+
+63 primitive operations were used to derive 280 operations for this category
+which algorithmically
+* IsCategoryWithDecidableColifts
+* IsCategoryWithDecidableLifts
+* IsEquippedWithHomomorphismStructure
+* IsLinearCategoryOverCommutativeRing
+* IsAbelianCategoryWithEnoughInjectives
+* IsAbelianCategoryWithEnoughProjectives
+* IsRigidSymmetricClosedMonoidalCategory
+* IsRigidSymmetricCoclosedMonoidalCategory
+and furthermore mathematically
+* IsLocallyOfFiniteInjectiveDimension
+* IsLocallyOfFiniteProjectiveDimension
+* IsTerminalCategory
+gap> i := InitialObject( T );
+<A zero object in TerminalCategoryWithMultipleObjects( )>
+gap> t := TerminalObject( T );
+<A zero object in TerminalCategoryWithMultipleObjects( )>
+gap> z := ZeroObject( T );
+<A zero object in TerminalCategoryWithMultipleObjects( )>
+gap> Display( i );
+ZeroObject
+gap> Display( t );
+ZeroObject
+gap> Display( z );
+ZeroObject
+gap> IsIdenticalObj( i, z );
 true
-gap> B := QVectorSpace( 2 );
-<A rational vector space of dimension 2>
-gap> C := QVectorSpace( 3 );
-<A rational vector space of dimension 3>
-gap> B_1 := QVectorSpace( 1 );
-<A rational vector space of dimension 1>
-gap> C_1 := QVectorSpace( 2 );
-<A rational vector space of dimension 2>
-gap> c1_source_aid := VectorSpaceMorphism( B_1, [ [ 1, 0 ] ], B );
-A rational vector space homomorphism with matrix: 
-[ [  1,  0 ] ]
-
-gap> SetIsSubobject( c1_source_aid, true );
-gap> c1_range_aid := VectorSpaceMorphism( C, [ [ 1, 0 ], [ 0, 1 ], [ 0, 0 ] ], C_1 );
-A rational vector space homomorphism with matrix: 
-[ [  1,  0 ],
-  [  0,  1 ],
-  [  0,  0 ] ]
-
-gap> SetIsFactorobject( c1_range_aid, true );
-gap> c1_associated := VectorSpaceMorphism( B_1, [ [ 1, 1 ] ], C_1 );
-A rational vector space homomorphism with matrix: 
-[ [  1,  1 ] ]
-
-gap> c1 := GeneralizedMorphism( c1_source_aid, c1_associated, c1_range_aid );
-<A morphism in Generalized morphism category of VectorSpacesForGeneralizedMorphismsTest>
-gap> B_2 := QVectorSpace( 1 );
-<A rational vector space of dimension 1>
-gap> C_2 := QVectorSpace( 2 );
-<A rational vector space of dimension 2>
-gap> c2_source_aid := VectorSpaceMorphism( B_2, [ [ 2, 0 ] ], B );
-A rational vector space homomorphism with matrix: 
-[ [  2,  0 ] ]
-
-gap> SetIsSubobject( c2_source_aid, true );
-gap> c2_range_aid := VectorSpaceMorphism( C, [ [ 3, 0 ], [ 0, 3 ], [ 0, 0 ] ], C_2 );
-A rational vector space homomorphism with matrix: 
-[ [  3,  0 ],
-  [  0,  3 ],
-  [  0,  0 ] ]
-
-gap> SetIsFactorobject( c2_range_aid, true );
-gap> c2_associated := VectorSpaceMorphism( B_2, [ [ 6, 6 ] ], C_2 );
-A rational vector space homomorphism with matrix: 
-[ [  6,  6 ] ]
-
-gap> c2 := GeneralizedMorphism( c2_source_aid, c2_associated, c2_range_aid );
-<A morphism in Generalized morphism category of VectorSpacesForGeneralizedMorphismsTest>
-gap> IsCongruentForMorphisms( c1, c2 );
+gap> IsIdenticalObj( t, z );
 true
-gap> IsCongruentForMorphisms( c1, c1 );
-true
-gap> c3_associated := VectorSpaceMorphism( B_1, [ [ 2, 2 ] ], C_1 );
-A rational vector space homomorphism with matrix: 
-[ [  2,  2 ] ]
-
-gap> c3 := GeneralizedMorphism( c1_source_aid, c3_associated, c1_range_aid );
-<A morphism in Generalized morphism category of VectorSpacesForGeneralizedMorphismsTest>
-gap> IsCongruentForMorphisms( c1, c3 );
+gap> id_z := IdentityMorphism( z );
+<A zero, identity morphism in TerminalCategoryWithMultipleObjects( )>
+gap> fn_z := ZeroObjectFunctorial( T );
+<A zero, isomorphism in TerminalCategoryWithMultipleObjects( )>
+gap> IsEqualForMorphisms( id_z, fn_z );
 false
-gap> IsCongruentForMorphisms( c2, c3 );
+gap> IsCongruentForMorphisms( id_z, fn_z );
+true
+gap> a := "a" / T;
+<A zero object in TerminalCategoryWithMultipleObjects( )>
+gap> Display( a );
+a
+gap> IsWellDefined( a );
+true
+gap> aa := ObjectConstructor( T, "a" );
+<A zero object in TerminalCategoryWithMultipleObjects( )>
+gap> Display( aa );
+a
+gap> a = aa;
+true
+gap> b := "b" / T;
+<A zero object in TerminalCategoryWithMultipleObjects( )>
+gap> Display( b );
+b
+gap> a = b;
 false
-gap> c1 + c2;
-<A morphism in Generalized morphism category of VectorSpacesForGeneralizedMorphismsTest>
-gap> Arrow( c1 + c2 );
-A rational vector space homomorphism with matrix: 
-[ [  12,  12 ] ]
-
+gap> t := TensorProduct( a, b );
+<A zero object in TerminalCategoryWithMultipleObjects( )>
+gap> Display( t );
+TensorProductOnObjects
+gap> a = t;
+false
+gap> TensorProduct( a, a ) = t;
+true
+gap> m := MorphismConstructor( a, "m", b );
+<A zero, isomorphism in TerminalCategoryWithMultipleObjects( )>
+gap> Display( m );
+a
+|
+| m
+v
+b
+gap> IsWellDefined( m );
+true
+gap> n := MorphismConstructor( a, "n", b );
+<A zero, isomorphism in TerminalCategoryWithMultipleObjects( )>
+gap> Display( n );
+a
+|
+| n
+v
+b
+gap> IsEqualForMorphisms( m, n );
+false
+gap> IsCongruentForMorphisms( m, n );
+true
+gap> m = n;
+true
+gap> id := IdentityMorphism( a );
+<A zero, identity morphism in TerminalCategoryWithMultipleObjects( )>
+gap> Display( id );
+a
+|
+| IdentityMorphism
+v
+a
+gap> m = id;
+false
+gap> id = MorphismConstructor( a, "xyz", a );
+true
+gap> z := ZeroMorphism( a, a );
+<A zero, isomorphism in TerminalCategoryWithMultipleObjects( )>
+gap> Display( z );
+a
+|
+| ZeroMorphism
+v
+a
+gap> id = z;
+true
+gap> IsLiftable( m, n );
+true
+gap> lift := Lift( m, n );
+<A zero, isomorphism in TerminalCategoryWithMultipleObjects( )>
+gap> Display( lift );
+a
+|
+| Lift
+v
+a
+gap> IsColiftable( m, n );
+true
+gap> colift := Colift( m, n );
+<A zero, isomorphism in TerminalCategoryWithMultipleObjects( )>
+gap> Display( colift );
+b
+|
+| Colift
+v
+b
 
 #
 gap> STOP_TEST("cap19.tst", 1);

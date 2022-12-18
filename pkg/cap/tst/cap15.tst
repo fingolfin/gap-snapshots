@@ -10,10 +10,10 @@
 #
 gap> START_TEST("cap15.tst");
 
-# doc/_Chapter_Examples_and_Tests.xml:463-537
+# doc/_Chapter_Examples_and_Tests.xml:476-550
 gap> LoadPackage( "LinearAlgebraForCAP" );
 true
-gap> LoadPackage( "GeneralizedMorphismsForCAP" );
+gap> LoadPackage( "GeneralizedMorphismsForCAP", false );
 true
 gap> old_generalized_morphism_standard := CAP_INTERNAL!.generalized_morphism_standard;;
 gap> SwitchGeneralizedMorphismStandard( "cospan" );

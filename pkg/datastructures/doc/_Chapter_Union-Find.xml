@@ -66,7 +66,7 @@
 <ManSection>
   <Oper Arg="unionfind, k1, k2" Name="Unite" Label="for IsPartitionDS and IsMutable, IsPosInt, IsPosInt"/>
  <Description>
- Fuses the parts of the paritition <A>unionfind</A> containing <A>k1</A>
+ Fuses the parts of the partition <A>unionfind</A> containing <A>k1</A>
  and <A>k2</A>.
  </Description>
 </ManSection>

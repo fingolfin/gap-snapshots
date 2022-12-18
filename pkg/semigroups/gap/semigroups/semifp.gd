@@ -15,3 +15,9 @@ DeclareAttribute("UnderlyingCongruence", IsFpSemigroup);
 DeclareAttribute("UnderlyingCongruence", IsFpMonoid);
 DeclareAttribute("Length", IsFpSemigroup);
 DeclareAttribute("Length", IsFpMonoid);
+
+DeclareOperation("ReversedOp", [IsElementOfFpSemigroup]);
+DeclareOperation("ReversedOp", [IsElementOfFpMonoid]);
+
+DeclareGlobalFunction("FreeMonoidAndAssignGeneratorVars");
+DeclareGlobalFunction("FreeSemigroupAndAssignGeneratorVars");

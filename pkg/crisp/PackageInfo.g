@@ -11,18 +11,18 @@ SetPackageInfo( rec(
 
 PackageName := "CRISP",
 Subtitle := "Computing with Radicals, Injectors, Schunck classes and Projectors",
-Version := "1.4.5",
-
-Date := "07/11/2019",
+Version := "1.4.6",
+Date := "15/12/2022",
+License := "BSD-2-Clause",
 
 BannerString := "\
 ----------------------------------------------------------------------\n\
-                        CRISP Version 1.4.5\n\
+                        CRISP Version 1.4.6\n\
   Computing with Radicals, Injectors, Schunck classes and Projectors\n\
                          by Burkhard Höfling\n\
 ----------------------------------------------------------------------\n",
 
-ArchiveURL := "http://www.icm.tu-bs.de/~bhoeflin/crisp/crisp-1.4.5",
+ArchiveURL := "http://www.icm.tu-bs.de/~bhoeflin/crisp/crisp-1.4.6",
 
 ArchiveFormats := ".tar.bz2", # the others are generated automatically
 BinaryFiles := ["doc/manual.pdf"],
@@ -80,9 +80,6 @@ PackageDoc := rec(
   # a longer title of the book, this together with the book name should
   # fit on a single text line (appears with the '?books' command in GAP)
   LongTitle := "Computing Radicals, Injectors, Projectors of soluble groups",
-  # Should this help book be autoloaded when GAP starts up? This should
-  # usually be 'true', otherwise say 'false'. 
-  Autoload := true
 ),
 
 
@@ -99,8 +96,6 @@ Dependencies := rec(
                       
 ),
 AvailabilityTest := ReturnTrue,
-
-Autoload := true,
 
 TestFile := "tst/testall.g",
 

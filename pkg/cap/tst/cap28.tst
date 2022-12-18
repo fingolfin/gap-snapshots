@@ -10,36 +10,36 @@
 #
 gap> START_TEST("cap28.tst");
 
-# doc/_Chapter_Examples_and_Tests.xml:1268-1298
-gap> vecspaces := CreateCapCategory( "VectorSpacesForFiberProductTest" );
-VectorSpacesForFiberProductTest
-gap> ReadPackage( "CAP", "examples/VectorSpacesAllMethods.g" );
+# doc/_Chapter_Examples_and_Tests.xml:1412-1442
+gap> vecspaces := CreateCapCategory( "VectorSpaces02" );
+VectorSpaces02
+gap> ReadPackage( "CAP", "examples/VectorSpacesAddKernel02.g" );
 true
-gap> A := QVectorSpace( 1 );
-<A rational vector space of dimension 1>
-gap> B := QVectorSpace( 2 );
+gap> V := QVectorSpace( 2 );
 <A rational vector space of dimension 2>
-gap> C := QVectorSpace( 3 );
+gap> W := QVectorSpace( 3 );
 <A rational vector space of dimension 3>
-gap> AtoC := VectorSpaceMorphism( A, [ [ 1, 2, 0 ] ], C );
+gap> alpha := VectorSpaceMorphism( V, [ [ 1, 1, 1 ], [ -1, -1, -1 ] ], W );
 A rational vector space homomorphism with matrix: 
-[ [  1,  2,  0 ] ]
+[ [   1,   1,   1 ],
+  [  -1,  -1,  -1 ] ]
 
-gap> BtoC := VectorSpaceMorphism( B, [ [ 1, 0, 0 ], [ 0, 1, 0 ] ], C );
-A rational vector space homomorphism with matrix: 
-[ [  1,  0,  0 ],
-  [  0,  1,  0 ] ]
-
-gap> P := FiberProduct( AtoC, BtoC );
+gap> k := KernelObject( alpha );
 <A rational vector space of dimension 1>
-gap> p1 := ProjectionInFactorOfFiberProduct( [ AtoC, BtoC ], 1 );
+gap> T := QVectorSpace( 2 );
+<A rational vector space of dimension 2>
+gap> tau := VectorSpaceMorphism( T, [ [ 2, 2 ], [ 2, 2 ] ], V );
 A rational vector space homomorphism with matrix: 
-[ [  1/2 ] ]
+[ [  2,  2 ],
+  [  2,  2 ] ]
 
-gap> p2 := ProjectionInFactorOfFiberProduct( [ AtoC, BtoC ], 2 );
+gap> k_lift := KernelLift( alpha, tau );
 A rational vector space homomorphism with matrix: 
-[ [  1/2,    1 ] ]
+[ [  2 ],
+  [  2 ] ]
 
+gap> HasKernelEmbedding( alpha );
+false
 
 #
 gap> STOP_TEST("cap28.tst", 1);

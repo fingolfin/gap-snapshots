@@ -342,7 +342,7 @@
   [33X[0;0Y[2XListWreathProductElement[102X  returns  a  list [22X[f_1, ..., f_m, h][122X containing the
   components of [3Xx[103X or [9Xfail[109X if [3Xx[103X cannot be decomposed in the wreath product.[133X
   
-  [33X[0;0YIf   ommited,   the   argument   [3XtestDecomposition[103X   defaults  to  true.  If
+  [33X[0;0YIf   omitted,   the   argument   [3XtestDecomposition[103X   defaults  to  true.  If
   [3XtestDecomposition[103X  is  true, [2XListWreathProductElement[102X makes additional tests
   to  ensure  that  the computed decomposition of [3Xx[103X is correct, i.e. it checks
   that [3Xx[103X is an element of the parent wreath product of [3XG[103X:[133X

@@ -10,16 +10,8 @@
 ##
 ######################################
 
-DeclareRepresentation( "IsCapCategoryObjectRep",
-                       IsAttributeStoringRep and IsCapCategoryObject,
-                       [ ] );
-
-BindGlobal( "TheFamilyOfCapCategoryObjects",
-        NewFamily( "TheFamilyOfCapCategoryObjects" ) );
-
-BindGlobal( "TheTypeOfCapCategoryObjects",
-        NewType( TheFamilyOfCapCategoryObjects,
-                IsCapCategoryObjectRep ) );
+# backwards compatibility
+BindGlobal( "IsCapCategoryObjectRep", IsCapCategoryObject );
 
 #######################################
 ##
@@ -44,10 +36,10 @@ InstallValue( PROPAGATION_LIST_FOR_EQUAL_OBJECTS,
 ###################################
 
 # This method should usually not be selected when the two morphisms belong to the same category
-InstallMethod( IsEqualForObjects,
-                [ IsCapCategoryObject, IsCapCategoryObject ],
+InstallOtherMethod( IsEqualForObjects,
+                    [ IsCapCategory, IsCapCategoryObject, IsCapCategoryObject ],
 
-  function( object_1, object_2 )
+  function( cat, object_1, object_2 )
 
     if not HasCapCategory( object_1 ) then
         Error( Concatenation( "the object \"", String( object_1 ), "\" has no CAP category" ) );
@@ -223,7 +215,7 @@ IsZeroForObjects );
 InstallMethod( IsEqualForCache,
                [ IsCapCategoryObject, IsCapCategoryObject ],
                
-  IsEqualForCacheForObjects );
+  { obj1, obj2 } -> IsEqualForCacheForObjects( CapCategory( obj1 ), obj1, obj2 ) );
 
 ##
 # generic fallback to IsIdenticalObj
@@ -245,7 +237,7 @@ InstallMethod( AddObjectRepresentation,
     fi;
     
     category!.object_representation := representation;
-    category!.object_type := NewType( TheFamilyOfCapCategoryObjects, representation and ObjectFilter( category ) and IsCapCategoryObjectRep and HasCapCategory );
+    category!.object_type := NewType( TheFamilyOfCapCategoryObjects, representation and ObjectFilter( category ) and HasCapCategory );
     
 end );
 
@@ -300,6 +292,27 @@ end );
 ##
 ###########################
 
+# fallback methods for Julia
+InstallMethod( ViewObj,
+               [ IsCapCategoryObject ],
+               
+  function ( object )
+    
+    # avoid space in front of "in" to distinguish it from the keyword "in"
+    Print( "<An object ", "in ", Name( CapCategory( object ) ), ">" );
+    
+end );
+
+InstallMethod( Display,
+               [ IsCapCategoryObject ],
+               
+  function ( object )
+    
+    # avoid space in front of "in" to distinguish it from the keyword "in"
+    Print( "An object ", "in ", Name( CapCategory( object ) ), ".\n" );
+    
+end );
+
 ##
 InstallGlobalFunction( CAP_INTERNAL_CREATE_OBJECT_PRINT,
                        
@@ -335,10 +348,12 @@ InstallGlobalFunction( CAP_INTERNAL_CREATE_OBJECT_PRINT,
     
 end );
 
+#= comment for Julia
 CAP_INTERNAL_CREATE_OBJECT_PRINT( );
+# =#
 
 InstallMethod( String,
-               [ IsCapCategoryObject and HasCapCategory ],
+               [ IsCapCategoryObject ],
                
   function( object )
     

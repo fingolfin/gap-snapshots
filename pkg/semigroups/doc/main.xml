@@ -20,8 +20,8 @@
 <!ENTITY R '<Alt Only="HTML MathJax">\(\mathscr{R}\)</Alt><Alt Only="HTML noMathJax"><E>R</E></Alt><Alt Only="Text"><E>R</E></Alt><Alt Only="LaTeX"><M>\mathcal{R}</M></Alt>'>
 <!ENTITY i '<Alt Not="Text"><M>i</M></Alt>
     <Alt Only="Text"><C>i</C></Alt>'>
-<!ENTITY VERSION '5.0.2'>
-<!ENTITY ARCHIVENAME 'semigroups-5.0.2.tar.gz'>
+<!ENTITY VERSION '5.2.0'>
+<!ENTITY ARCHIVENAME 'semigroups-5.2.0.tar.gz'>
 <!ENTITY k '<Alt Not="Text"><M>k</M></Alt>
     <Alt Only="Text"><C>k</C></Alt>'>
 <!ENTITY see '<Alt Only="LaTeX">$\to$</Alt><Alt Not="LaTeX">--&gt;</Alt>'>

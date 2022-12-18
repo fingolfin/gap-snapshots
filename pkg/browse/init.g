@@ -12,9 +12,8 @@ if (not IsBound(NCurses)) and
   LoadStaticModule("ncurses");
 fi;
 if (not IsBound(NCurses)) and 
-   (Filename(DirectoriesPackagePrograms("Browse"), "ncurses.so") <> fail) then
-  LoadDynamicModule(Filename(DirectoriesPackagePrograms("Browse"), 
-    "ncurses.so"));
+   IsKernelExtensionAvailable("Browse", "ncurses") then
+  LoadKernelExtension("Browse", "ncurses");
 fi;
 
 # check if the kernel module was loaded and has correct version
@@ -52,4 +51,4 @@ ReadPackage( "Browse", "lib/brdbattr.gd" );
 # utilities for Browse applications (must be read before `read.g')
 ReadPackage( "Browse", "lib/brutils.g" );
 
-Browse_svnRevision := "681";
+Browse_svnRevision := "690";

@@ -653,7 +653,6 @@ ac_subst_vars='LTLIBOBJS
 LIBOBJS
 NORMALIZ_CPPFLAGS
 NORMALIZ_LDFLAGS
-GAP_LIBS
 GAP_LDFLAGS
 GAP_CFLAGS
 GAP_CPPFLAGS
@@ -3560,6 +3559,8 @@ printf %s "checking for GAP architecture... " >&6; }
   if test "x$GAParch" != "x"; then
     GAPARCH=$GAParch
   fi
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $GAPARCH" >&5
+printf "%s\n" "$GAPARCH" >&6; }
 
   if test "x$GAPARCH" = "xUnknown" ; then
     echo ""
@@ -3590,7 +3591,6 @@ printf %s "checking for GAP architecture... " >&6; }
 
   # compatibility with GAP 4.9 (not needed in GAP >= 4.10)
   GAP_CPPFLAGS="$GAP_CPPFLAGS -I${GAP_LIB_DIR}/src"
-
 
 
 

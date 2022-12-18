@@ -1023,7 +1023,7 @@ true</pre></div>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=Random(AllGroups(Size, 32));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=Random(AllSmallGroups(Size, 32));;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat:=List([1..5], x-&gt; List([1..3], y-&gt; Random(G)));;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=ReesMatrixSemigroup(G, mat);</span>
 &lt;Rees matrix semigroup 3x5 over &lt;pc group of size 32 with 

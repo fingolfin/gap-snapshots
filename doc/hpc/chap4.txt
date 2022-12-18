@@ -114,7 +114,7 @@
   [1X4.1-12 [33X[0;0Y!prefix (id|*) string[133X[101X
   
   [33X[0;0YPrefix  the  output  from  the  specified  thread  (or for all newly created
-  threads  if [10X*[110X was specified) wiht [10Xstring[110X. The same substitution rules as for
+  threads  if [10X*[110X was specified) with [10Xstring[110X. The same substitution rules as for
   the [10X!prompt[110X command apply.[133X
   
   

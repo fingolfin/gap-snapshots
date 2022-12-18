@@ -57,8 +57,10 @@
 ##  <Example>
 ##  gap> dirs := DirectoriesPackageLibrary("Browse");;
 ##  gap> demofile := Filename(dirs, "../app/demo.demo");;
-##  gap> LoadDemoFile("My first demo", demofile);
-##  gap> LoadDemoFile("My first demo (single lines)", demofile, true);
+##  gap> if IsBound(GAPInfo.UseReadline) and GAPInfo.UseReadline = true then
+##  >   LoadDemoFile("My first demo", demofile);
+##  >   LoadDemoFile("My first demo (single lines)", demofile, true);
+##  > fi;
 ##  </Example>
 ##  </Description>
 ##  </ManSection>

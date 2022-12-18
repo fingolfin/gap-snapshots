@@ -28,6 +28,8 @@ F 2.7. CayleyGraph
 F 2.7. CayleyGraph
 S 2.8. GeneralizedOrbitalGraphs
 F 2.8. GeneralizedOrbitalGraphs
+F 2.8. GeneralizedOrbitalGraphs
+I 2.8. generalized orbital graph
 S 2.9. AddEdgeOrbit
 F 2.9. AddEdgeOrbit
 F 2.9. AddEdgeOrbit
@@ -94,9 +96,9 @@ F 4.4. IsDistanceRegular
 S 4.5. CollapsedAdjacencyMat
 F 4.5. CollapsedAdjacencyMat
 F 4.5. CollapsedAdjacencyMat
-S 4.6. OrbitalGraphColadjMats
-F 4.6. OrbitalGraphColadjMats
-F 4.6. OrbitalGraphColadjMats
+S 4.6. OrbitalDigraphColadjMats
+F 4.6. OrbitalDigraphColadjMats
+F 4.6. OrbitalDigraphColadjMats
 S 4.7. VertexTransitiveDRGs
 F 4.7. VertexTransitiveDRGs
 F 4.7. VertexTransitiveDRGs

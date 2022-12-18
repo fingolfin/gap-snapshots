@@ -9,7 +9,7 @@
     Residue-Class-Wise Affine Groups
   </Subtitle>
   <Version>
-    4.7.0
+    4.7.1
   </Version>
   <Author>
     Stefan Kohl<Alt Only="LaTeX"><Br/></Alt>
@@ -18,7 +18,7 @@
 
   </Author>
   <Date>
-    29 July 2022
+    6 December 2022
   </Date>
   <Abstract>
     <#Include SYSTEM "abstract.xml">

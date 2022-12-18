@@ -15,9 +15,9 @@
 <body class="chap14"  onload="jscontent()">
 
 
-<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chapInd.html">Ind</a>  </div>
 
-<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap13.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapInd.html">[Next Chapter]</a>&nbsp;  </div>
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap13.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap15.html">[Next Chapter]</a>&nbsp;  </div>
 
 <p id="mathjaxlink" class="pcenter"><a href="chap14_mj.html">[MathJax on]</a></p>
 <p><a id="X7967FE8E7BBDF485" name="X7967FE8E7BBDF485"></a></p>
@@ -52,16 +52,19 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X84410C637B3C1D0E">14.10 <span class="Heading">Opposite category</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X86FB477C7908A3A6">14.11 <span class="Heading">Generalized Morphisms Category</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X7EA29B7D7BA60F42">14.11 <span class="Heading">Terminal category</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X7E8AFE5085FF7E15">14.12 <span class="Heading">IsWellDefined</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X86FB477C7908A3A6">14.12 <span class="Heading">Generalized Morphisms Category</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X7DCD99628504B810">14.13 <span class="Heading">Kernel</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X7E8AFE5085FF7E15">14.13 <span class="Heading">IsWellDefined</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X7DE20941803BFBD9">14.14 <span class="Heading">FiberProduct</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X7DCD99628504B810">14.14 <span class="Heading">Kernel</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X7DE20941803BFBD9">14.15 <span class="Heading">FiberProduct</span></a>
 </span>
 </div>
 </div>
@@ -76,11 +79,20 @@
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoadPackage( "CAP", false );</span>
 true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">list_of_operations_to_install := [</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">    "ObjectConstructor",</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">    "MorphismConstructor",</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">    "ObjectDatum",</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">    "MorphismDatum",</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">    "PreCompose",</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">    "IdentityMorphism",</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">    "DirectSum",</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">];;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">dummy := DummyCategory( rec(</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">    list_of_operations_to_install := [ "PreCompose", "IdentityMorphism", "DirectSum" ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">    list_of_operations_to_install := list_of_operations_to_install,</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">    properties := [ "IsAdditiveCategory" ],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">) );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CanCompute( dummy, "DirectSum" );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ForAll( list_of_operations_to_install, o -&gt; CanCompute( dummy, o ) );</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsAdditiveCategory( dummy );</span>
 true
@@ -143,7 +155,7 @@ true
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">InputSignature( F2 );</span>
-[ [ Product of: Category of left presentations of Q, Opposite of Category of left presentations of Q, false ] ]
+[ [ Product of: Category of left presentations of Q, Opposite( Category of left presentations of Q ), false ] ]
 </pre></div>
 
 <p>Installation of the first functor as a GAP-operation. It will be installed both as a unary and binary version.</p>
@@ -470,6 +482,10 @@ true
 false
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsColiftableAlongEpimorphism( beta, gamma );</span>
 true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PreCompose( PreInverseForMorphisms( gamma ), gamma ) = IdentityMorphism( V );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PreCompose( alpha, PostInverseForMorphisms( alpha ) ) = IdentityMorphism( V );</span>
+true
 </pre></div>
 
 <p><a id="X8245BF297DF9A3E7" name="X8245BF297DF9A3E7"></a></p>
@@ -519,7 +535,7 @@ true
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoadPackage( "LinearAlgebraForCAP" );</span>
 true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoadPackage( "GeneralizedMorphismsForCAP" );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoadPackage( "GeneralizedMorphismsForCAP", false );</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">old_generalized_morphism_standard := CAP_INTERNAL!.generalized_morphism_standard;;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SwitchGeneralizedMorphismStandard( "cospan" );</span>
@@ -787,9 +803,217 @@ true
 true
 </pre></div>
 
+<p><a id="X7EA29B7D7BA60F42" name="X7EA29B7D7BA60F42"></a></p>
+
+<h4>14.11 <span class="Heading">Terminal category</span></h4>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoadPackage( "MonoidalCategories" );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := TerminalCategoryWithMultipleObjects( );</span>
+TerminalCategoryWithMultipleObjects( )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( T );</span>
+A CAP category with name TerminalCategoryWithMultipleObjects( ):
+
+63 primitive operations were used to derive 280 operations for this category
+which algorithmically
+* IsCategoryWithDecidableColifts
+* IsCategoryWithDecidableLifts
+* IsEquippedWithHomomorphismStructure
+* IsLinearCategoryOverCommutativeRing
+* IsAbelianCategoryWithEnoughInjectives
+* IsAbelianCategoryWithEnoughProjectives
+* IsRigidSymmetricClosedMonoidalCategory
+* IsRigidSymmetricCoclosedMonoidalCategory
+and furthermore mathematically
+* IsLocallyOfFiniteInjectiveDimension
+* IsLocallyOfFiniteProjectiveDimension
+* IsTerminalCategory
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">i := InitialObject( T );</span>
+&lt;A zero object in TerminalCategoryWithMultipleObjects( )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">t := TerminalObject( T );</span>
+&lt;A zero object in TerminalCategoryWithMultipleObjects( )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">z := ZeroObject( T );</span>
+&lt;A zero object in TerminalCategoryWithMultipleObjects( )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( i );</span>
+ZeroObject
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( t );</span>
+ZeroObject
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( z );</span>
+ZeroObject
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsIdenticalObj( i, z );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsIdenticalObj( t, z );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">id_z := IdentityMorphism( z );</span>
+&lt;A zero, identity morphism in TerminalCategoryWithMultipleObjects( )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">fn_z := ZeroObjectFunctorial( T );</span>
+&lt;A zero, isomorphism in TerminalCategoryWithMultipleObjects( )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsEqualForMorphisms( id_z, fn_z );</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCongruentForMorphisms( id_z, fn_z );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a := "a" / T;</span>
+&lt;A zero object in TerminalCategoryWithMultipleObjects( )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( a );</span>
+a
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( a );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">aa := ObjectConstructor( T, "a" );</span>
+&lt;A zero object in TerminalCategoryWithMultipleObjects( )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( aa );</span>
+a
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a = aa;</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">b := "b" / T;</span>
+&lt;A zero object in TerminalCategoryWithMultipleObjects( )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( b );</span>
+b
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a = b;</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">t := TensorProduct( a, b );</span>
+&lt;A zero object in TerminalCategoryWithMultipleObjects( )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( t );</span>
+TensorProductOnObjects
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a = t;</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TensorProduct( a, a ) = t;</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">m := MorphismConstructor( a, "m", b );</span>
+&lt;A zero, isomorphism in TerminalCategoryWithMultipleObjects( )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( m );</span>
+a
+|
+| m
+v
+b
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( m );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n := MorphismConstructor( a, "n", b );</span>
+&lt;A zero, isomorphism in TerminalCategoryWithMultipleObjects( )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( n );</span>
+a
+|
+| n
+v
+b
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsEqualForMorphisms( m, n );</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCongruentForMorphisms( m, n );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">m = n;</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">id := IdentityMorphism( a );</span>
+&lt;A zero, identity morphism in TerminalCategoryWithMultipleObjects( )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( id );</span>
+a
+|
+| IdentityMorphism
+v
+a
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">m = id;</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">id = MorphismConstructor( a, "xyz", a );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">z := ZeroMorphism( a, a );</span>
+&lt;A zero, isomorphism in TerminalCategoryWithMultipleObjects( )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( z );</span>
+a
+|
+| ZeroMorphism
+v
+a
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">id = z;</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsLiftable( m, n );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">lift := Lift( m, n );</span>
+&lt;A zero, isomorphism in TerminalCategoryWithMultipleObjects( )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( lift );</span>
+a
+|
+| Lift
+v
+a
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsColiftable( m, n );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">colift := Colift( m, n );</span>
+&lt;A zero, isomorphism in TerminalCategoryWithMultipleObjects( )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( colift );</span>
+b
+|
+| Colift
+v
+b
+</pre></div>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoadPackage( "MonoidalCategories" );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := TerminalCategoryWithSingleObject( );</span>
+TerminalCategoryWithSingleObject( )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( T );</span>
+A CAP category with name TerminalCategoryWithSingleObject( ):
+
+63 primitive operations were used to derive 280 operations for this category
+which algorithmically
+* IsCategoryWithDecidableColifts
+* IsCategoryWithDecidableLifts
+* IsEquippedWithHomomorphismStructure
+* IsLinearCategoryOverCommutativeRing
+* IsAbelianCategoryWithEnoughInjectives
+* IsAbelianCategoryWithEnoughProjectives
+* IsRigidSymmetricClosedMonoidalCategory
+* IsRigidSymmetricCoclosedMonoidalCategory
+and furthermore mathematically
+* IsLocallyOfFiniteInjectiveDimension
+* IsLocallyOfFiniteProjectiveDimension
+* IsSkeletalCategory
+* IsStrictMonoidalCategory
+* IsTerminalCategory
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">i := InitialObject( T );</span>
+&lt;A zero object in TerminalCategoryWithSingleObject( )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">t := TerminalObject( T );</span>
+&lt;A zero object in TerminalCategoryWithSingleObject( )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">z := ZeroObject( T );</span>
+&lt;A zero object in TerminalCategoryWithSingleObject( )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( i );</span>
+A zero object in TerminalCategoryWithSingleObject( ).
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( t );</span>
+A zero object in TerminalCategoryWithSingleObject( ).
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( z );</span>
+A zero object in TerminalCategoryWithSingleObject( ).
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsIdenticalObj( i, z );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsIdenticalObj( t, z );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( z );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">id_z := IdentityMorphism( z );</span>
+&lt;A zero, identity morphism in TerminalCategoryWithSingleObject( )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">fn_z := ZeroObjectFunctorial( T );</span>
+&lt;A zero, identity morphism in TerminalCategoryWithSingleObject( )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( fn_z );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsEqualForMorphisms( id_z, fn_z );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCongruentForMorphisms( id_z, fn_z );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsLiftable( id_z, fn_z );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Lift( id_z, fn_z );</span>
+&lt;A zero, identity morphism in TerminalCategoryWithSingleObject( )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsColiftable( id_z, fn_z );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Colift( id_z, fn_z );</span>
+&lt;A zero, identity morphism in TerminalCategoryWithSingleObject( )&gt;
+</pre></div>
+
 <p><a id="X86FB477C7908A3A6" name="X86FB477C7908A3A6"></a></p>
 
-<h4>14.11 <span class="Heading">Generalized Morphisms Category</span></h4>
+<h4>14.12 <span class="Heading">Generalized Morphisms Category</span></h4>
 
 
 <div class="example"><pre>
@@ -797,7 +1021,7 @@ true
 VectorSpacesForGeneralizedMorphismsTest
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ReadPackage( "CAP", "examples/VectorSpacesAllMethods.g" );</span>
 true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoadPackage( "GeneralizedMorphismsForCAP" );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoadPackage( "GeneralizedMorphismsForCAP", false );</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B := QVectorSpace( 2 );</span>
 &lt;A rational vector space of dimension 2&gt;
@@ -1164,7 +1388,7 @@ true
 
 <p><a id="X7E8AFE5085FF7E15" name="X7E8AFE5085FF7E15"></a></p>
 
-<h4>14.12 <span class="Heading">IsWellDefined</span></h4>
+<h4>14.13 <span class="Heading">IsWellDefined</span></h4>
 
 
 <div class="example"><pre>
@@ -1172,7 +1396,7 @@ true
 VectorSpacesForIsWellDefinedTest 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ReadPackage( "CAP", "examples/VectorSpacesAllMethods.g" );</span>
 true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoadPackage( "GeneralizedMorphismsForCAP" );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoadPackage( "GeneralizedMorphismsForCAP", false );</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A := QVectorSpace( 1 );</span>
 &lt;A rational vector space of dimension 1&gt;
@@ -1194,7 +1418,7 @@ false
 
 <p><a id="X7DCD99628504B810" name="X7DCD99628504B810"></a></p>
 
-<h4>14.13 <span class="Heading">Kernel</span></h4>
+<h4>14.14 <span class="Heading">Kernel</span></h4>
 
 
 <div class="example"><pre>
@@ -1308,7 +1532,7 @@ true
 
 <p><a id="X7DE20941803BFBD9" name="X7DE20941803BFBD9"></a></p>
 
-<h4>14.14 <span class="Heading">FiberProduct</span></h4>
+<h4>14.15 <span class="Heading">FiberProduct</span></h4>
 
 
 <div class="example"><pre>
@@ -1344,10 +1568,10 @@ A rational vector space homomorphism with matrix:
 </pre></div>
 
 
-<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap13.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapInd.html">[Next Chapter]</a>&nbsp;  </div>
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap13.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap15.html">[Next Chapter]</a>&nbsp;  </div>
 
 
-<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <hr />
 <p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>

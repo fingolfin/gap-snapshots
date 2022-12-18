@@ -9,7 +9,7 @@ gap> primes := Filtered([1..N], IsPrimeInt);;
 
 # create new empty hash set
 gap> hashset := HashSet();
-<hash set obj capacity=16 used=0>
+HashSet([])
 gap> IsEmpty(hashset);
 true
 
@@ -22,6 +22,26 @@ gap> s:=AsSet(hashset); IsMutable(s);
 false
 gap> List(Iterator(hashset));
 [  ]
+gap> Set(HashSet([])) = [];
+true
+gap> s := Set(HashSet([1,2,3])) = [1,2,3];
+true
+
+# printing
+gap> HashSet();
+HashSet([])
+gap> HashSet([]);
+HashSet([])
+gap> HashSet([2]);
+HashSet([2])
+gap> String(HashSet([2]));
+"HashSet([2])"
+gap> String(HashSet([2,3])) in ["HashSet([2, 3])","HashSet([3, 2])"];
+true
+gap> PrintString(HashSet([2]));
+"HashSet([\>\>2\<\<])"
+gap> PrintString(HashSet([2,3])) in ["HashSet([\>\>2,\< \>3\<\<])","HashSet([\>\>3,\< \>2\<\<])"];
+true
 
 # add stuff
 gap> for p in primes do AddSet(hashset, p); od;
@@ -101,6 +121,11 @@ gap> Set(hashset);
 gap> List(Iterator(hashset));
 [  ]
 
+# Check different equality and hash functions
+gap> h := HashSet([20,11,10,21], x -> x mod 2, {x,y} -> (x mod 10 = y mod 10));;
+gap> Set(h);
+[ 11, 20 ]
+
 #
 # error
 #
@@ -112,13 +137,11 @@ Error, <iter> is exhausted
 
 # mutability
 gap> hashset := HashSet();
-<hash set obj capacity=16 used=0>
+HashSet([])
 gap> AddSet(hashset, 15);
 gap> MakeImmutable(hashset);
-<hash set obj capacity=16 used=1>
+HashSet([15])
 gap> AddSet(hashset, 15);
 Error, <ht> must be a mutable hashmap or hashset
 gap> RemoveSet(hashset, 20);
 Error, <ht> must be a mutable hashmap or hashset
-
-

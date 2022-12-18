@@ -10,150 +10,53 @@
 #
 gap> START_TEST("cap22.tst");
 
-# doc/_Chapter_Examples_and_Tests.xml:931-1075
+# doc/_Chapter_Examples_and_Tests.xml:1049-1096
 gap> vecspaces := CreateCapCategory( "VectorSpacesForGeneralizedMorphismsTest" );
 VectorSpacesForGeneralizedMorphismsTest
 gap> ReadPackage( "CAP", "examples/VectorSpacesAllMethods.g" );
 true
-gap> A := QVectorSpace( 3 );
-<A rational vector space of dimension 3>
-gap> Asub := QVectorSpace( 2 );
-<A rational vector space of dimension 2>
-gap> B := QVectorSpace( 3 );
-<A rational vector space of dimension 3>
-gap> Bfac := QVectorSpace( 1 );
+gap> A := QVectorSpace( 1 );
 <A rational vector space of dimension 1>
-gap> Bsub := QVectorSpace( 2 );
+gap> B := QVectorSpace( 2 );
 <A rational vector space of dimension 2>
 gap> C := QVectorSpace( 3 );
 <A rational vector space of dimension 3>
-gap> Cfac := QVectorSpace( 1 );
-<A rational vector space of dimension 1>
-gap> Asub_into_A := VectorSpaceMorphism( Asub, [ [ 1, 0, 0 ], [ 0, 1, 0 ] ], A );
+gap> phi_tilde_associated := VectorSpaceMorphism( A, [ [ 1, 2, 0 ] ], C );
 A rational vector space homomorphism with matrix: 
-[ [  1,  0,  0 ],
-  [  0,  1,  0 ] ]
+[ [  1,  2,  0 ] ]
 
-gap> Asub_to_Bfac := VectorSpaceMorphism( Asub, [ [ 1 ], [ 1 ] ], Bfac );
+gap> phi_tilde_source_aid := VectorSpaceMorphism( A, [ [ 1, 2 ] ], B );
 A rational vector space homomorphism with matrix: 
-[ [  1 ],
-  [  1 ] ]
+[ [  1,  2 ] ]
 
-gap> B_onto_Bfac := VectorSpaceMorphism( B, [ [ 1 ], [ 1 ], [ 1 ] ], Bfac );
-A rational vector space homomorphism with matrix: 
-[ [  1 ],
-  [  1 ],
-  [  1 ] ]
-
-gap> Bsub_into_B := VectorSpaceMorphism( Bsub, [ [ 2, 2, 0 ], [ 0, 2, 2 ] ], B );
-A rational vector space homomorphism with matrix: 
-[ [  2,  2,  0 ],
-  [  0,  2,  2 ] ]
-
-gap> Bsub_to_Cfac := VectorSpaceMorphism( Bsub, [ [ 3 ], [ 0 ] ], Cfac );
-A rational vector space homomorphism with matrix: 
-[ [  3 ],
-  [  0 ] ]
-
-gap> C_onto_Cfac := VectorSpaceMorphism( C, [ [ 1 ], [ 2 ], [ 3 ] ], Cfac );
-A rational vector space homomorphism with matrix: 
-[ [  1 ],
-  [  2 ],
-  [  3 ] ]
-
-gap> generalized_morphism1 := GeneralizedMorphism( Asub_into_A, Asub_to_Bfac, B_onto_Bfac );
+gap> phi_tilde := GeneralizedMorphismWithSourceAid( phi_tilde_source_aid, phi_tilde_associated );
 <A morphism in Generalized morphism category of VectorSpacesForGeneralizedMorphismsTest>
-gap> generalized_morphism2 := GeneralizedMorphism( Bsub_into_B, Bsub_to_Cfac, C_onto_Cfac );
-<A morphism in Generalized morphism category of VectorSpacesForGeneralizedMorphismsTest>
-gap> IsWellDefined( generalized_morphism1 );
-true
-gap> IsWellDefined( generalized_morphism2 );
-true
-gap> p := PreCompose( generalized_morphism1, generalized_morphism2 );
-<A morphism in Generalized morphism category of VectorSpacesForGeneralizedMorphismsTest>
-gap> SourceAid( p );
-A rational vector space homomorphism with matrix: 
-[ [  -1,   1,   0 ],
-  [   1,   0,   0 ] ]
-
-gap> Arrow( p );
-A rational vector space homomorphism with matrix: 
-(an empty 2 x 0 matrix)
-
-gap> RangeAid( p );
-A rational vector space homomorphism with matrix: 
-(an empty 3 x 0 matrix)
-gap> A := QVectorSpace( 3 );
-<A rational vector space of dimension 3>
-gap> Asub := QVectorSpace( 2 );
-<A rational vector space of dimension 2>
-gap> B := QVectorSpace( 3 );
-<A rational vector space of dimension 3>
-gap> Bfac := QVectorSpace( 1 );
-<A rational vector space of dimension 1>
-gap> Bsub := QVectorSpace( 2 );
-<A rational vector space of dimension 2>
-gap> C := QVectorSpace( 3 );
-<A rational vector space of dimension 3>
-gap> Cfac := QVectorSpace( 2 );
-<A rational vector space of dimension 2>
-gap> Asub_into_A := VectorSpaceMorphism( Asub, [ [ 1, 0, 0 ], [ 0, 1, 0 ] ], A );
-A rational vector space homomorphism with matrix: 
-[ [  1,  0,  0 ],
-  [  0,  1,  0 ] ]
-
-gap> Asub_to_Bfac := VectorSpaceMorphism( Asub, [ [ 1 ], [ 1 ] ], Bfac );
-A rational vector space homomorphism with matrix: 
-[ [  1 ],
-  [  1 ] ]
-
-gap> B_onto_Bfac := VectorSpaceMorphism( B, [ [ 1 ], [ 1 ], [ 1 ] ], Bfac );
-A rational vector space homomorphism with matrix: 
-[ [  1 ],
-  [  1 ],
-  [  1 ] ]
-
-gap> Bsub_into_B := VectorSpaceMorphism( Bsub, [ [ 2, 2, 0 ], [ 0, 2, 2 ] ], B );
-A rational vector space homomorphism with matrix: 
-[ [  2,  2,  0 ],
-  [  0,  2,  2 ] ]
-
-gap> Bsub_to_Cfac := VectorSpaceMorphism( Bsub, [ [ 3, 3 ], [ 0, 0 ] ], Cfac );
-A rational vector space homomorphism with matrix: 
-[ [  3,  3 ],
-  [  0,  0 ] ]
-
-gap> C_onto_Cfac := VectorSpaceMorphism( C, [ [ 1, 0 ], [ 0, 2 ], [ 3, 3 ] ], Cfac );
+gap> psi_tilde_associated := IdentityMorphism( B );
 A rational vector space homomorphism with matrix: 
 [ [  1,  0 ],
-  [  0,  2 ],
-  [  3,  3 ] ]
+  [  0,  1 ] ]
 
-gap> generalized_morphism1 := GeneralizedMorphism( Asub_into_A, Asub_to_Bfac, B_onto_Bfac );
-<A morphism in Generalized morphism category of VectorSpacesForGeneralizedMorphismsTest>
-gap> generalized_morphism2 := GeneralizedMorphism( Bsub_into_B, Bsub_to_Cfac, C_onto_Cfac );
-<A morphism in Generalized morphism category of VectorSpacesForGeneralizedMorphismsTest>
-gap> IsWellDefined( generalized_morphism1 );
-true
-gap> IsWellDefined( generalized_morphism2 );
-true
-gap> p := PreCompose( generalized_morphism1, generalized_morphism2 );
-<A morphism in Generalized morphism category of VectorSpacesForGeneralizedMorphismsTest>
-gap> SourceAid( p );
+gap> psi_tilde_source_aid := VectorSpaceMorphism( B, [ [ 1, 0, 0 ], [ 0, 1, 0 ] ], C );
 A rational vector space homomorphism with matrix: 
-[ [  -1,   1,   0 ],
-  [   1,   0,   0 ] ]
+[ [  1,  0,  0 ],
+  [  0,  1,  0 ] ]
 
-gap> Arrow( p );
+gap> psi_tilde := GeneralizedMorphismWithSourceAid( psi_tilde_source_aid, psi_tilde_associated );
+<A morphism in Generalized morphism category of VectorSpacesForGeneralizedMorphismsTest>
+gap> composition := PreCompose( phi_tilde, psi_tilde );
+<A morphism in Generalized morphism category of VectorSpacesForGeneralizedMorphismsTest>
+gap> Arrow( composition );
 A rational vector space homomorphism with matrix: 
-[ [  0 ],
-  [  0 ] ]
+[ [  1/2,    1 ] ]
 
-gap> RangeAid( p );
+gap> SourceAid( composition );
 A rational vector space homomorphism with matrix: 
-[ [  -1 ],
-  [   2 ],
-  [   0 ] ]
+[ [  1/2,    1 ] ]
+
+gap> RangeAid( composition );
+A rational vector space homomorphism with matrix: 
+[ [  1,  0 ],
+  [  0,  1 ] ]
 
 #
 gap> STOP_TEST("cap22.tst", 1);

@@ -56,7 +56,7 @@ computation on another available server;
 </Item>
 <Item>
 it allows to add dynamically new workers during the computation
-on hostnames and ports from a range perviously declared in
+on hostnames and ports from a range previously declared in
 <Ref Var="SCSCPservers" />.
 </Item>
 </List>
@@ -176,6 +176,7 @@ of degree 32000:
 <Example>
 <![CDATA[
 gap> ReadPackage("scscp/example/karatsuba.g");
+true
 gap> fam:=FamilyObj(1);;
 gap> f:=LaurentPolynomialByCoefficients( fam, 
 >         List([1..32000],i->Random(Integers)), 0, 1 );;

@@ -10,7 +10,7 @@
 #
 gap> START_TEST("cap16.tst");
 
-# doc/_Chapter_Examples_and_Tests.xml:546-644
+# doc/_Chapter_Examples_and_Tests.xml:559-657
 gap> ZZ := HomalgRingOfIntegers();;
 gap> Ml := AsLeftPresentation( HomalgMatrix( [ [ 2 ] ], 1, 1, ZZ ) );
 <An object in Category of left presentations of Z>

@@ -8,7 +8,7 @@
 **
 */
 
-#define VERSION "1.8.18"
+#define VERSION "1.8.19"
 
 /* read GAP source header files with a combined header file */
 

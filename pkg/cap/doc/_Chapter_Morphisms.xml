@@ -199,6 +199,10 @@
  <Description>
  The arguments are an object <Math>a</Math> in a category <Math>C</Math> and an integer <Math>n</Math>.
  The output is a random morphism <Math>\alpha: a \rightarrow b</Math> for some object <Math>b</Math> in <Math>C</Math>.
+ If <Math>C</Math> is equipped with the methods <C>RandomObjectByInteger</C> and <C>RandomMorphismWithFixedSourceAndRangeByInteger</C>
+ and <Math>C</Math> is an Ab-category, then <C>RandomMorphismWithFixedSourceByInteger</C><Math>(C,a,n)</Math> can be derived as
+ <C>RandomMorphismWithFixedSourceAndRangeByInteger</C>(<Math>C</Math>,<Math>a</Math>,<Math>b</Math>,<Math>1</Math>+<C>Log2Int</C>(<Math>n</Math>)) where
+ <Math>b</Math> is computed via <C>RandomObjectByInteger</C>(<Math>C</Math>,<Math>n</Math>).
  </Description>
 </ManSection>
 
@@ -210,6 +214,10 @@
  <Description>
  The arguments are an object <Math>a</Math> in a category <Math>C</Math> and a list <Math>L</Math>.
  The output is a random morphism <Math>\alpha: a \rightarrow b</Math> for some object <Math>b</Math> in <Math>C</Math>.
+ If <Math>C</Math> is equipped with the methods <C>RandomObjectByList</C> and <C>RandomMorphismWithFixedSourceAndRangeByList</C>
+ and <Math>C</Math> is an Ab-category, then <C>RandomMorphismWithFixedSourceByList</C><Math>(C,a,L)</Math> can be derived as
+ <C>RandomMorphismWithFixedSourceAndRangeByList</C>(<Math>C,a,b,L[2]</Math>) where
+ <Math>b</Math> is computed via <C>RandomObjectByList</C>(<Math>C,L[1]</Math>).
  </Description>
 </ManSection>
 
@@ -221,6 +229,10 @@
  <Description>
  The arguments are an object <Math>b</Math> in a category <Math>C</Math> and an integer <Math>n</Math>.
  The output is a random morphism <Math>\alpha: a \rightarrow b</Math> for some object <Math>a</Math> in <Math>C</Math>.
+ If <Math>C</Math> is equipped with the methods <C>RandomObjectByInteger</C> and <C>RandomMorphismWithFixedSourceAndRangeByInteger</C>
+ and <Math>C</Math> is an Ab-category, then <C>RandomMorphismWithFixedRangeByInteger</C><Math>(C,b,n)</Math> can be derived as
+ <C>RandomMorphismWithFixedSourceAndRangeByInteger</C>(<Math>C</Math>,<Math>a</Math>,<Math>b</Math>,<Math>1</Math>+<C>Log2Int</C>(<Math>n</Math>)) where
+ <Math>a</Math> is computed via <C>RandomObjectByInteger</C>(<Math>C</Math>,<Math>n</Math>).
  </Description>
 </ManSection>
 
@@ -232,6 +244,10 @@
  <Description>
  The arguments are an object <Math>b</Math> in a category <Math>C</Math> and a list <Math>L</Math>.
  The output is a random morphism <Math>\alpha: a \rightarrow b</Math> for some object <Math>a</Math> in <Math>C</Math>.
+ If <Math>C</Math> is equipped with the methods <C>RandomObjectByList</C> and <C>RandomMorphismWithFixedSourceAndRangeByList</C>
+ and <Math>C</Math> is an Ab-category, then <C>RandomMorphismWithFixedRangeByList</C><Math>(C,b,L)</Math> can be derived as
+ <C>RandomMorphismWithFixedSourceAndRangeByList</C>(<Math>C,a,b,L[2]</Math>) where
+ <Math>a</Math> is computed via <C>RandomObjectByList</C>(<Math>C,L[1]</Math>).
  </Description>
 </ManSection>
 
@@ -265,12 +281,28 @@
 </Returns>
  <Description>
  The arguments are a category <Math>C</Math> and an integer <Math>n</Math>.
- The output is a random morphism in <Math>C</Math> or <C>fail</C>.
- If the methods <C>RandomObjectByInteger</C> and
- <C>RandomMorphismWithFixedSourceByInteger</C>(<C>RandomMorphismWithFixedRangeByInteger</C>)
- are added to the category <Math>C</Math>, then <C>RandomMorphismByInteger</C> can be
- derived to return a random morphism of complexity <Math>n</Math> with random
- source(range) of complexity <Math>n</Math>.
+ The output is a random morphism in <Math>C</Math>.
+ The operation can be derived in three different ways:
+<List>
+<Item>
+If <Math>C</Math> is equipped with the methods <C>RandomObjectByInteger</C> and <C>RandomMorphismWithFixedSourceAndRangeByInteger</C>
+   and <Math>C</Math> is an Ab-category, then <C>RandomMorphism</C><Math>(C,n)</Math> can be derived as
+   <C>RandomMorphismWithFixedSourceAndRangeByInteger</C>(<Math>C,a,b</Math>,<Math>1</Math>+<C>Log2Int</C>(<Math>n</Math>)) where
+   <Math>a</Math> and <Math>b</Math> are computed via <C>RandomObjectByInteger</C>(<Math>C,n</Math>).
+</Item>
+<Item>
+If <Math>C</Math> is equipped with the methods <C>RandomObjectByInteger</C> and <C>RandomMorphismWithFixedSourceByInteger</C>,
+   then <C>RandomMorphism</C><Math>(C,n)</Math> can be derived as
+   <C>RandomMorphismWithFixedSourceByInteger</C>(<Math>C,a,1</Math>+<C>Log2Int</C>(<Math>n</Math>)) where
+   <Math>a</Math> is computed via <C>RandomObjectByInteger</C>(<Math>C,n</Math>).
+</Item>
+<Item>
+If <Math>C</Math> is equipped with the methods <C>RandomObjectByInteger</C> and <C>RandomMorphismWithFixedRangeByInteger</C>,
+   then <C>RandomMorphism</C><Math>(C,n)</Math> can be derived as
+   <C>RandomMorphismWithFixedRangeByInteger</C>(<Math>C,b,1</Math>+<C>Log2Int</C>(<Math>n</Math>)) where
+   <Math>b</Math> is computed via <C>RandomObjectByInteger</C>(<Math>C,n</Math>).
+</Item>
+</List>
  </Description>
 </ManSection>
 
@@ -282,6 +314,27 @@
  <Description>
  The arguments are a category <Math>C</Math> and a list <Math>L</Math>.
  The output is a random morphism in <Math>C</Math>.
+ The operation can be derived in three different ways:
+<List>
+<Item>
+If <Math>C</Math> is equipped with the methods <C>RandomObjectByList</C> and <C>RandomMorphismWithFixedSourceAndRangeByList</C>
+   and <Math>C</Math> is an Ab-category, then <C>RandomMorphism</C><Math>(C,L)</Math> can be derived as
+   <C>RandomMorphismWithFixedSourceAndRangeByList</C>(<Math>C,a,b,L[3]</Math>)) where
+   <Math>a</Math> and <Math>b</Math> are computed via <C>RandomObjectByList</C>(<Math>C,L[i]</Math>) for <Math>i=1,2</Math> respectively.
+</Item>
+<Item>
+If <Math>C</Math> is equipped with the methods <C>RandomObjectByList</C> and <C>RandomMorphismWithFixedSourceByList</C>,
+   then <C>RandomMorphism</C><Math>(C,L)</Math> can be derived as
+   <C>RandomMorphismWithFixedSourceByList</C>(<Math>C,a,L[2]</Math>) where
+   <Math>a</Math> is computed via <C>RandomObjectByList</C>(<Math>C,L[1]</Math>).
+</Item>
+<Item>
+If <Math>C</Math> is equipped with the methods <C>RandomObjectByList</C> and <C>RandomMorphismWithFixedRangeByList</C>,
+   then <C>RandomMorphism</C><Math>(C,L)</Math> can be derived as
+   <C>RandomMorphismWithFixedRangeByList</C>(<Math>C,b,L[2]</Math>) where
+   <Math>b</Math> is computed via <C>RandomObjectByList</C>(<Math>C,L[1]</Math>).
+</Item>
+</List>
  </Description>
 </ManSection>
 
@@ -531,7 +584,7 @@
 
 
 <ManSection>
-  <Oper Arg="r, alpha" Name="\*" Label="for IsRingElement, IsCapCategoryMorphism"/>
+  <Oper Arg="r, alpha" Name="*" Label="for IsRingElement, IsCapCategoryMorphism"/>
  <Returns>a morphism in <Math>\mathrm{Hom}(a,b)</Math>
 </Returns>
  <Description>
@@ -741,6 +794,18 @@
  <Math>L = ( \alpha_n: a_n \rightarrow a_{n+1}, \alpha_{n-1}: a_{n-1} \rightarrow a_n, \dots, \alpha_1: a_1 \rightarrow a_2 )</Math>.
  The output is the composition
  <Math>((\alpha_{n} \circ  \alpha_{n-1}) \circ \dots  \alpha_2) \circ \alpha_1</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="s, morphisms, r" Name="SumOfMorphisms" Label="for IsCapCategoryObject, IsList, IsCapCategoryObject"/>
+ <Returns>a morphism in <Math>\mathrm{Hom}(s,r)</Math>
+</Returns>
+ <Description>
+ The arguments are two objects <A>s</A>, <A>r</A> and a list <A>morphisms</A> of morphisms from <A>s</A> to <A>r</A>.
+ The output is the sum of all elements in <A>morphisms</A>, or the zero-morphism from <A>s</A> to <A>r</A> 
+ if <A>morphisms</A> is empty.
  </Description>
 </ManSection>
 
@@ -986,6 +1051,32 @@ For any pair of morphisms <Math>\alpha: a \rightarrow c</Math>, <Math>\beta: a \
  <Description>
  The argument is an isomorphism <Math>\alpha: a \rightarrow b</Math>.
  The output is its inverse <Math>\alpha^{-1}: b \rightarrow a</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="alpha" Name="PreInverseForMorphisms" Label="for IsCapCategoryMorphism"/>
+ <Returns>a morphism in <Math>\mathrm{Hom}(b,a)</Math>
+</Returns>
+ <Description>
+ The argument is a split-epimorphism <Math>\alpha: a \rightarrow b</Math>.
+ The output is a pre-inverse <Math>\iota: b \rightarrow a</Math> of <Math>\alpha</Math>,
+ i.e., <Math>\iota</Math> satisfies <Math>\alpha \circ \iota \sim_{b,b} \mathrm{id}_b</Math>.
+ The morphism <Math>\iota</Math> is also known as a section or a right-inverse of <Math>\alpha</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="alpha" Name="PostInverseForMorphisms" Label="for IsCapCategoryMorphism"/>
+ <Returns>a morphism in <Math>\mathrm{Hom}(b,a)</Math>
+</Returns>
+ <Description>
+ The argument is a split-monomorphism <Math>\alpha: a \rightarrow b</Math>.
+ The output is a post-inverse <Math>\pi: b \rightarrow a</Math> of <Math>\alpha</Math>,
+ i.e., <Math>\pi</Math> satisfies <Math>\pi \circ \alpha \sim_{a,a} \mathrm{id}_a</Math>.
+ The morphism <Math>\pi</Math> is also known as a contraction or a left-inverse of <Math>\alpha</Math>.
  </Description>
 </ManSection>
 

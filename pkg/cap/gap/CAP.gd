@@ -67,8 +67,6 @@ DeclareGlobalVariable( "CAP_INTERNAL_DERIVATION_GRAPH" );
 
 DeclareGlobalVariable( "CAP_INTERNAL_CATEGORICAL_PROPERTIES_LIST" );
 
-## Syntax for categorical property with no dual counterpart:
-## [ , "property" ]
 InstallValue( CAP_INTERNAL_CATEGORICAL_PROPERTIES_LIST, [ ] );
 
 DeclareGlobalVariable( "CATEGORIES_FAMILY_PROPERTIES" );
@@ -91,7 +89,7 @@ InstallValue( CATEGORIES_FAMILY_PROPERTIES,
 #!  as a handler and a presentation of the CAP category.
 #! @Arguments object
 DeclareCategory( "IsCapCategory",
-                 IsObject );
+                 IsAttributeStoringRep );
 
 #! @Description
 #! The GAP category of CAP category cells.
@@ -128,6 +126,13 @@ DeclareCategory( "IsCapCategoryTwoCell",
 DeclareCategory( "IsCellOfSkeletalCategory",
                  IsCapCategoryCell );
 
+###################################
+##
+#! @Section Categorical properties
+##
+###################################
+
+
 #! @Description
 #!  Adds a categorical property to the list of CAP
 #!  categorical properties. <A>list</A> must be a list
@@ -140,10 +145,10 @@ DeclareCategory( "IsCellOfSkeletalCategory",
 DeclareGlobalFunction( "AddCategoricalProperty" );
 
 InstallGlobalFunction( AddCategoricalProperty,
-  function( property_list )
-    local i;
+  function( property_pair )
+    local property;
     
-    if not IsList( property_list ) or Length( property_list ) <> 2 or not IsString( property_list[1] ) or not ( IsString( property_list[2] ) or property_list[2] = fail ) then
+    if not IsList( property_pair ) or Length( property_pair ) <> 2 or not IsString( property_pair[1] ) or not ( IsString( property_pair[2] ) or property_pair[2] = fail ) then
         Error(
             "You must pass a pair (i.e. a list of length 2) of strings to `AddCategoricalProperty`. ",
             "The second entry is the property of the opposite category. ",
@@ -152,36 +157,120 @@ InstallGlobalFunction( AddCategoricalProperty,
         return;
     fi;
     
-    Add( CAP_INTERNAL_CATEGORICAL_PROPERTIES_LIST, property_list );
+    Add( CAP_INTERNAL_CATEGORICAL_PROPERTIES_LIST, property_pair );
     
-    for i in [ 1 .. 2 ] do
+    #= comment for Julia
+    if not IsBoundGlobal( property_pair[1] ) then
         
-        if IsBound( property_list[ i ] ) and IsString( property_list[ i ] ) then
-            
-            DeclareProperty( property_list[ i ], IsCapCategory );
-            
-        fi;
+        Print( "WARNING: please declare ", property_pair[1], " as a property of IsCapCategory with corresponding documentation before adding it as a categorical property.\n" );
         
-    od;
+        DeclareProperty( property_pair[1], IsCapCategory );
+        
+        # all property pairs must also be added with the entries swapped
+        # this will declare the opposite property
+        
+    fi;
+    # =#
     
 end );
 
-Perform(
-## This is the CAP_INTERNAL_CATEGORICAL_PROPERTIES_LIST
-    [ [ "IsEquippedWithHomomorphismStructure", "IsEquippedWithHomomorphismStructure" ],
-      [ "IsEnrichedOverCommutativeRegularSemigroup", "IsEnrichedOverCommutativeRegularSemigroup" ],
-      [ "IsSkeletalCategory", "IsSkeletalCategory" ],
-      [ "IsAbCategory", "IsAbCategory" ],
-      [ "IsLinearCategoryOverCommutativeRing", "IsLinearCategoryOverCommutativeRing" ],
-      [ "IsAdditiveCategory", "IsAdditiveCategory" ],
-      [ "IsPreAbelianCategory", "IsPreAbelianCategory" ],
-      [ "IsAbelianCategory", "IsAbelianCategory" ],
-      [ "IsAbelianCategoryWithEnoughProjectives", "IsAbelianCategoryWithEnoughInjectives" ],
-      [ "IsAbelianCategoryWithEnoughInjectives", "IsAbelianCategoryWithEnoughProjectives" ],
-      [ "IsLocallyOfFiniteProjectiveDimension", "IsLocallyOfFiniteInjectiveDimension" ],
-      [ "IsLocallyOfFiniteInjectiveDimension", "IsLocallyOfFiniteProjectiveDimension" ]
-    ],
-    AddCategoricalProperty );
+#! @Description
+#!  The property of the category <A>C</A> being equipped with a homomorphism structure.
+#! @Arguments C
+DeclareProperty( "IsEquippedWithHomomorphismStructure", IsCapCategory );
+
+AddCategoricalProperty( [ "IsEquippedWithHomomorphismStructure", "IsEquippedWithHomomorphismStructure" ] );
+
+#! @Description
+#!  The property of the category <A>C</A> having decidable lifts.
+#! @Arguments C
+DeclareProperty( "IsCategoryWithDecidableLifts", IsCapCategory );
+
+AddCategoricalProperty( [ "IsCategoryWithDecidableLifts", "IsCategoryWithDecidableColifts" ] );
+
+#! @Description
+#!  The property of the category <A>C</A> having decidable colifts.
+#! @Arguments C
+DeclareProperty( "IsCategoryWithDecidableColifts", IsCapCategory );
+
+AddCategoricalProperty( [ "IsCategoryWithDecidableColifts", "IsCategoryWithDecidableLifts" ] );
+
+#! @Description
+#!  The property of the category <A>C</A> being enriched over a commutative regular semigroup.
+#! @Arguments C
+DeclareProperty( "IsEnrichedOverCommutativeRegularSemigroup", IsCapCategory );
+
+AddCategoricalProperty( [ "IsEnrichedOverCommutativeRegularSemigroup", "IsEnrichedOverCommutativeRegularSemigroup" ] );
+
+#! @Description
+#!  The property of the category <A>C</A> being skeletal.
+#! @Arguments C
+DeclareProperty( "IsSkeletalCategory", IsCapCategory );
+
+AddCategoricalProperty( [ "IsSkeletalCategory", "IsSkeletalCategory" ] );
+
+#! @Description
+#!  The property of the category <A>C</A> being preadditive.
+#! @Arguments C
+DeclareProperty( "IsAbCategory", IsCapCategory );
+
+AddCategoricalProperty( [ "IsAbCategory", "IsAbCategory" ] );
+
+#! @Description
+#!  The property of the category <A>C</A> being linear over a commutative ring.
+#! @Arguments C
+DeclareProperty( "IsLinearCategoryOverCommutativeRing", IsCapCategory );
+
+AddCategoricalProperty( [ "IsLinearCategoryOverCommutativeRing", "IsLinearCategoryOverCommutativeRing" ] );
+
+#! @Description
+#!  The property of the category <A>C</A> being additive.
+#! @Arguments C
+DeclareProperty( "IsAdditiveCategory", IsCapCategory );
+
+AddCategoricalProperty( [ "IsAdditiveCategory", "IsAdditiveCategory" ] );
+
+#! @Description
+#!  The property of the category <A>C</A> being preabelian.
+#! @Arguments C
+DeclareProperty( "IsPreAbelianCategory", IsCapCategory );
+
+AddCategoricalProperty( [ "IsPreAbelianCategory", "IsPreAbelianCategory" ] );
+
+#! @Description
+#!  The property of the category <A>C</A> being abelian.
+#! @Arguments C
+DeclareProperty( "IsAbelianCategory", IsCapCategory );
+
+AddCategoricalProperty( [ "IsAbelianCategory", "IsAbelianCategory" ] );
+
+#! @Description
+#!  The property of the category <A>C</A> being abelian with enough projectives.
+#! @Arguments C
+DeclareProperty( "IsAbelianCategoryWithEnoughProjectives", IsCapCategory );
+
+AddCategoricalProperty( [ "IsAbelianCategoryWithEnoughProjectives", "IsAbelianCategoryWithEnoughInjectives" ] );
+
+#! @Description
+#!  The property of the category <A>C</A> being abelian with enough injectives.
+#! @Arguments C
+DeclareProperty( "IsAbelianCategoryWithEnoughInjectives", IsCapCategory );
+
+AddCategoricalProperty( [ "IsAbelianCategoryWithEnoughInjectives", "IsAbelianCategoryWithEnoughProjectives" ] );
+
+#! @Description
+#!  The property of the category <A>C</A> being locally of finite projective dimension.
+#! @Arguments C
+DeclareProperty( "IsLocallyOfFiniteProjectiveDimension", IsCapCategory );
+
+AddCategoricalProperty( [ "IsLocallyOfFiniteProjectiveDimension", "IsLocallyOfFiniteInjectiveDimension" ] );
+
+#! @Description
+#!  The property of the category <A>C</A> being locally of finite injective dimension.
+#! @Arguments C
+DeclareProperty( "IsLocallyOfFiniteInjectiveDimension", IsCapCategory );
+
+AddCategoricalProperty( [ "IsLocallyOfFiniteInjectiveDimension", "IsLocallyOfFiniteProjectiveDimension" ] );
 
 DeclareAttribute( "TheoremRecord",
                   IsCapCategory, "mutable" );
@@ -196,8 +285,6 @@ DeclareOperation( "AddCategoryToFamily",
 ###################################
 
 DeclareGlobalFunction( "CREATE_CAP_CATEGORY_OBJECT" );
-
-DeclareGlobalFunction( "CREATE_CAP_CATEGORY_FILTERS" );
 
 DeclareGlobalFunction( "INSTALL_ADD_FUNCTIONS_FOR_CATEGORY" );
 
@@ -219,11 +306,40 @@ DeclareOperation( "CreateCapCategory",
 DeclareOperation( "CreateCapCategory",
                            [ IsString ] );
 
+#! @Description
+#! The argument is a string $s$.
+#! This operation creates a new CAP category from scratch.
+#! Its name is set to $s$.
+#! The category, its objects, its morphisms, and its two cells will lie in the corresponding given filters.
+#! @Arguments s, category_filter, object_filter, morphism_filter, two_cell_filter
+#! @Returns a category
+DeclareOperation( "CreateCapCategory",
+                           [ IsString, IsFunction, IsFunction, IsFunction, IsFunction ] );
+
+#! @Description
+#! The argument is a string $s$.
+#! This operation creates a new CAP category from scratch.
+#! Its name is set to $s$.
+#! The category, its objects, its morphisms, and its two cells will lie in the corresponding given filters.
+#! The data types of the object/morphism/two cell datum can be given as described in <Ref BookName="CompilerForCAP" Func="CapJitInferredDataTypes" />.
+#! As a convenience, simply a filter can be given if this suffices to fully determine the data type.
+#! If a data type is not specified, pass `fail` instead.
+#! @Arguments s, category_filter, object_filter, morphism_filter, two_cell_filter, object_datum_type, morphism_datum_type, two_cell_datum_type
+#! @Returns a category
+DeclareGlobalFunction( "CreateCapCategoryWithDataTypes" );
+
 ###################################
 ##
 #! @Section Internal Attributes
 ##
 ###################################
+
+#! @Description
+#! The argument is a category $C$.
+#! The output is its name.
+#! @Arguments C
+#! @Returns a string
+DeclareAttribute( "Name", IsCapCategory );
 
 #! Each category $C$ stores various filters.
 #! They are used to apply the right functions in the method selection.
@@ -238,12 +354,6 @@ DeclareOperation( "CreateCapCategory",
 DeclareAttribute( "CategoryFilter",
                   IsCapCategory );
 
-#! @Description
-#! The argument is a category $C$.
-#! The output is a filter in which all cells
-#! of $C$ shall lie.
-#! @Arguments C
-#! @Returns a filter
 DeclareAttribute( "CellFilter",
                   IsCapCategory );
 
@@ -275,6 +385,33 @@ DeclareAttribute( "TwoCellFilter",
                   IsCapCategory );
 
 #! @Description
+#! The argument is a category $C$.
+#! The output is the data type (see <Ref BookName="CompilerForCAP" Func="CapJitInferredDataTypes" />)
+#! of object data of $C$ (or `fail` if this data type is not specified).
+#! @Arguments C
+#! @Returns a data type or `fail`
+DeclareAttribute( "ObjectDatumType",
+                  IsCapCategory );
+
+#! @Description
+#! The argument is a category $C$.
+#! The output is the data type (see <Ref BookName="CompilerForCAP" Func="CapJitInferredDataTypes" />)
+#! of morphism data of $C$ (or `fail` if this data type is not specified).
+#! @Arguments C
+#! @Returns a data type or `fail`
+DeclareAttribute( "MorphismDatumType",
+                  IsCapCategory );
+
+#! @Description
+#! The argument is a category $C$.
+#! The output is the data type (see <Ref BookName="CompilerForCAP" Func="CapJitInferredDataTypes" />)
+#! of two cell data of $C$ (or `fail` if this data type is not specified).
+#! @Arguments C
+#! @Returns a data type or `fail`
+DeclareAttribute( "TwoCellDatumType",
+                  IsCapCategory );
+
+#! @Description
 #! The argument is a category $C$ which is expected to lie in the
 #! filter <C>IsLinearCategoryOverCommutativeRing</C>.
 #! The output is a commutative ring over which the category is linear.
@@ -299,6 +436,24 @@ DeclareAttribute( "RangeCategoryOfHomomorphismStructure",
 #! @Arguments C
 #! @Returns a list of objects
 DeclareAttribute( "AdditiveGenerators",
+                  IsCapCategory );
+
+#! @Description
+#!  The argument is an Abelian category $C$ with enough projectives.
+#!  The output is the set of indecomposable projective objects in $C$ up to isomorphism.
+#!  That is every projective object in $C$ is isomorphic to a finite direct sum over these objects.
+#! @Arguments C
+#! @Returns a list of objects
+DeclareAttribute( "IndecomposableProjectiveObjects",
+                  IsCapCategory );
+
+#! @Description
+#!  The argument is an Abelian category $C$ with enough injectives.
+#!  The output is the set of indecomposable injective objects in $C$ up to isomorphism.
+#!  That is every injective object in $C$ is isomorphic to a finite direct sum over these objects.
+#! @Arguments C
+#! @Returns a list of objects
+DeclareAttribute( "IndecomposableInjectiveObjects",
                   IsCapCategory );
 
 #############################################

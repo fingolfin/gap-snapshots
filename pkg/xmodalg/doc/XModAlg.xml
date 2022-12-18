@@ -3,9 +3,7 @@
 <!-- This is an automatically generated file. -->
 <!DOCTYPE Book SYSTEM "gapdoc.dtd"
 [
-<!ENTITY AutoDoc '<Package>AutoDoc</Package>'>
-<!ENTITY see '<Alt Only="LaTeX">$\to$</Alt><Alt Not="LaTeX">--&gt;</Alt>'>
-<!ENTITY XModAlg '<Package>XModAlg</Package>'>
+    [<#Include SYSTEM "_entities.xml">
 ]
 >
 <Book Name="XModAlg">

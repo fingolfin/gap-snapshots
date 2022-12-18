@@ -882,6 +882,8 @@ DeclareGlobalFunction( "homalgInternalMatrixHull" );
 
 DeclareGlobalFunction( "HomalgMatrix" );
 DeclareGlobalFunction( "HomalgMatrixListList" );
+DeclareGlobalFunction( "HomalgRowVector" );
+DeclareGlobalFunction( "HomalgColumnVector" );
 
 DeclareGlobalFunction( "HomalgMatrixWithAttributes" );
 
@@ -1041,6 +1043,12 @@ DeclareOperation( "EntriesOfHomalgMatrixAsListList",
         [ IsHomalgMatrix ] );
 
 DeclareOperation( "EntriesOfHomalgMatrix",
+        [ IsHomalgMatrix ] );
+
+DeclareOperation( "EntriesOfHomalgRowVector",
+        [ IsHomalgMatrix ] );
+
+DeclareOperation( "EntriesOfHomalgColumnVector",
         [ IsHomalgMatrix ] );
 
 DeclareOperation( "AreComparableMatrices",

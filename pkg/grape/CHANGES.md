@@ -1,3 +1,19 @@
+Main changes from GRAPE 4.8.5 to GRAPE 4.9.0 (09 December 2022)
+---------------------------------------------------------------
+
+1. The included version of nauty is now 2.8.6. You should expect canonical
+labellings produced by nauty to change from previous versions of GRAPE.
+
+2. Made function ``GeneralizedOrbitalGraphs`` more flexible, and updated
+the documentation.
+
+3. Renamed function ``OrbitalGraphColadjMats`` by
+``OrbitalDigraphColadjMats``, but the old name still works.
+Also, improved the documentation for this function.
+
+4. Added some tweaks to functions to compute complete subgraphs, which
+should hopefully improve overall performance.
+
 Main changes from GRAPE 4.8.4 to GRAPE 4.8.5 (26 March 2021)
 ------------------------------------------------------------
 
@@ -65,7 +81,7 @@ various GRAPE functions.
 
 2. Function GraphImage documented, and a test added for this function. 
 
-3. Last (accidently) remaining function call ``Stabiliser`` changed 
+3. Last (accidentally) remaining function call ``Stabiliser`` changed 
 to ``Stabilizer``. 
 
 4. More tests added to tst/testall.tst.

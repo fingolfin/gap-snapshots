@@ -29,7 +29,18 @@
 #include "libsemigroups/types.hpp"    // for relation_type
 
 namespace libsemigroups {
+  enum class author {
+    Machine,
+    Aizenstat,
+    Carmichael,
+    East,
+    Iwahori,
+    Moore,
+    Sutov
+  };
+
   std::vector<relation_type> RookMonoid(size_t l, int q);
+
   std::vector<relation_type> RennerCommonTypeBMonoid(size_t l, int q);
   std::vector<relation_type> RennerTypeBMonoid(size_t l, int q);
   std::vector<relation_type> EGTypeBMonoid(size_t l, int q);
@@ -40,16 +51,26 @@ namespace libsemigroups {
   std::vector<relation_type> Fibonacci(size_t r, size_t n);
   std::vector<relation_type> Plactic(size_t n);
   std::vector<relation_type> Stylic(size_t n);
+
   std::vector<relation_type> SymmetricGroup1(size_t n);
   std::vector<relation_type> SymmetricGroup2(size_t n);
+  std::vector<relation_type> SymmetricGroup(size_t n, author val);
   std::vector<relation_type> DualSymmetricInverseMonoidEEF(size_t n);
   std::vector<relation_type> UniformBlockBijectionMonoidF(size_t n);
-  std::vector<relation_type> PartitionMonoidEast41(size_t n);
+  std::vector<relation_type> PartitionMonoid(size_t n, author val);
   std::vector<relation_type> SingularBrauer(size_t n);
   std::vector<relation_type> OrientationPreserving(size_t n);
   std::vector<relation_type> OrientationReversing(size_t n);
   std::vector<relation_type> TemperleyLieb(size_t n);
   std::vector<relation_type> Brauer(size_t n);
+  std::vector<relation_type> RectangularBand(size_t m, size_t n);
+  std::vector<relation_type> FullTransformationMonoid(size_t n, author val);
+  std::vector<relation_type> PartialTransformationMonoid(size_t n, author val);
+  std::vector<relation_type> SymmetricInverseMonoid(size_t n, author val);
+
+  std::vector<relation_type> ChineseMonoid(size_t n);
+  // The monogenic semigroup a ^ m + r = a ^ m
+  std::vector<relation_type> MonogenicSemigroup(size_t m, size_t r);
 
   template <typename T, typename F, typename... Args>
   void setup(T& tc, size_t num_gens, F func, Args... args) {

@@ -122,18 +122,18 @@ EXTRA_PROGRAMS = test_action$(EXEEXT) test_bipart$(EXEEXT) \
 	test_froidure_pin_transf$(EXEEXT) test_hpcombi$(EXEEXT) \
 	test_iterator$(EXEEXT) test_kambites$(EXEEXT) \
 	test_kbe$(EXEEXT) test_knuth_bendix$(EXEEXT) \
-	test_konieczny$(EXEEXT) test_make_present$(EXEEXT) \
-	test_matrix$(EXEEXT) test_obvinf$(EXEEXT) test_order$(EXEEXT) \
-	test_pbr$(EXEEXT) test_pool$(EXEEXT) test_present$(EXEEXT) \
-	test_race$(EXEEXT) test_runner$(EXEEXT) \
-	test_schreier_sims$(EXEEXT) test_sims1$(EXEEXT) \
-	test_schreier_sims_helper$(EXEEXT) test_siso$(EXEEXT) \
-	test_string$(EXEEXT) test_string_view$(EXEEXT) \
-	test_suffix_tree$(EXEEXT) test_timer$(EXEEXT) \
-	test_todd_coxeter$(EXEEXT) test_transf$(EXEEXT) \
-	test_types$(EXEEXT) test_uf$(EXEEXT) test_wilo$(EXEEXT) \
-	test_wislo$(EXEEXT) test_word$(EXEEXT) bench_all$(EXEEXT) \
-	bench_action$(EXEEXT) bench_bmat$(EXEEXT) \
+	test_konieczny$(EXEEXT) test_make_froidure_pin$(EXEEXT) \
+	test_make_present$(EXEEXT) test_matrix$(EXEEXT) \
+	test_obvinf$(EXEEXT) test_order$(EXEEXT) test_pbr$(EXEEXT) \
+	test_pool$(EXEEXT) test_present$(EXEEXT) test_race$(EXEEXT) \
+	test_runner$(EXEEXT) test_schreier_sims$(EXEEXT) \
+	test_sims1$(EXEEXT) test_schreier_sims_helper$(EXEEXT) \
+	test_siso$(EXEEXT) test_string$(EXEEXT) \
+	test_string_view$(EXEEXT) test_suffix_tree$(EXEEXT) \
+	test_timer$(EXEEXT) test_todd_coxeter$(EXEEXT) \
+	test_transf$(EXEEXT) test_types$(EXEEXT) test_uf$(EXEEXT) \
+	test_wilo$(EXEEXT) test_wislo$(EXEEXT) test_word$(EXEEXT) \
+	bench_all$(EXEEXT) bench_action$(EXEEXT) bench_bmat$(EXEEXT) \
 	bench_digraph$(EXEEXT) bench_freeband$(EXEEXT) \
 	bench_froidure_pin$(EXEEXT) bench_kambites$(EXEEXT) \
 	bench_knuth_bendix$(EXEEXT) bench_konieczny$(EXEEXT) \
@@ -463,11 +463,13 @@ am_test_all_OBJECTS = tests/bmat-data.$(OBJEXT) \
 	tests/test-konieczny-transf.$(OBJEXT) \
 	tests/test-konieczny-bmat.$(OBJEXT) \
 	tests/test-konieczny-pperm.$(OBJEXT) tests/test-main.$(OBJEXT) \
-	tests/test-make-present.$(OBJEXT) tests/test-matrix.$(OBJEXT) \
-	tests/test-obvinf.$(OBJEXT) tests/test-order.$(OBJEXT) \
-	tests/test-pbr.$(OBJEXT) tests/test-pool.$(OBJEXT) \
-	tests/test-present.$(OBJEXT) tests/test-race.$(OBJEXT) \
-	tests/test-runner.$(OBJEXT) tests/test-schreier-sims.$(OBJEXT) \
+	tests/test-make-present.$(OBJEXT) \
+	tests/test-make-froidure-pin.$(OBJEXT) \
+	tests/test-matrix.$(OBJEXT) tests/test-obvinf.$(OBJEXT) \
+	tests/test-order.$(OBJEXT) tests/test-pbr.$(OBJEXT) \
+	tests/test-pool.$(OBJEXT) tests/test-present.$(OBJEXT) \
+	tests/test-race.$(OBJEXT) tests/test-runner.$(OBJEXT) \
+	tests/test-schreier-sims.$(OBJEXT) \
 	tests/test-schreier-sims-helper.$(OBJEXT) \
 	tests/test-sims1.$(OBJEXT) tests/test-siso.$(OBJEXT) \
 	tests/test-string.$(OBJEXT) tests/test-string-view.$(OBJEXT) \
@@ -660,7 +662,8 @@ am_test_knuth_bendix_OBJECTS = tests/test-knuth-bendix-1.$(OBJEXT) \
 	tests/test-knuth-bendix-3.$(OBJEXT) \
 	tests/test-knuth-bendix-4.$(OBJEXT) \
 	tests/test-knuth-bendix-5.$(OBJEXT) \
-	tests/test-knuth-bendix-6.$(OBJEXT) tests/test-main.$(OBJEXT)
+	tests/test-knuth-bendix-6.$(OBJEXT) \
+	tests/fpsemi-examples.$(OBJEXT) tests/test-main.$(OBJEXT)
 test_knuth_bendix_OBJECTS = $(am_test_knuth_bendix_OBJECTS)
 test_knuth_bendix_LDADD = $(LDADD)
 test_knuth_bendix_DEPENDENCIES = libsemigroups.la
@@ -674,6 +677,12 @@ am_test_konieczny_OBJECTS = tests/test-konieczny-bmat8-1.$(OBJEXT) \
 test_konieczny_OBJECTS = $(am_test_konieczny_OBJECTS)
 test_konieczny_LDADD = $(LDADD)
 test_konieczny_DEPENDENCIES = libsemigroups.la
+am_test_make_froidure_pin_OBJECTS =  \
+	tests/test-make-froidure-pin.$(OBJEXT) \
+	tests/test-main.$(OBJEXT)
+test_make_froidure_pin_OBJECTS = $(am_test_make_froidure_pin_OBJECTS)
+test_make_froidure_pin_LDADD = $(LDADD)
+test_make_froidure_pin_DEPENDENCIES = libsemigroups.la
 am_test_make_present_OBJECTS = tests/test-make-present.$(OBJEXT) \
 	tests/test-main.$(OBJEXT)
 test_make_present_OBJECTS = $(am_test_make_present_OBJECTS)
@@ -902,6 +911,7 @@ am__depfiles_remade = benchmarks/$(DEPDIR)/bench-action.Po \
 	tests/$(DEPDIR)/test-konieczny-pperm.Po \
 	tests/$(DEPDIR)/test-konieczny-transf.Po \
 	tests/$(DEPDIR)/test-main.Po \
+	tests/$(DEPDIR)/test-make-froidure-pin.Po \
 	tests/$(DEPDIR)/test-make-present.Po \
 	tests/$(DEPDIR)/test-matrix.Po tests/$(DEPDIR)/test-obvinf.Po \
 	tests/$(DEPDIR)/test-order.Po tests/$(DEPDIR)/test-pbr.Po \
@@ -968,9 +978,10 @@ SOURCES = $(libsemigroups_la_SOURCES) $(bench_action_SOURCES) \
 	$(test_froidure_pin_transf_SOURCES) $(test_hpcombi_SOURCES) \
 	$(test_iterator_SOURCES) $(test_kambites_SOURCES) \
 	$(test_kbe_SOURCES) $(test_knuth_bendix_SOURCES) \
-	$(test_konieczny_SOURCES) $(test_make_present_SOURCES) \
-	$(test_matrix_SOURCES) $(test_obvinf_SOURCES) \
-	$(test_order_SOURCES) $(test_pbr_SOURCES) $(test_pool_SOURCES) \
+	$(test_konieczny_SOURCES) $(test_make_froidure_pin_SOURCES) \
+	$(test_make_present_SOURCES) $(test_matrix_SOURCES) \
+	$(test_obvinf_SOURCES) $(test_order_SOURCES) \
+	$(test_pbr_SOURCES) $(test_pool_SOURCES) \
 	$(test_present_SOURCES) $(test_race_SOURCES) \
 	$(test_runner_SOURCES) $(test_schreier_sims_SOURCES) \
 	$(test_schreier_sims_helper_SOURCES) $(test_sims1_SOURCES) \
@@ -1011,9 +1022,10 @@ DIST_SOURCES = $(libsemigroups_la_SOURCES) $(bench_action_SOURCES) \
 	$(test_froidure_pin_transf_SOURCES) $(test_hpcombi_SOURCES) \
 	$(test_iterator_SOURCES) $(test_kambites_SOURCES) \
 	$(test_kbe_SOURCES) $(test_knuth_bendix_SOURCES) \
-	$(test_konieczny_SOURCES) $(test_make_present_SOURCES) \
-	$(test_matrix_SOURCES) $(test_obvinf_SOURCES) \
-	$(test_order_SOURCES) $(test_pbr_SOURCES) $(test_pool_SOURCES) \
+	$(test_konieczny_SOURCES) $(test_make_froidure_pin_SOURCES) \
+	$(test_make_present_SOURCES) $(test_matrix_SOURCES) \
+	$(test_obvinf_SOURCES) $(test_order_SOURCES) \
+	$(test_pbr_SOURCES) $(test_pool_SOURCES) \
 	$(test_present_SOURCES) $(test_race_SOURCES) \
 	$(test_runner_SOURCES) $(test_schreier_sims_SOURCES) \
 	$(test_schreier_sims_helper_SOURCES) $(test_sims1_SOURCES) \
@@ -1359,19 +1371,19 @@ am__eigensrcsvdinclude_HEADERS_DIST =  \
 	extern/eigen-3.3.9/Eigen/src/SVD/SVDBase.h
 am__eigensrcumfpacksupportinclude_HEADERS_DIST =  \
 	extern/eigen-3.3.9/Eigen/src/UmfPackSupport/UmfPackSupport.h
-am__fmtinclude_HEADERS_DIST = extern/fmt-8.0.1/include/fmt/args.h \
-	extern/fmt-8.0.1/include/fmt/chrono.h \
-	extern/fmt-8.0.1/include/fmt/color.h \
-	extern/fmt-8.0.1/include/fmt/compile.h \
-	extern/fmt-8.0.1/include/fmt/core.h \
-	extern/fmt-8.0.1/include/fmt/format-inl.h \
-	extern/fmt-8.0.1/include/fmt/format.h \
-	extern/fmt-8.0.1/include/fmt/locale.h \
-	extern/fmt-8.0.1/include/fmt/os.h \
-	extern/fmt-8.0.1/include/fmt/ostream.h \
-	extern/fmt-8.0.1/include/fmt/printf.h \
-	extern/fmt-8.0.1/include/fmt/ranges.h \
-	extern/fmt-8.0.1/include/fmt/xchar.h
+am__fmtinclude_HEADERS_DIST = extern/fmt-8.1.1/include/fmt/args.h \
+	extern/fmt-8.1.1/include/fmt/chrono.h \
+	extern/fmt-8.1.1/include/fmt/color.h \
+	extern/fmt-8.1.1/include/fmt/compile.h \
+	extern/fmt-8.1.1/include/fmt/core.h \
+	extern/fmt-8.1.1/include/fmt/format-inl.h \
+	extern/fmt-8.1.1/include/fmt/format.h \
+	extern/fmt-8.1.1/include/fmt/locale.h \
+	extern/fmt-8.1.1/include/fmt/os.h \
+	extern/fmt-8.1.1/include/fmt/ostream.h \
+	extern/fmt-8.1.1/include/fmt/printf.h \
+	extern/fmt-8.1.1/include/fmt/ranges.h \
+	extern/fmt-8.1.1/include/fmt/xchar.h
 am__hpcombifallbackinclude_HEADERS_DIST =  \
 	extern/HPCombi/include/fallback/gcdlcm.hpp \
 	extern/HPCombi/include/fallback/seq.hpp
@@ -1657,6 +1669,7 @@ pkginclude_HEADERS = include/libsemigroups/action.hpp \
 	include/libsemigroups/containers.hpp \
 	include/libsemigroups/coset.hpp \
 	include/libsemigroups/debug.hpp \
+	include/libsemigroups/deprecated.hpp \
 	include/libsemigroups/digraph-helper.hpp \
 	include/libsemigroups/digraph-with-sources.hpp \
 	include/libsemigroups/digraph-with-sources.tpp \
@@ -1682,6 +1695,7 @@ pkginclude_HEADERS = include/libsemigroups/action.hpp \
 	include/libsemigroups/knuth-bendix.hpp \
 	include/libsemigroups/konieczny.hpp \
 	include/libsemigroups/libsemigroups.hpp \
+	include/libsemigroups/make-froidure-pin.hpp \
 	include/libsemigroups/make-present.hpp \
 	include/libsemigroups/matrix.hpp \
 	include/libsemigroups/obvinf.hpp \
@@ -1726,19 +1740,19 @@ hpcombiincludedir = $(includedir)/libsemigroups/HPCombi/include
 @LIBSEMIGROUPS_HPCOMBI_ENABLED_TRUE@hpcombifallbackinclude_HEADERS = extern/HPCombi/include/fallback/gcdlcm.hpp \
 @LIBSEMIGROUPS_HPCOMBI_ENABLED_TRUE@	extern/HPCombi/include/fallback/seq.hpp
 fmtincludedir = $(includedir)/libsemigroups/fmt
-@LIBSEMIGROUPS_WITH_INTERNAL_FMT_TRUE@fmtinclude_HEADERS = extern/fmt-8.0.1/include/fmt/args.h \
-@LIBSEMIGROUPS_WITH_INTERNAL_FMT_TRUE@	extern/fmt-8.0.1/include/fmt/chrono.h \
-@LIBSEMIGROUPS_WITH_INTERNAL_FMT_TRUE@	extern/fmt-8.0.1/include/fmt/color.h \
-@LIBSEMIGROUPS_WITH_INTERNAL_FMT_TRUE@	extern/fmt-8.0.1/include/fmt/compile.h \
-@LIBSEMIGROUPS_WITH_INTERNAL_FMT_TRUE@	extern/fmt-8.0.1/include/fmt/core.h \
-@LIBSEMIGROUPS_WITH_INTERNAL_FMT_TRUE@	extern/fmt-8.0.1/include/fmt/format-inl.h \
-@LIBSEMIGROUPS_WITH_INTERNAL_FMT_TRUE@	extern/fmt-8.0.1/include/fmt/format.h \
-@LIBSEMIGROUPS_WITH_INTERNAL_FMT_TRUE@	extern/fmt-8.0.1/include/fmt/locale.h \
-@LIBSEMIGROUPS_WITH_INTERNAL_FMT_TRUE@	extern/fmt-8.0.1/include/fmt/os.h \
-@LIBSEMIGROUPS_WITH_INTERNAL_FMT_TRUE@	extern/fmt-8.0.1/include/fmt/ostream.h \
-@LIBSEMIGROUPS_WITH_INTERNAL_FMT_TRUE@	extern/fmt-8.0.1/include/fmt/printf.h \
-@LIBSEMIGROUPS_WITH_INTERNAL_FMT_TRUE@	extern/fmt-8.0.1/include/fmt/ranges.h \
-@LIBSEMIGROUPS_WITH_INTERNAL_FMT_TRUE@	extern/fmt-8.0.1/include/fmt/xchar.h
+@LIBSEMIGROUPS_WITH_INTERNAL_FMT_TRUE@fmtinclude_HEADERS = extern/fmt-8.1.1/include/fmt/args.h \
+@LIBSEMIGROUPS_WITH_INTERNAL_FMT_TRUE@	extern/fmt-8.1.1/include/fmt/chrono.h \
+@LIBSEMIGROUPS_WITH_INTERNAL_FMT_TRUE@	extern/fmt-8.1.1/include/fmt/color.h \
+@LIBSEMIGROUPS_WITH_INTERNAL_FMT_TRUE@	extern/fmt-8.1.1/include/fmt/compile.h \
+@LIBSEMIGROUPS_WITH_INTERNAL_FMT_TRUE@	extern/fmt-8.1.1/include/fmt/core.h \
+@LIBSEMIGROUPS_WITH_INTERNAL_FMT_TRUE@	extern/fmt-8.1.1/include/fmt/format-inl.h \
+@LIBSEMIGROUPS_WITH_INTERNAL_FMT_TRUE@	extern/fmt-8.1.1/include/fmt/format.h \
+@LIBSEMIGROUPS_WITH_INTERNAL_FMT_TRUE@	extern/fmt-8.1.1/include/fmt/locale.h \
+@LIBSEMIGROUPS_WITH_INTERNAL_FMT_TRUE@	extern/fmt-8.1.1/include/fmt/os.h \
+@LIBSEMIGROUPS_WITH_INTERNAL_FMT_TRUE@	extern/fmt-8.1.1/include/fmt/ostream.h \
+@LIBSEMIGROUPS_WITH_INTERNAL_FMT_TRUE@	extern/fmt-8.1.1/include/fmt/printf.h \
+@LIBSEMIGROUPS_WITH_INTERNAL_FMT_TRUE@	extern/fmt-8.1.1/include/fmt/ranges.h \
+@LIBSEMIGROUPS_WITH_INTERNAL_FMT_TRUE@	extern/fmt-8.1.1/include/fmt/xchar.h
 eigenincludedir = $(includedir)/libsemigroups/Eigen
 @LIBSEMIGROUPS_WITH_INTERNAL_EIGEN_TRUE@eigeninclude_HEADERS = extern/eigen-3.3.9/Eigen/StdList \
 @LIBSEMIGROUPS_WITH_INTERNAL_EIGEN_TRUE@	extern/eigen-3.3.9/Eigen/Jacobi \
@@ -2142,9 +2156,10 @@ test_all_SOURCES = tests/bmat-data.cpp tests/fpsemi-examples.cpp \
 	tests/test-konieczny-bmat8-3.cpp \
 	tests/test-konieczny-transf.cpp tests/test-konieczny-bmat.cpp \
 	tests/test-konieczny-pperm.cpp tests/test-main.cpp \
-	tests/test-make-present.cpp tests/test-matrix.cpp \
-	tests/test-obvinf.cpp tests/test-order.cpp tests/test-pbr.cpp \
-	tests/test-pool.cpp tests/test-present.cpp tests/test-race.cpp \
+	tests/test-make-present.cpp tests/test-make-froidure-pin.cpp \
+	tests/test-matrix.cpp tests/test-obvinf.cpp \
+	tests/test-order.cpp tests/test-pbr.cpp tests/test-pool.cpp \
+	tests/test-present.cpp tests/test-race.cpp \
 	tests/test-runner.cpp tests/test-schreier-sims.cpp \
 	tests/test-schreier-sims-helper.cpp tests/test-sims1.cpp \
 	tests/test-siso.cpp tests/test-string.cpp \
@@ -2205,12 +2220,15 @@ test_kbe_SOURCES = tests/test-kbe.cpp tests/test-main.cpp
 test_knuth_bendix_SOURCES = tests/test-knuth-bendix-1.cpp \
 	tests/test-knuth-bendix-2.cpp tests/test-knuth-bendix-3.cpp \
 	tests/test-knuth-bendix-4.cpp tests/test-knuth-bendix-5.cpp \
-	tests/test-knuth-bendix-6.cpp tests/test-main.cpp
+	tests/test-knuth-bendix-6.cpp tests/fpsemi-examples.cpp \
+	tests/test-main.cpp
 test_konieczny_SOURCES = tests/test-konieczny-bmat8-1.cpp \
 	tests/test-konieczny-bmat8-2.cpp \
 	tests/test-konieczny-bmat8-3.cpp \
 	tests/test-konieczny-transf.cpp tests/test-konieczny-bmat.cpp \
 	tests/test-konieczny-pperm.cpp tests/bmat-data.cpp \
+	tests/test-main.cpp
+test_make_froidure_pin_SOURCES = tests/test-make-froidure-pin.cpp \
 	tests/test-main.cpp
 test_make_present_SOURCES = tests/test-make-present.cpp \
 	tests/test-main.cpp
@@ -2676,6 +2694,8 @@ tests/test-konieczny-pperm.$(OBJEXT): tests/$(am__dirstamp) \
 	tests/$(DEPDIR)/$(am__dirstamp)
 tests/test-make-present.$(OBJEXT): tests/$(am__dirstamp) \
 	tests/$(DEPDIR)/$(am__dirstamp)
+tests/test-make-froidure-pin.$(OBJEXT): tests/$(am__dirstamp) \
+	tests/$(DEPDIR)/$(am__dirstamp)
 tests/test-matrix.$(OBJEXT): tests/$(am__dirstamp) \
 	tests/$(DEPDIR)/$(am__dirstamp)
 tests/test-obvinf.$(OBJEXT): tests/$(am__dirstamp) \
@@ -2856,6 +2876,10 @@ test_knuth_bendix$(EXEEXT): $(test_knuth_bendix_OBJECTS) $(test_knuth_bendix_DEP
 test_konieczny$(EXEEXT): $(test_konieczny_OBJECTS) $(test_konieczny_DEPENDENCIES) $(EXTRA_test_konieczny_DEPENDENCIES) 
 	@rm -f test_konieczny$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(test_konieczny_OBJECTS) $(test_konieczny_LDADD) $(LIBS)
+
+test_make_froidure_pin$(EXEEXT): $(test_make_froidure_pin_OBJECTS) $(test_make_froidure_pin_DEPENDENCIES) $(EXTRA_test_make_froidure_pin_DEPENDENCIES) 
+	@rm -f test_make_froidure_pin$(EXEEXT)
+	$(AM_V_CXXLD)$(CXXLINK) $(test_make_froidure_pin_OBJECTS) $(test_make_froidure_pin_LDADD) $(LIBS)
 
 test_make_present$(EXEEXT): $(test_make_present_OBJECTS) $(test_make_present_DEPENDENCIES) $(EXTRA_test_make_present_DEPENDENCIES) 
 	@rm -f test_make_present$(EXEEXT)
@@ -3062,6 +3086,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@tests/$(DEPDIR)/test-konieczny-pperm.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@tests/$(DEPDIR)/test-konieczny-transf.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@tests/$(DEPDIR)/test-main.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@tests/$(DEPDIR)/test-make-froidure-pin.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@tests/$(DEPDIR)/test-make-present.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@tests/$(DEPDIR)/test-matrix.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@tests/$(DEPDIR)/test-obvinf.Po@am__quote@ # am--include-marker
@@ -4658,6 +4683,7 @@ distclean: distclean-am
 	-rm -f tests/$(DEPDIR)/test-konieczny-pperm.Po
 	-rm -f tests/$(DEPDIR)/test-konieczny-transf.Po
 	-rm -f tests/$(DEPDIR)/test-main.Po
+	-rm -f tests/$(DEPDIR)/test-make-froidure-pin.Po
 	-rm -f tests/$(DEPDIR)/test-make-present.Po
 	-rm -f tests/$(DEPDIR)/test-matrix.Po
 	-rm -f tests/$(DEPDIR)/test-obvinf.Po
@@ -4867,6 +4893,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f tests/$(DEPDIR)/test-konieczny-pperm.Po
 	-rm -f tests/$(DEPDIR)/test-konieczny-transf.Po
 	-rm -f tests/$(DEPDIR)/test-main.Po
+	-rm -f tests/$(DEPDIR)/test-make-froidure-pin.Po
 	-rm -f tests/$(DEPDIR)/test-make-present.Po
 	-rm -f tests/$(DEPDIR)/test-matrix.Po
 	-rm -f tests/$(DEPDIR)/test-obvinf.Po

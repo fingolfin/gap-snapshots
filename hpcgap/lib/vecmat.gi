@@ -1432,7 +1432,7 @@ InstallGlobalFunction(CopyToVectorRep,function( v, q )
             common := FFECONWAY.WriteOverSmallestCommonField(vc);
             #
             # FFECONWAY.WriteOverSmallestCommonField returns an integer or fail.
-            # When it resturns an integer, it may modify individual entries of vc
+            # When it returns an integer, it may modify individual entries of vc
             #
             if common = fail or common  > 256 then
                 #
@@ -1704,7 +1704,7 @@ end);
 
 #############################################################################
 ##
-#F  ImmutableVector( <field>, <vector>
+#F  ImmutableVector( <field>, <vector> )
 ##
 InstallMethod( ImmutableVector,"general,2",[IsObject,IsRowVector],0,
 function(f,v)
@@ -1715,6 +1715,11 @@ function(f,v)
     if v2 <> fail then v := v2; fi;
   fi;
   return Immutable(v);
+end);
+
+InstallOtherMethod( ImmutableVector,"vectorObj,2",[IsObject,IsVectorObj],0,
+function(f,v)
+  return MakeImmutable( ChangedBaseDomain( v, f ) );
 end);
 
 InstallOtherMethod( ImmutableVector,"general,3",[IsObject,IsRowVector,IsBool],0,

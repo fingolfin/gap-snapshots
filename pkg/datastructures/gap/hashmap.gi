@@ -17,12 +17,17 @@
 
 InstallGlobalFunction(HashMap,
 function(arg...)
-    local hashfunc, eqfunc, capacity;
+    local hashfunc, eqfunc, capacity, values, v, map;
 
+    values := [];
     hashfunc := HashBasic;
     eqfunc := \=;
     capacity := 16;
 
+    if Length(arg) > 0 and IsList(arg[1]) then
+        values := Remove(arg, 1);
+        capacity := Maximum(capacity, Length(values));
+    fi;
     if Length(arg) > 0 and IsFunction(arg[1]) then
         hashfunc := Remove(arg, 1);
     fi;
@@ -36,14 +41,55 @@ function(arg...)
         Error("Invalid arguments");
     fi;
 
-    return DS_Hash_Create(hashfunc, eqfunc, capacity, false);
+
+    map := DS_Hash_Create(hashfunc, eqfunc, capacity, false);
+
+    for v in values do
+        if Length(v) <> 2 then
+            Error("Invalid initial values");
+        fi;
+        map[v[1]] := v[2];
+    od;
+
+    return map;
 end);
 
-InstallMethod(ViewString, "for hash maps",
+InstallMethod(PrintString, "for hashmaps",
     [ IsHashMapRep ],
 function(ht)
-    return STRINGIFY("<hash map obj capacity=",DS_Hash_Capacity(ht),
-            " used=",DS_Hash_Used(ht),">");
+    local v, first, string;
+    string := [];
+    Add(string, "HashMap([\>\>");
+    first := true;
+    for v in KeyValueIterator(ht) do
+        if first then
+            first := false;
+        else
+            Add(string, ",\< \>");
+        fi;
+        Add(string, PrintString(v));
+    od;
+    Add(string, "\<\<])");
+    return Concatenation(string);
+end);
+
+InstallMethod(String, "for hashmaps",
+    [ IsHashMapRep ],
+function(ht)
+    local v, first, string;
+    string := [];
+    Add(string, "HashMap([");
+    first := true;
+    for v in KeyValueIterator(ht) do
+        if first then
+            first := false;
+        else
+            Add(string, ", ");
+        fi;
+        Add(string, String(v));
+    od;
+    Add(string, "])");
+    return Concatenation(string);
 end);
 
 #! @Description

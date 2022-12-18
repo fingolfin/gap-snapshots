@@ -1,6 +1,20 @@
 
         Main CHANGES between versions of the Browse package
 
+1.8.19
+  - In 'BrowseAtlasInfo()', fixed the appearance of non-core data:
+    Use 'UserPreference( "AtlasRep", "AtlasRepMarkNonCoreData" )'
+    not the outdated 'AtlasOfGroupRepresentationsInfo.markprivate'.
+  - When running the tests in 'tst/tests.tst',
+    execute the 'LoadDemoFile' examples only if 'GAPInfo.UseReadline = true'
+    holds.
+    Up to now, running 'tst/tests.tst' in the background caused error messages
+    because there is no readline support in GAP 4.12 if the session runs
+    without terminal.
+    (The problem had been announced by Joachim Zobel.)
+  - Use 'IsKernelExtensionAvailable' and 'LoadKernelExtension' instead of
+    'LOAD_DYN', see https://github.com/gap-system/gap/issues/5195.
+
 1.8.18
   - Fixed 'BrowseDirectory' again.
   - Changed an '#include' statement, in order to improve compatibility.

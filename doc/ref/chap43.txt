@@ -786,10 +786,10 @@
   
   [33X[1;0Y[29X[2XIteratorStabChain[102X( [3XS[103X ) [32X function[133X
   
-  [33X[0;0Yreturns an iterator for the elments of the group described by the stabilizer
-  chain  [3XS[103X.  The elements of the group [3XG[103X are produced by iterating through all
-  base  images  in  turn,  and  in  the ordering induced by the base. For more
-  details see [14X43.6[114X[133X
+  [33X[0;0Yreturns  an  iterator  for  the  elements  of  the  group  described  by the
+  stabilizer  chain  [3XS[103X.  The elements of the group [3XG[103X are produced by iterating
+  through  all  base  images in turn, and in the ordering induced by the base.
+  For more details see [14X43.6[114X[133X
   
   [1X43.10-11 InverseRepresentative[101X
   

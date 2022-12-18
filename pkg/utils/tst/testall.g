@@ -2,7 +2,7 @@
 ##
 #W  testall.g                   Utils Package                    Chris Wensley
 ##
-#Y  Copyright (C) 2015-2018, The GAP Group 
+#Y  Copyright (C) 2015-2022, The GAP Group 
 ##  
 
 LoadPackage( "utils" ); 
@@ -17,4 +17,5 @@ fi;
 dir := DirectoriesPackageLibrary("utils","tst");
 TestDirectory(dir, rec(exitGAP := true,
     testOptions:=rec(compareFunction := "uptowhitespace")));
+
 FORCE_QUIT_GAP(1);

@@ -40,6 +40,8 @@
 \makelabel{yangbaxter:Brace2YB for IsSkewbrace}{1.1.21}{X7F09E6DE78CC240B}
 \makelabel{yangbaxter:SkewbraceSubset2YB for IsSkewbrace, IsCollection}{1.1.22}{X7E2F64338788EBF9}
 \makelabel{yangbaxter:SemidirectProduct for IsSkewbrace, IsSkewbrace, IsGeneralMapping}{1.1.23}{X8439C2087DD1D9A6}
+\makelabel{yangbaxter:UnderlyingAdditiveGroup for IsSkewbrace}{1.1.24}{X86D6131182AE2DBC}
+\makelabel{yangbaxter:UnderlyingMultiplicativeGroup for IsSkewbrace}{1.1.25}{X840A631685DA79D6}
 \makelabel{yangbaxter:AdditiveGroupOfRing for IsRing}{2.1.1}{X86C2A9257D2D1CAF}
 \makelabel{yangbaxter:IsJacobsonRadical for IsRing}{2.1.2}{X7816FE1786837102}
 \makelabel{yangbaxter:Table2YB for IsList}{2.2.1}{X7AEBEF6F7CFCA074}
@@ -70,6 +72,7 @@
 \makelabel{yangbaxter:RightNilpotentIdeals for IsSkewbrace}{4.3.7}{X7B6EB5A37EBFFB7D}
 \makelabel{yangbaxter:SmoktunowiczSeries for IsSkewbrace, IsInt}{4.3.8}{X7E9665EB79226E96}
 \makelabel{yangbaxter:Socle for IsSkewbrace}{4.3.9}{X7D503F497CB34B9D}
+\makelabel{yangbaxter:Annihilator for IsSkewbrace}{4.3.10}{X7FF15DAA78E08F0A}
 \makelabel{yangbaxter:SocleSeries for IsSkewbrace}{4.4.1}{X7E0053787EDFEAFB}
 \makelabel{yangbaxter:MultipermutationLevel for IsSkewbrace}{4.4.2}{X85AA85F57FF7BD73}
 \makelabel{yangbaxter:IsMultipermutation for IsSkewbrace}{4.4.3}{X824956137F4CEF3C}

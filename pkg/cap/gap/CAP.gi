@@ -6,6 +6,21 @@
 
 ######################################
 ##
+## Reps, types, stuff.
+##
+######################################
+
+BindGlobal( "TheFamilyOfCapCategoryObjects",
+        NewFamily( "TheFamilyOfCapCategoryObjects" ) );
+
+BindGlobal( "TheFamilyOfCapCategoryMorphisms",
+        NewFamily( "TheFamilyOfCapCategoryMorphisms" ) );
+
+BindGlobal( "TheFamilyOfCapCategoryTwoCells",
+        NewFamily( "TheFamilyOfCapCategoryTwoCells" ) );
+
+######################################
+##
 ## Properties logic
 ##
 ######################################
@@ -29,45 +44,6 @@ InstallTrueMethod( IsAbelianCategory, IsAbelianCategoryWithEnoughInjectives );
 ######################################
 
 ##
-InstallValue( CAP_INTERNAL,
-                rec(
-                    name_counter := 0,
-                    default_cache_type := "weak",
-                    operation_names_with_cache_disabled_by_default := [
-                        # the following operations are needed for comparison in caches
-                        "IsEqualForObjects",
-                        "IsEqualForMorphisms",
-                        "IsEqualForMorphismsOnMor",
-                        "IsEqualForCacheForObjects",
-                        "IsEqualForCacheForMorphisms",
-                        # it is unclear how `IsEqualForCacheForObjects` and `IsEqualForCacheForMorphisms`
-                        # would behave on non-well-defined objects/morphisms, so exclude `IsWellDefined*`
-                        "IsWellDefinedForObjects",
-                        "IsWellDefinedForMorphisms",
-                        "IsWellDefinedForTwoCells",
-                        # do not cache operations returning random data
-                        "RandomObjectByInteger",
-                        "RandomMorphismByInteger",
-                        "RandomMorphismWithFixedSourceByInteger",
-                        "RandomMorphismWithFixedRangeByInteger",
-                        "RandomMorphismWithFixedSourceAndRangeByInteger",
-                        "RandomObjectByList",
-                        "RandomMorphismByList",
-                        "RandomMorphismWithFixedSourceByList",
-                        "RandomMorphismWithFixedRangeByList",
-                        "RandomMorphismWithFixedSourceAndRangeByList",
-                        # by default, do not cache constructors and object/morphism data
-                        # because in general these operations are cheap,
-                        # so caching would not improve the performance
-                        "ObjectConstructor",
-                        "ObjectDatum",
-                        "MorphismConstructor",
-                        "MorphismDatum",
-                    ],
-              )
-);
-
-##
 InstallGlobalFunction( CAP_INTERNAL_NAME_COUNTER,
                        
   function( )
@@ -87,6 +63,9 @@ InstallGlobalFunction( GET_METHOD_CACHE,
   function( category, name, number )
     local cache, cache_type;
     
+    cache := fail;
+    
+    #= comment for Julia
     if IsBound( category!.caches.( name ) ) and IsCachingObject( category!.caches.( name ) ) then
         
         if category!.caches.( name )!.nr_keys <> number then
@@ -118,10 +97,11 @@ InstallGlobalFunction( GET_METHOD_CACHE,
         cache := CreateCrispCachingObject( number );
         DeactivateCachingObject( cache );
     else
-        Error( "unrecognized cache type" );
+        Error( "unrecognized cache type ", cache_type );
     fi;
     
     category!.caches.(name) := cache;
+    # =#
     
     return cache;
     
@@ -162,16 +142,15 @@ InstallValue( CAP_INTERNAL_DERIVATION_GRAPH,
 ##
 ######################################
 
-DeclareRepresentation( "IsCapCategoryRep",
-                       IsAttributeStoringRep and IsCapCategory,
-                       [ ] );
+# backwards compatibility
+BindGlobal( "IsCapCategoryRep", IsCapCategory );
 
 BindGlobal( "TheFamilyOfCapCategories",
         NewFamily( "TheFamilyOfCapCategories" ) );
 
 BindGlobal( "TheTypeOfCapCategories",
         NewType( TheFamilyOfCapCategories,
-                 IsCapCategoryRep ) );
+                 IsCapCategory ) );
 
 
 #####################################
@@ -181,71 +160,59 @@ BindGlobal( "TheTypeOfCapCategories",
 #####################################
 
 ##
-InstallGlobalFunction( CREATE_CAP_CATEGORY_FILTERS,
-                       
-  function( category )
-    local name, cell_filter, filter_name, filter;
-
-    name := Name( category );
-    
-    filter := NewFilter( Concatenation( name, "InternalCategoryFilter" ) );
-    
-    SetCategoryFilter( category, filter );
-    
-    SetFilterObj( category, filter );
-    
-    filter_name := Concatenation( name, "CellFilter" );
-    
-    cell_filter := NewFilter( filter_name );
-    
-    SetCellFilter( category, cell_filter );
-    
-    filter := NewCategory( Concatenation( name, "ObjectFilter" ), cell_filter );
-    
-    SetObjectFilter( category, filter );
-    
-    filter := NewCategory( Concatenation( name, "MorphismFilter" ), cell_filter );
-    
-    SetMorphismFilter( category, filter );
-    
-    filter := NewCategory( Concatenation( name, "TwoCellFilter" ), cell_filter );
-    
-    SetTwoCellFilter( category, filter );
-    
-end );
-
-##
 InstallGlobalFunction( "CREATE_CAP_CATEGORY_OBJECT",
-                       
-  function( obj_rec, attr_list )
-    local i, flatted_attribute_list, obj, operation_name;
+  function( obj_rec, name, category_filter, object_filter, morphism_filter, two_cell_filter, object_datum_type, morphism_datum_type, two_cell_datum_type )
+    local filter, obj, operation_name;
     
-    for i in [ 1 .. Length( attr_list ) ] do
+    if IsFilter( object_datum_type ) then
         
-        if IsString( attr_list[ i ][ 1 ] ) then
-            
-            attr_list[ i ][ 1 ] := ValueGlobal( attr_list[ i ][ 1 ] );
-            
-        fi;
+        object_datum_type := rec( filter := object_datum_type );
         
-    od;
+    fi;
     
-    flatted_attribute_list := [ ];
-    
-    for i in attr_list do
+    if IsFilter( morphism_datum_type ) then
         
-        Add( flatted_attribute_list, i[ 1 ] );
+        morphism_datum_type := rec( filter := morphism_datum_type );
         
-        Add( flatted_attribute_list, i[ 2 ] );
+    fi;
+    
+    if IsFilter( two_cell_datum_type ) then
         
-    od;
-    
-    flatted_attribute_list := Concatenation( [ obj_rec, TheTypeOfCapCategories ], flatted_attribute_list );
-    
+        two_cell_datum_type := rec( filter := two_cell_datum_type );
+        
+    fi;
     
     obj_rec!.logical_implication_files := StructuralCopy( CATEGORIES_LOGIC_FILES );
     
-    obj := CallFuncList( ObjectifyWithAttributes, flatted_attribute_list );
+    filter := NewFilter( Concatenation( name, "InternalCategoryFilter" ), category_filter );
+    
+    obj := ObjectifyWithAttributes( obj_rec, NewType( TheFamilyOfCapCategories, filter ), Name, name );
+    
+    SetCategoryFilter( obj, filter );
+    
+    # object filter
+    filter := NewCategory( Concatenation( name, "ObjectFilter" ), object_filter );
+    
+    SetObjectFilter( obj, filter );
+    SetObjectDatumType( obj, object_datum_type );
+    
+    obj!.object_representation := object_filter;
+    obj!.object_type := NewType( TheFamilyOfCapCategoryObjects, filter );
+    
+    # morphism filter
+    filter := NewCategory( Concatenation( name, "MorphismFilter" ), morphism_filter );
+    
+    SetMorphismFilter( obj, filter );
+    SetMorphismDatumType( obj, morphism_datum_type );
+    
+    obj!.morphism_representation := morphism_filter;
+    obj!.morphism_type := NewType( TheFamilyOfCapCategoryMorphisms, filter );
+    
+    # two cell filter
+    filter := NewCategory( Concatenation( name, "TwoCellFilter" ), two_cell_filter );
+    
+    SetTwoCellFilter( obj, filter );
+    SetTwoCellDatumType( obj, two_cell_datum_type );
     
     SetIsFinalized( obj, false );
     
@@ -277,6 +244,46 @@ InstallGlobalFunction( "CREATE_CAP_CATEGORY_OBJECT",
     obj!.predicate_logic := true;
     
     obj!.add_primitive_output := false;
+    
+    # convenience for Julia lists
+    if IsPackageMarkedForLoading( "JuliaInterface", ">= 0.2" ) then
+        
+        if object_datum_type <> fail and object_datum_type.filter = IsList then
+            
+            InstallOtherMethod( ObjectConstructor,
+                                [ CategoryFilter( obj ), ValueGlobal( "IsJuliaObject" ) ],
+                                
+              function( cat, julia_list )
+                
+                return ObjectConstructor( cat, ValueGlobal( "ConvertJuliaToGAP" )( julia_list ) );
+                
+            end );
+            
+        fi;
+        
+        if morphism_datum_type <> fail and morphism_datum_type.filter = IsList then
+            
+            InstallOtherMethod( MorphismConstructor,
+                                [ ObjectFilter( obj ), ValueGlobal( "IsJuliaObject" ), ObjectFilter( obj ) ],
+                                
+              function( source, julia_list, range )
+                
+                return MorphismConstructor( source, ValueGlobal( "ConvertJuliaToGAP" )( julia_list ), range );
+                
+            end );
+            
+            InstallOtherMethod( MorphismConstructor,
+                                [ CategoryFilter( obj ), ObjectFilter( obj ), ValueGlobal( "IsJuliaObject" ), ObjectFilter( obj ) ],
+                                
+              function( cat, source, julia_list, range )
+                
+                return MorphismConstructor( cat, source, ValueGlobal( "ConvertJuliaToGAP" )( julia_list ), range );
+                
+            end );
+            
+        fi;
+        
+    fi;
     
     return obj;
     
@@ -381,6 +388,7 @@ InstallMethod( DeactivateCaching,
     
 end );
 
+#= comment for Julia
 ##
 InstallMethod( CachingObject,
                [ IsCapCategoryCell, IsString, IsInt ],
@@ -396,6 +404,7 @@ InstallMethod( CachingObject,
                [ IsCapCategory, IsString, IsInt ],
                
   GET_METHOD_CACHE );
+# =#
 
 InstallGlobalFunction( SetCachingOfCategory,
   
@@ -497,30 +506,44 @@ InstallMethod( CreateCapCategory,
                [ IsString ],
                
   function( name )
+    
+    return CreateCapCategory( name, IsCapCategory, IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryTwoCell );
+    
+end );
+
+##
+InstallMethod( CreateCapCategory,
+               [ IsString, IsFunction, IsFunction, IsFunction, IsFunction ],
+               
+  function( name, category_filter, object_filter, morphism_filter, two_cell_filter )
+    
+    return CreateCapCategoryWithDataTypes( name, category_filter, object_filter, morphism_filter, two_cell_filter, fail, fail, fail );
+    
+end );
+
+##
+InstallGlobalFunction( CreateCapCategoryWithDataTypes,
+  function ( name, category_filter, object_filter, morphism_filter, two_cell_filter, object_datum_type, morphism_datum_type, two_cell_datum_type )
     local overhead, is_computable, category;
     
     overhead := CAP_INTERNAL_RETURN_OPTION_OR_DEFAULT( "overhead", true );
     
     is_computable := CAP_INTERNAL_RETURN_OPTION_OR_DEFAULT( "is_computable", true );
-
-    category := rec( );
     
-    category := CREATE_CAP_CATEGORY_OBJECT( category, [ [ "Name", name ] ] );
+    category := CREATE_CAP_CATEGORY_OBJECT( rec( ), name, category_filter, object_filter, morphism_filter, two_cell_filter, object_datum_type, morphism_datum_type, two_cell_datum_type );
     
     category!.overhead := overhead;
     
     category!.is_computable := is_computable;
-
-    CREATE_CAP_CATEGORY_FILTERS( category );
     
     if overhead then
-    
-      AddCategoryToFamily( category, "general" );
-      
+        
+        AddCategoryToFamily( category, "general" );
+        
     else
-      
-      category!.predicate_logic := false;
-      
+        
+        category!.predicate_logic := false;
+        
     fi;
     
     return category;
@@ -542,7 +565,7 @@ InstallMethod( CanCompute,
     
     weight_list := category!.derivations_weight_list;
     
-    return not CurrentOperationWeight( weight_list, string ) = infinity;
+    return CurrentOperationWeight( weight_list, string ) <> infinity;
     
 end );
 
@@ -1012,49 +1035,29 @@ end );
 ##
 #######################################
 
-InstallGlobalFunction( CAP_INTERNAL_INSTALL_PRINT_FUNCTION,
+InstallMethod( ViewObj,
+               [ IsCapCategory ],
                
-  function( )
-    local print_graph, category_function, i, internal_list;
+  function ( category )
     
-    category_function := function( category )
-      local string;
-      
-      string := "CAP category";
-      
-      if HasName( category ) then
-          
-          Append( string, " with name " );
-          
-          Append( string, Name( category ) );
-          
-      fi;
-      
-      return string;
-      
-    end;
+    Print( Name( category ) );
     
-    print_graph := CreatePrintingGraph( IsCapCategory, category_function );
+end );
+
+InstallMethod( Display,
+               [ IsCapCategory ],
+               
+  function ( category )
     
-    internal_list := Concatenation( CAP_INTERNAL_CATEGORICAL_PROPERTIES_LIST );
+    Print( "A CAP category with name ", Name( category ), ":\n\n" );
     
-    for i in internal_list do
-        
-        AddNodeToGraph( print_graph, rec( Conditions := i,
-                                          TypeOfView := 3,
-                                          ComputeLevel := 5 ) );
-        
-    od;
-    
-    InstallPrintFunctionsOutOfPrintingGraph( print_graph );
+    InfoOfInstalledOperationsOfCategory( category );
     
 end );
 
 InstallMethod( String,
                [ IsCapCategory ],
     Name );
-
-CAP_INTERNAL_INSTALL_PRINT_FUNCTION( );
 
 InstallGlobalFunction( DisableAddForCategoricalOperations,
   
@@ -1077,5 +1080,14 @@ InstallGlobalFunction( EnableAddForCategoricalOperations,
     fi;
     
     category!.add_primitive_output := true;
+    
+end );
+
+InstallMethod( CellFilter,
+               [ IsCapCategory ],
+
+  function ( category )
+    
+    Error( "Categories do not have an attribute `CellFilter` anymore." );
     
 end );

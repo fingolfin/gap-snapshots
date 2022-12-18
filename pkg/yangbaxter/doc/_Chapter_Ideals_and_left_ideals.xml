@@ -319,7 +319,7 @@ gap> SmoktunowiczSeries(br,5);
 
 <ManSection>
   <Attr Arg="obj" Name="Socle" Label="for IsSkewbrace"/>
- <Returns>the ideals of the socle series of <A>obj</A>
+ <Returns>the socle of <A>obj</A>
 </Returns>
  <Description>
  The socle of a skew brace <Math>A</Math> is the ideal <Math>\ker\lambda\cap Z(A,+)</Math>. 
@@ -329,6 +329,26 @@ gap> Socle(SmallSkewbrace(6,2));
 gap> Socle(SmallBrace(8,20));
 <brace of size 8>
 gap> Socle(SmallBrace(8,2));
+<brace of size 4>
+]]></Example>
+
+
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="obj" Name="Annihilator" Label="for IsSkewbrace"/>
+ <Returns>the annihilator of <A>obj</A>
+</Returns>
+ <Description>
+ The socle of a skew brace <Math>A</Math> is the ideal <Math>\ker\lambda\cap Z(A,+)\cap Z(A,\circ)</Math>. 
+<Example><![CDATA[
+gap> Annihilator(SmallSkewbrace(8,12));
+<brace of size 2>
+gap> Annihilator(SmallSkewbrace(4,2));
+<brace of size 2>
+gap> Annihilator(SmallSkewbrace(8,14));
 <brace of size 4>
 ]]></Example>
 

@@ -10,53 +10,66 @@
 #
 gap> START_TEST("cap20.tst");
 
-# doc/_Chapter_Examples_and_Tests.xml:826-873
-gap> vecspaces := CreateCapCategory( "VectorSpacesForGeneralizedMorphismsTest" );
-VectorSpacesForGeneralizedMorphismsTest
-gap> ReadPackage( "CAP", "examples/VectorSpacesAllMethods.g" );
+# doc/_Chapter_Examples_and_Tests.xml:901-961
+gap> LoadPackage( "MonoidalCategories" );
 true
-gap> A := QVectorSpace( 1 );
-<A rational vector space of dimension 1>
-gap> B := QVectorSpace( 2 );
-<A rational vector space of dimension 2>
-gap> C := QVectorSpace( 3 );
-<A rational vector space of dimension 3>
-gap> phi_tilde_associated := VectorSpaceMorphism( A, [ [ 1, 2, 0 ] ], C );
-A rational vector space homomorphism with matrix: 
-[ [  1,  2,  0 ] ]
+gap> T := TerminalCategoryWithSingleObject( );
+TerminalCategoryWithSingleObject( )
+gap> Display( T );
+A CAP category with name TerminalCategoryWithSingleObject( ):
 
-gap> phi_tilde_source_aid := VectorSpaceMorphism( A, [ [ 1, 2 ] ], B );
-A rational vector space homomorphism with matrix: 
-[ [  1,  2 ] ]
-
-gap> phi_tilde := GeneralizedMorphismWithSourceAid( phi_tilde_source_aid, phi_tilde_associated );
-<A morphism in Generalized morphism category of VectorSpacesForGeneralizedMorphismsTest>
-gap> psi_tilde_associated := IdentityMorphism( B );
-A rational vector space homomorphism with matrix: 
-[ [  1,  0 ],
-  [  0,  1 ] ]
-
-gap> psi_tilde_source_aid := VectorSpaceMorphism( B, [ [ 1, 0, 0 ], [ 0, 1, 0 ] ], C );
-A rational vector space homomorphism with matrix: 
-[ [  1,  0,  0 ],
-  [  0,  1,  0 ] ]
-
-gap> psi_tilde := GeneralizedMorphismWithSourceAid( psi_tilde_source_aid, psi_tilde_associated );
-<A morphism in Generalized morphism category of VectorSpacesForGeneralizedMorphismsTest>
-gap> composition := PreCompose( phi_tilde, psi_tilde );
-<A morphism in Generalized morphism category of VectorSpacesForGeneralizedMorphismsTest>
-gap> Arrow( composition );
-A rational vector space homomorphism with matrix: 
-[ [  1/2,    1 ] ]
-
-gap> SourceAid( composition );
-A rational vector space homomorphism with matrix: 
-[ [  1/2,    1 ] ]
-
-gap> RangeAid( composition );
-A rational vector space homomorphism with matrix: 
-[ [  1,  0 ],
-  [  0,  1 ] ]
+63 primitive operations were used to derive 280 operations for this category
+which algorithmically
+* IsCategoryWithDecidableColifts
+* IsCategoryWithDecidableLifts
+* IsEquippedWithHomomorphismStructure
+* IsLinearCategoryOverCommutativeRing
+* IsAbelianCategoryWithEnoughInjectives
+* IsAbelianCategoryWithEnoughProjectives
+* IsRigidSymmetricClosedMonoidalCategory
+* IsRigidSymmetricCoclosedMonoidalCategory
+and furthermore mathematically
+* IsLocallyOfFiniteInjectiveDimension
+* IsLocallyOfFiniteProjectiveDimension
+* IsSkeletalCategory
+* IsStrictMonoidalCategory
+* IsTerminalCategory
+gap> i := InitialObject( T );
+<A zero object in TerminalCategoryWithSingleObject( )>
+gap> t := TerminalObject( T );
+<A zero object in TerminalCategoryWithSingleObject( )>
+gap> z := ZeroObject( T );
+<A zero object in TerminalCategoryWithSingleObject( )>
+gap> Display( i );
+A zero object in TerminalCategoryWithSingleObject( ).
+gap> Display( t );
+A zero object in TerminalCategoryWithSingleObject( ).
+gap> Display( z );
+A zero object in TerminalCategoryWithSingleObject( ).
+gap> IsIdenticalObj( i, z );
+true
+gap> IsIdenticalObj( t, z );
+true
+gap> IsWellDefined( z );
+true
+gap> id_z := IdentityMorphism( z );
+<A zero, identity morphism in TerminalCategoryWithSingleObject( )>
+gap> fn_z := ZeroObjectFunctorial( T );
+<A zero, identity morphism in TerminalCategoryWithSingleObject( )>
+gap> IsWellDefined( fn_z );
+true
+gap> IsEqualForMorphisms( id_z, fn_z );
+true
+gap> IsCongruentForMorphisms( id_z, fn_z );
+true
+gap> IsLiftable( id_z, fn_z );
+true
+gap> Lift( id_z, fn_z );
+<A zero, identity morphism in TerminalCategoryWithSingleObject( )>
+gap> IsColiftable( id_z, fn_z );
+true
+gap> Colift( id_z, fn_z );
+<A zero, identity morphism in TerminalCategoryWithSingleObject( )>
 
 #
 gap> STOP_TEST("cap20.tst", 1);

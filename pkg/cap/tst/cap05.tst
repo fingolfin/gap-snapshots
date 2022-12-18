@@ -10,7 +10,7 @@
 #
 gap> START_TEST("cap05.tst");
 
-# doc/_Chapter_Examples_and_Tests.xml:66-73
+# doc/_Chapter_Examples_and_Tests.xml:75-82
 gap> F2 := CapFunctor( "CohomForVec2", Product( vec, Opposite( vec ) ), vec );;
 gap> AddObjectFunction( F2, a -> obj_func( a[1], Opposite( a[2] ) ) );;
 gap> AddMorphismFunction( F2, function( source, datum, range ) return mor_func( source, datum[1], Opposite( datum[2] ), range ); end );;

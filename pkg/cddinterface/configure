@@ -2906,6 +2906,8 @@ $as_echo_n "checking for GAP architecture... " >&6; }
   if test "x$GAParch" != "x"; then
     GAPARCH=$GAParch
   fi
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $GAPARCH" >&5
+$as_echo "$GAPARCH" >&6; }
 
   if test "x$GAPARCH" = "xUnknown" ; then
     echo ""
@@ -2963,11 +2965,27 @@ fi
 if test "x$with_cddlib" = "xno"; then :
   as_fn_error $? "cddlib is required and cannot be disabled" "$LINENO" 5
 fi
+
+# if no path was given. as a special consideration, detect if the user has cddlib
+# installed via Homebrew (on macOS), and if so, use that
+if test "x$with_cddlib" = "xyes"; then :
+
+  if command -v brew >/dev/null 2>&1; then :
+
+    { $as_echo "$as_me:${as_lineno-$LINENO}: BREW detected" >&5
+$as_echo "$as_me: BREW detected" >&6;}
+    with_cddlib=$(brew --prefix)
+
+fi
+
+fi
+
 if test "x$with_cddlib" != "xyes"; then :
 
-  # Debian and Ubuntu put the headers into PREFIX/include/cdd, while on other
-  # systems, the headers are directly in PREFIX/include/ -- so we just add
-  # both to the CPPFLAGS
+  # Debian and Ubuntu put the headers into PREFIX/include/cdd, while on
+  # e.g. homebrew the headers are in PREFIX/include/cddlib. Finally in
+  # some cases, the headers are directly in PREFIX/include/ -- so we
+  # just add all three to the CPPFLAGS
   if test -d "$with_cddlib"; then :
 
 else

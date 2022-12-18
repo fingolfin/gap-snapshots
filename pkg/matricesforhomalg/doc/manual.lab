@@ -183,9 +183,11 @@
 \makelabel{matricesforhomalg:HomalgMatrix constructor for matrices using a string of a listlist}{5.2.6}{X864ACCB08094F0B7}
 \makelabel{matricesforhomalg:HomalgMatrix constructor for matrices using a string of a list}{5.2.6}{X864ACCB08094F0B7}
 \makelabel{matricesforhomalg:HomalgMatrixListList constructor for matrices using a listlist with given dimensions}{5.2.7}{X8246E1D17F96DAE7}
-\makelabel{matricesforhomalg:HomalgDiagonalMatrix constructor for diagonal matrices}{5.2.8}{X872D39C678D0C4AE}
-\makelabel{matricesforhomalg:CoercedMatrix copy a matrix over a different ring}{5.2.10}{X7C4E49D287011DCD}
-\makelabel{matricesforhomalg:CoercedMatrix copy a matrix over a different ring (convenience)}{5.2.10}{X7C4E49D287011DCD}
+\makelabel{matricesforhomalg:HomalgRowVector constructor for matrices with a single row}{5.2.8}{X7B127B5584CD012D}
+\makelabel{matricesforhomalg:HomalgColumnVector constructor for matrices with a single column}{5.2.9}{X871AF271843FF2B5}
+\makelabel{matricesforhomalg:HomalgDiagonalMatrix constructor for diagonal matrices}{5.2.10}{X872D39C678D0C4AE}
+\makelabel{matricesforhomalg:CoercedMatrix copy a matrix over a different ring}{5.2.12}{X7C4E49D287011DCD}
+\makelabel{matricesforhomalg:CoercedMatrix copy a matrix over a different ring (convenience)}{5.2.12}{X7C4E49D287011DCD}
 \makelabel{matricesforhomalg:IsZero for matrices}{5.3.1}{X858B5AF57D5BC90A}
 \makelabel{matricesforhomalg:IsOne}{5.3.2}{X814D78347858EC13}
 \makelabel{matricesforhomalg:IsUnitFree}{5.3.3}{X7813653578F174AB}

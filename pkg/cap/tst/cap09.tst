@@ -10,7 +10,7 @@
 #
 gap> START_TEST("cap09.tst");
 
-# doc/_Chapter_Examples_and_Tests.xml:113-138
+# doc/_Chapter_Examples_and_Tests.xml:122-147
 gap> LoadPackage( "CAP", false );
 true
 gap> dummy1 := CreateCapCategory( );;

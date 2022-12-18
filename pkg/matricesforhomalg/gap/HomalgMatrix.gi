@@ -852,6 +852,32 @@ InstallMethod( EntriesOfHomalgMatrix,
 end );
 
 ##
+InstallMethod( EntriesOfHomalgRowVector,
+        "for a homalg row vector",
+        [ IsHomalgMatrix ],
+        
+  function( M )
+    
+    Assert( 0, NrRows( M ) = 1 );
+    
+    return EntriesOfHomalgMatrix( M );
+    
+end );
+
+##
+InstallMethod( EntriesOfHomalgColumnVector,
+        "for a homalg column vector",
+        [ IsHomalgMatrix ],
+        
+  function( M )
+    
+    Assert( 0, NrColumns( M ) = 1 );
+    
+    return EntriesOfHomalgMatrix( M );
+    
+end );
+
+##
 InstallMethod( GetUnitPosition,
         "for homalg matrices",
         [ IsHomalgMatrix ],
@@ -2798,6 +2824,42 @@ InstallGlobalFunction( HomalgMatrixListList,
     fi;
     
     return HomalgMatrix( llist, m, n, R );
+    
+end );
+
+##  <#GAPDoc Label="HomalgRowVector">
+##  <ManSection>
+##    <Func Arg="entries, nr_cols, R" Name="HomalgRowVector" Label="constructor for matrices with a single row"/>
+##    <Returns>a &homalg; matrix</Returns>
+##    <Description>
+##      Special case of <Ref Meth="HomalgMatrix" Label="constructor for matrices using a list"/> for matrices with a single row.
+##      <A>entries</A> must be a list of ring elements.
+##    </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+InstallGlobalFunction( HomalgRowVector,
+  function( entries, c, R )
+    
+    return HomalgMatrixListList( [ entries ], 1, c, R );
+    
+end );
+
+##  <#GAPDoc Label="HomalgColumnVector">
+##  <ManSection>
+##    <Func Arg="entries, nr_rows, R" Name="HomalgColumnVector" Label="constructor for matrices with a single column"/>
+##    <Returns>a &homalg; matrix</Returns>
+##    <Description>
+##      Special case of <Ref Meth="HomalgMatrix" Label="constructor for matrices using a list"/> for matrices with a single column.
+##      <A>entries</A> must be a list of ring elements.
+##    </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+InstallGlobalFunction( HomalgColumnVector,
+  function( entries, r, R )
+    
+    return HomalgMatrixListList( List( entries, x -> [ x ] ), r, 1, R );
     
 end );
 

@@ -202,20 +202,20 @@ DeclareOperation( "AddCoastrictionToImageWithGivenImageObject",
 #! @Description
 #! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
-#! to the category for the basic operation `CoefficientsOfMorphismWithGivenBasisOfExternalHom`.
-#! $F: ( arg2, arg3 ) \mapsto \mathtt{CoefficientsOfMorphismWithGivenBasisOfExternalHom}(arg2, arg3)$.
+#! to the category for the basic operation `CoefficientsOfMorphism`.
+#! $F: ( arg2 ) \mapsto \mathtt{CoefficientsOfMorphism}(arg2)$.
 #! @Returns nothing
 #! @Arguments C, F
-DeclareOperation( "AddCoefficientsOfMorphismWithGivenBasisOfExternalHom",
+DeclareOperation( "AddCoefficientsOfMorphism",
                   [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddCoefficientsOfMorphismWithGivenBasisOfExternalHom",
+DeclareOperation( "AddCoefficientsOfMorphism",
                   [ IsCapCategory, IsFunction, IsInt ] );
 
-DeclareOperation( "AddCoefficientsOfMorphismWithGivenBasisOfExternalHom",
+DeclareOperation( "AddCoefficientsOfMorphism",
                   [ IsCapCategory, IsList, IsInt ] );
 
-DeclareOperation( "AddCoefficientsOfMorphismWithGivenBasisOfExternalHom",
+DeclareOperation( "AddCoefficientsOfMorphism",
                   [ IsCapCategory, IsList ] );
 
 #! @Description
@@ -292,6 +292,44 @@ DeclareOperation( "AddCoimageObject",
                   [ IsCapCategory, IsList, IsInt ] );
 
 DeclareOperation( "AddCoimageObject",
+                  [ IsCapCategory, IsList ] );
+
+#! @Description
+#! The arguments are a category $C$ and a function $F$.
+#! This operation adds the given function $F$
+#! to the category for the basic operation `CoimageObjectFunctorial`.
+#! $F: ( alpha, mu, alphap ) \mapsto \mathtt{CoimageObjectFunctorial}(alpha, mu, alphap)$.
+#! @Returns nothing
+#! @Arguments C, F
+DeclareOperation( "AddCoimageObjectFunctorial",
+                  [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddCoimageObjectFunctorial",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+
+DeclareOperation( "AddCoimageObjectFunctorial",
+                  [ IsCapCategory, IsList, IsInt ] );
+
+DeclareOperation( "AddCoimageObjectFunctorial",
+                  [ IsCapCategory, IsList ] );
+
+#! @Description
+#! The arguments are a category $C$ and a function $F$.
+#! This operation adds the given function $F$
+#! to the category for the basic operation `CoimageObjectFunctorialWithGivenCoimageObjects`.
+#! $F: ( C, alpha, mu, alphap, Cp ) \mapsto \mathtt{CoimageObjectFunctorialWithGivenCoimageObjects}(C, alpha, mu, alphap, Cp)$.
+#! @Returns nothing
+#! @Arguments C, F
+DeclareOperation( "AddCoimageObjectFunctorialWithGivenCoimageObjects",
+                  [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddCoimageObjectFunctorialWithGivenCoimageObjects",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+
+DeclareOperation( "AddCoimageObjectFunctorialWithGivenCoimageObjects",
+                  [ IsCapCategory, IsList, IsInt ] );
+
+DeclareOperation( "AddCoimageObjectFunctorialWithGivenCoimageObjects",
                   [ IsCapCategory, IsList ] );
 
 #! @Description
@@ -848,6 +886,44 @@ DeclareOperation( "AddEmbeddingOfEqualizerWithGivenEqualizer",
 #! @Description
 #! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
+#! to the category for the basic operation `EpimorphismFromProjectiveCoverObject`.
+#! $F: ( A ) \mapsto \mathtt{EpimorphismFromProjectiveCoverObject}(A)$.
+#! @Returns nothing
+#! @Arguments C, F
+DeclareOperation( "AddEpimorphismFromProjectiveCoverObject",
+                  [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddEpimorphismFromProjectiveCoverObject",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+
+DeclareOperation( "AddEpimorphismFromProjectiveCoverObject",
+                  [ IsCapCategory, IsList, IsInt ] );
+
+DeclareOperation( "AddEpimorphismFromProjectiveCoverObject",
+                  [ IsCapCategory, IsList ] );
+
+#! @Description
+#! The arguments are a category $C$ and a function $F$.
+#! This operation adds the given function $F$
+#! to the category for the basic operation `EpimorphismFromProjectiveCoverObjectWithGivenProjectiveCoverObject`.
+#! $F: ( A, P ) \mapsto \mathtt{EpimorphismFromProjectiveCoverObjectWithGivenProjectiveCoverObject}(A, P)$.
+#! @Returns nothing
+#! @Arguments C, F
+DeclareOperation( "AddEpimorphismFromProjectiveCoverObjectWithGivenProjectiveCoverObject",
+                  [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddEpimorphismFromProjectiveCoverObjectWithGivenProjectiveCoverObject",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+
+DeclareOperation( "AddEpimorphismFromProjectiveCoverObjectWithGivenProjectiveCoverObject",
+                  [ IsCapCategory, IsList, IsInt ] );
+
+DeclareOperation( "AddEpimorphismFromProjectiveCoverObjectWithGivenProjectiveCoverObject",
+                  [ IsCapCategory, IsList ] );
+
+#! @Description
+#! The arguments are a category $C$ and a function $F$.
+#! This operation adds the given function $F$
 #! to the category for the basic operation `EpimorphismFromSomeProjectiveObject`.
 #! $F: ( A ) \mapsto \mathtt{EpimorphismFromSomeProjectiveObject}(A)$.
 #! @Returns nothing
@@ -1247,6 +1323,82 @@ DeclareOperation( "AddImageObject",
 #! @Description
 #! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
+#! to the category for the basic operation `ImageObjectFunctorial`.
+#! $F: ( alpha, nu, alphap ) \mapsto \mathtt{ImageObjectFunctorial}(alpha, nu, alphap)$.
+#! @Returns nothing
+#! @Arguments C, F
+DeclareOperation( "AddImageObjectFunctorial",
+                  [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddImageObjectFunctorial",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+
+DeclareOperation( "AddImageObjectFunctorial",
+                  [ IsCapCategory, IsList, IsInt ] );
+
+DeclareOperation( "AddImageObjectFunctorial",
+                  [ IsCapCategory, IsList ] );
+
+#! @Description
+#! The arguments are a category $C$ and a function $F$.
+#! This operation adds the given function $F$
+#! to the category for the basic operation `ImageObjectFunctorialWithGivenImageObjects`.
+#! $F: ( I, alpha, nu, alphap, Ip ) \mapsto \mathtt{ImageObjectFunctorialWithGivenImageObjects}(I, alpha, nu, alphap, Ip)$.
+#! @Returns nothing
+#! @Arguments C, F
+DeclareOperation( "AddImageObjectFunctorialWithGivenImageObjects",
+                  [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddImageObjectFunctorialWithGivenImageObjects",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+
+DeclareOperation( "AddImageObjectFunctorialWithGivenImageObjects",
+                  [ IsCapCategory, IsList, IsInt ] );
+
+DeclareOperation( "AddImageObjectFunctorialWithGivenImageObjects",
+                  [ IsCapCategory, IsList ] );
+
+#! @Description
+#! The arguments are a category $C$ and a function $F$.
+#! This operation adds the given function $F$
+#! to the category for the basic operation `IndecomposableInjectiveObjects`.
+#! $F: (  ) \mapsto \mathtt{IndecomposableInjectiveObjects}()$.
+#! @Returns nothing
+#! @Arguments C, F
+DeclareOperation( "AddIndecomposableInjectiveObjects",
+                  [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddIndecomposableInjectiveObjects",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+
+DeclareOperation( "AddIndecomposableInjectiveObjects",
+                  [ IsCapCategory, IsList, IsInt ] );
+
+DeclareOperation( "AddIndecomposableInjectiveObjects",
+                  [ IsCapCategory, IsList ] );
+
+#! @Description
+#! The arguments are a category $C$ and a function $F$.
+#! This operation adds the given function $F$
+#! to the category for the basic operation `IndecomposableProjectiveObjects`.
+#! $F: (  ) \mapsto \mathtt{IndecomposableProjectiveObjects}()$.
+#! @Returns nothing
+#! @Arguments C, F
+DeclareOperation( "AddIndecomposableProjectiveObjects",
+                  [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddIndecomposableProjectiveObjects",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+
+DeclareOperation( "AddIndecomposableProjectiveObjects",
+                  [ IsCapCategory, IsList, IsInt ] );
+
+DeclareOperation( "AddIndecomposableProjectiveObjects",
+                  [ IsCapCategory, IsList ] );
+
+#! @Description
+#! The arguments are a category $C$ and a function $F$.
+#! This operation adds the given function $F$
 #! to the category for the basic operation `InitialObject`.
 #! $F: (  ) \mapsto \mathtt{InitialObject}()$.
 #! @Returns nothing
@@ -1456,6 +1608,25 @@ DeclareOperation( "AddInjectiveDimension",
 #! @Description
 #! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
+#! to the category for the basic operation `InjectiveEnvelopeObject`.
+#! $F: ( arg2 ) \mapsto \mathtt{InjectiveEnvelopeObject}(arg2)$.
+#! @Returns nothing
+#! @Arguments C, F
+DeclareOperation( "AddInjectiveEnvelopeObject",
+                  [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddInjectiveEnvelopeObject",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+
+DeclareOperation( "AddInjectiveEnvelopeObject",
+                  [ IsCapCategory, IsList, IsInt ] );
+
+DeclareOperation( "AddInjectiveEnvelopeObject",
+                  [ IsCapCategory, IsList ] );
+
+#! @Description
+#! The arguments are a category $C$ and a function $F$.
+#! This operation adds the given function $F$
 #! to the category for the basic operation `InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure`.
 #! $F: ( alpha ) \mapsto \mathtt{InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure}(alpha)$.
 #! @Returns nothing
@@ -1495,7 +1666,7 @@ DeclareOperation( "AddInterpretMorphismAsMorphismFromDistinguishedObjectToHomomo
 #! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism`.
-#! $F: ( arg2, arg3, arg4 ) \mapsto \mathtt{InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism}(arg2, arg3, arg4)$.
+#! $F: ( source, range, alpha ) \mapsto \mathtt{InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism}(source, range, alpha)$.
 #! @Returns nothing
 #! @Arguments C, F
 DeclareOperation( "AddInterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism",
@@ -2862,6 +3033,44 @@ DeclareOperation( "AddMereExistenceOfSolutionOfLinearSystemInAbCategory",
 #! @Description
 #! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
+#! to the category for the basic operation `MonomorphismIntoInjectiveEnvelopeObject`.
+#! $F: ( A ) \mapsto \mathtt{MonomorphismIntoInjectiveEnvelopeObject}(A)$.
+#! @Returns nothing
+#! @Arguments C, F
+DeclareOperation( "AddMonomorphismIntoInjectiveEnvelopeObject",
+                  [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddMonomorphismIntoInjectiveEnvelopeObject",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+
+DeclareOperation( "AddMonomorphismIntoInjectiveEnvelopeObject",
+                  [ IsCapCategory, IsList, IsInt ] );
+
+DeclareOperation( "AddMonomorphismIntoInjectiveEnvelopeObject",
+                  [ IsCapCategory, IsList ] );
+
+#! @Description
+#! The arguments are a category $C$ and a function $F$.
+#! This operation adds the given function $F$
+#! to the category for the basic operation `MonomorphismIntoInjectiveEnvelopeObjectWithGivenInjectiveEnvelopeObject`.
+#! $F: ( A, I ) \mapsto \mathtt{MonomorphismIntoInjectiveEnvelopeObjectWithGivenInjectiveEnvelopeObject}(A, I)$.
+#! @Returns nothing
+#! @Arguments C, F
+DeclareOperation( "AddMonomorphismIntoInjectiveEnvelopeObjectWithGivenInjectiveEnvelopeObject",
+                  [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddMonomorphismIntoInjectiveEnvelopeObjectWithGivenInjectiveEnvelopeObject",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+
+DeclareOperation( "AddMonomorphismIntoInjectiveEnvelopeObjectWithGivenInjectiveEnvelopeObject",
+                  [ IsCapCategory, IsList, IsInt ] );
+
+DeclareOperation( "AddMonomorphismIntoInjectiveEnvelopeObjectWithGivenInjectiveEnvelopeObject",
+                  [ IsCapCategory, IsList ] );
+
+#! @Description
+#! The arguments are a category $C$ and a function $F$.
+#! This operation adds the given function $F$
 #! to the category for the basic operation `MonomorphismIntoSomeInjectiveObject`.
 #! $F: ( A ) \mapsto \mathtt{MonomorphismIntoSomeInjectiveObject}(A)$.
 #! @Returns nothing
@@ -3318,6 +3527,25 @@ DeclareOperation( "AddPostComposeList",
 #! @Description
 #! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
+#! to the category for the basic operation `PostInverseForMorphisms`.
+#! $F: ( alpha ) \mapsto \mathtt{PostInverseForMorphisms}(alpha)$.
+#! @Returns nothing
+#! @Arguments C, F
+DeclareOperation( "AddPostInverseForMorphisms",
+                  [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddPostInverseForMorphisms",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+
+DeclareOperation( "AddPostInverseForMorphisms",
+                  [ IsCapCategory, IsList, IsInt ] );
+
+DeclareOperation( "AddPostInverseForMorphisms",
+                  [ IsCapCategory, IsList ] );
+
+#! @Description
+#! The arguments are a category $C$ and a function $F$.
+#! This operation adds the given function $F$
 #! to the category for the basic operation `PreCompose`.
 #! $F: ( alpha, beta ) \mapsto \mathtt{PreCompose}(alpha, beta)$.
 #! @Returns nothing
@@ -3351,6 +3579,25 @@ DeclareOperation( "AddPreComposeList",
                   [ IsCapCategory, IsList, IsInt ] );
 
 DeclareOperation( "AddPreComposeList",
+                  [ IsCapCategory, IsList ] );
+
+#! @Description
+#! The arguments are a category $C$ and a function $F$.
+#! This operation adds the given function $F$
+#! to the category for the basic operation `PreInverseForMorphisms`.
+#! $F: ( alpha ) \mapsto \mathtt{PreInverseForMorphisms}(alpha)$.
+#! @Returns nothing
+#! @Arguments C, F
+DeclareOperation( "AddPreInverseForMorphisms",
+                  [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddPreInverseForMorphisms",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+
+DeclareOperation( "AddPreInverseForMorphisms",
+                  [ IsCapCategory, IsList, IsInt ] );
+
+DeclareOperation( "AddPreInverseForMorphisms",
                   [ IsCapCategory, IsList ] );
 
 #! @Description
@@ -3503,6 +3750,25 @@ DeclareOperation( "AddProjectionOntoCoequalizerWithGivenCoequalizer",
                   [ IsCapCategory, IsList, IsInt ] );
 
 DeclareOperation( "AddProjectionOntoCoequalizerWithGivenCoequalizer",
+                  [ IsCapCategory, IsList ] );
+
+#! @Description
+#! The arguments are a category $C$ and a function $F$.
+#! This operation adds the given function $F$
+#! to the category for the basic operation `ProjectiveCoverObject`.
+#! $F: ( arg2 ) \mapsto \mathtt{ProjectiveCoverObject}(arg2)$.
+#! @Returns nothing
+#! @Arguments C, F
+DeclareOperation( "AddProjectiveCoverObject",
+                  [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddProjectiveCoverObject",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+
+DeclareOperation( "AddProjectiveCoverObject",
+                  [ IsCapCategory, IsList, IsInt ] );
+
+DeclareOperation( "AddProjectiveCoverObject",
                   [ IsCapCategory, IsList ] );
 
 #! @Description
@@ -4282,6 +4548,25 @@ DeclareOperation( "AddSubtractionForMorphisms",
                   [ IsCapCategory, IsList, IsInt ] );
 
 DeclareOperation( "AddSubtractionForMorphisms",
+                  [ IsCapCategory, IsList ] );
+
+#! @Description
+#! The arguments are a category $C$ and a function $F$.
+#! This operation adds the given function $F$
+#! to the category for the basic operation `SumOfMorphisms`.
+#! $F: ( source, list_of_morphisms, range ) \mapsto \mathtt{SumOfMorphisms}(source, list_of_morphisms, range)$.
+#! @Returns nothing
+#! @Arguments C, F
+DeclareOperation( "AddSumOfMorphisms",
+                  [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddSumOfMorphisms",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+
+DeclareOperation( "AddSumOfMorphisms",
+                  [ IsCapCategory, IsList, IsInt ] );
+
+DeclareOperation( "AddSumOfMorphisms",
                   [ IsCapCategory, IsList ] );
 
 #! @Description

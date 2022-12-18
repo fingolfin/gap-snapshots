@@ -1,10 +1,10 @@
 SetPackageInfo( rec(
 PackageName := "Browse",
-Version := "1.8.18",
-Date := "07/10/2022",
+Version := "1.8.19",
+Date := "08/12/2022",
 License := "GPL-3.0-or-later",
 Subtitle := "browsing applications and ncurses interface",
-ArchiveURL := "https://www.math.rwth-aachen.de/~Browse/Browse-1.8.18",
+ArchiveURL := "https://www.math.rwth-aachen.de/~Browse/Browse-1.8.19",
 ArchiveFormats := ".tar.bz2",
 Persons := [
   rec(
@@ -48,15 +48,16 @@ PackageDoc := [
 )
 ],
 Dependencies := rec(
-  GAP := "4.11.0",  # because of DirectoryContents, [i,j] syntax,
-                    # and MethodsOperation
+  GAP := "4.12.0",  # because of IsKernelExtensionAvailable
+                    # and LoadKernelExtension
+                    # (StripMarkupFromUserPreferenceDescription if available)
   NeededOtherPackages := [ ["GAPDoc", ">= 1.6"], ], # more robust treatment of entries in *.bib files
   SuggestedOtherPackages := [ ["AtlasRep",">=2.0"], [ "IO", ">=2.2" ] ],
   ExternalConditions := ["C-compiler", "ncurses development library"]
 ),
 AvailabilityTest := function()
   if not "ncurses" in SHOW_STAT() and
-     Filename(DirectoriesPackagePrograms("Browse"), "ncurses.so") = fail then
+     not IsKernelExtensionAvailable("Browse", "ncurses") then
     LogPackageLoadingMessage( PACKAGE_WARNING,
         [ "kernel functions for ncurses not available." ] );
     if UserPreference("browse", "loadwithoutncurses") = true then

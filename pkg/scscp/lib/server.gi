@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W server.g                 The SCSCP package             Alexander Konovalov
+#W server.g                 The SCSCP package              Olexandr Konovalov
 #W                                                               Steve Linton
 ##
 #############################################################################
@@ -104,7 +104,7 @@ else
         #   UnbindGlobal( cookie );
         # od;
         # session_cookies := [];
-        repeat # until disconnect: this loop is a signle SCSCP session
+        repeat # until disconnect: this loop is a single SCSCP session
             # We accept connections from everywhere
             Info(InfoSCSCP, 1, "Waiting for new client connection at ", 
                                server, ":", port, " ..." );
@@ -284,7 +284,7 @@ else
                     if return_cookie then
                         cookie := TemporaryGlobalVarName( Concatenation( "TEMPVarSCSCP", RandomString(8) ) );  
                         ASS_GVAR( cookie, objrec.object );
-                        if ISBOUND_GLOBAL( cookie ) then                                             
+                        if IsBoundGlobal( cookie ) then                                             
                             Info( InfoSCSCP, 2, "Result stored in the global variable ", cookie );  
                         else
                             Error( "Failed to store result in the global variable ", cookie, "\n" );                                                  

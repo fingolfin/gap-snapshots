@@ -2073,12 +2073,12 @@ a dependent function <Math>u</Math> mapping each list of morphisms
 
 <ManSection>
   <Oper Arg="D" Name="DirectSumDiagonalDifference" Label="for IsList"/>
- <Returns>a morphism in <Math>\mathrm{Hom}( \bigoplus_{i=1}^n P_i, B )</Math>
+ <Returns>a morphism in <Math>\mathrm{Hom}( \bigoplus_{i=1}^n P_i, \bigoplus_{i=1}^{n-1} B )</Math>
 </Returns>
  <Description>
  The argument is a list of morphisms <Math>D = ( \beta_i: P_i \rightarrow B )_{i = 1 \dots n}</Math>.
  The output is a morphism
- <Math>\bigoplus_{i=1}^n P_i \rightarrow B</Math>
+ <Math>\bigoplus_{i=1}^n P_i \rightarrow \bigoplus_{i=1}^{n-1} B</Math>
  such that its kernel equalizes the <Math>\beta_i</Math>.
  </Description>
 </ManSection>
@@ -2361,12 +2361,12 @@ a dependent function <Math>u</Math> mapping each list of morphisms
 
 <ManSection>
   <Oper Arg="D" Name="DirectSumCodiagonalDifference" Label="for IsList"/>
- <Returns>a morphism in <Math>\mathrm{Hom}(B, \bigoplus_{i=1}^n I_i)</Math>
+ <Returns>a morphism in <Math>\mathrm{Hom}(\bigoplus_{i=1}^{n-1} B, \bigoplus_{i=1}^n I_i)</Math>
 </Returns>
  <Description>
  The argument is a list of morphisms <Math>D = ( \beta_i: B \rightarrow I_i )_{i = 1 \dots n}</Math>.
  The output is a morphism
- <Math>B \rightarrow \bigoplus_{i=1}^n I_i</Math>
+ <Math>\bigoplus_{i=1}^{n-1} B \rightarrow \bigoplus_{i=1}^n I_i</Math>
  such that its cokernel coequalizes the <Math>\beta_i</Math>.
  </Description>
 </ManSection>
@@ -2699,6 +2699,36 @@ a dependent function <Math>u</Math> mapping each pair of morphisms <Math>\tau = 
 </ManSection>
 
 
+<ManSection>
+  <Oper Arg="alpha, nu, alpha_prime" Name="ImageObjectFunctorial" Label="for IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism"/>
+ <Returns>a morphism in <Math>\mathrm{Hom}( \mathrm{ImageObject}( \alpha ), \mathrm{ImageObject}( \alpha' ) )</Math>
+</Returns>
+ <Description>
+ The arguments are three morphisms
+ <Math>\alpha: A \rightarrow B</Math>, <Math>\nu: B \rightarrow B'</Math>, <Math>\alpha': A' \rightarrow B'</Math>.
+ The output is the morphism
+ <Math>\mathrm{ImageObject}( \alpha ) \rightarrow \mathrm{ImageObject}( \alpha' )</Math>
+ given by the functoriality of the image.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="s, alpha, nu, alpha_prime, r" Name="ImageObjectFunctorialWithGivenImageObjects" Label="for IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject"/>
+ <Returns>a morphism in <Math>\mathrm{Hom}( s, r )</Math>
+</Returns>
+ <Description>
+ The arguments are an object <Math>s = \mathrm{ImageObject}( \alpha )</Math>,
+ three morphisms
+ <Math>\alpha: A \rightarrow B</Math>, <Math>\nu: B \rightarrow B'</Math>, <Math>\alpha': A' \rightarrow B'</Math>,
+ and an object <Math>r = \mathrm{ImageObject}( \alpha' )</Math>.
+ The output is the morphism
+ <Math>\mathrm{ImageObject}( \alpha ) \rightarrow \mathrm{ImageObject}( \alpha' )</Math>
+ given by the functoriality of the image.
+ </Description>
+</ManSection>
+
+
 </Section>
 
 
@@ -2947,6 +2977,36 @@ a dependent function <Math>u</Math> mapping each pair of morphisms <Math>\tau = 
 </ManSection>
 
 
+<ManSection>
+  <Oper Arg="alpha, mu, alpha_prime" Name="CoimageObjectFunctorial" Label="for IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism"/>
+ <Returns>a morphism in <Math>\mathrm{Hom}(\mathrm{CoimageObject}( \alpha ), \mathrm{CoimageObject}( \alpha' ))</Math>
+</Returns>
+ <Description>
+ The arguments are three morphisms
+ <Math>\alpha: A \rightarrow B, \mu: A \rightarrow A', \alpha': A' \rightarrow B'</Math>.
+ The output is the morphism
+ <Math>\mathrm{CoimageObject}( \alpha ) \rightarrow \mathrm{CoimageObject}( \alpha' )</Math>
+ given by the functoriality of the coimage.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="s, alpha, mu, alpha_prime, r" Name="CoimageObjectFunctorialWithGivenCoimageObjects" Label="for IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject"/>
+ <Returns>a morphism in <Math>\mathrm{Hom}(s, r)</Math>
+</Returns>
+ <Description>
+ The arguments are an object <Math>s = \mathrm{CoimageObject}( \alpha )</Math>,
+ three morphisms
+ <Math>\alpha: A \rightarrow B, \mu: A \rightarrow A', \alpha': A' \rightarrow B'</Math>,
+ and an object <Math>r = \mathrm{CoimageObject}( \alpha' )</Math>.
+ The output is the morphism
+ <Math>\mathrm{CoimageObject}( \alpha ) \rightarrow \mathrm{CoimageObject}( \alpha' )</Math>
+ given by the functoriality of the coimage.
+ </Description>
+</ManSection>
+
+
 </Section>
 
 
@@ -3045,6 +3105,78 @@ a dependent function <Math>u</Math> mapping each pair of morphisms <Math>\tau = 
  <Math>\mathrm{ImageObject}( \mathrm{PreCompose}( \mathrm{KernelEmbedding}( \beta ), \mathrm{CokernelProjection}( \alpha ) ) )</Math>,
  denoted by <Math>I</Math>,
  to the homology object <Math>H</Math> of <Math>\alpha</Math> and <Math>\beta</Math>.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Universal_Objects_Section_Projective_covers_and_injective_envelopes">
+<Heading>Projective covers and injective envelopes</Heading>
+
+<ManSection>
+  <Attr Arg="A" Name="ProjectiveCoverObject" Label="for IsCapCategoryObject"/>
+ <Returns>an object
+</Returns>
+ <Description>
+  The argument is an object <Math>A</Math>.
+  The output is a projective cover of <Math>A</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="A" Name="EpimorphismFromProjectiveCoverObject" Label="for IsCapCategoryObject"/>
+ <Returns>an epimorphism
+</Returns>
+ <Description>
+  The argument is an object <Math>A</Math>.
+  The output is an epimorphism from a projective cover of <Math>A</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="A, P" Name="EpimorphismFromProjectiveCoverObjectWithGivenProjectiveCoverObject" Label="for IsCapCategoryObject, IsCapCategoryObject"/>
+ <Returns>an epimorphism
+</Returns>
+ <Description>
+  The argument is an object <Math>A</Math>.
+  The output is the epimorphism from the projective cover <Math>P</Math> of <Math>A</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="A" Name="InjectiveEnvelopeObject" Label="for IsCapCategoryObject"/>
+ <Returns>an object
+</Returns>
+ <Description>
+  The argument is an object <Math>A</Math>.
+  The output is an injective envelope of <Math>A</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="A" Name="MonomorphismIntoInjectiveEnvelopeObject" Label="for IsCapCategoryObject"/>
+ <Returns>a monomorphism
+</Returns>
+ <Description>
+  The argument is an object <Math>A</Math>.
+  The output is a monomorphism into an injective envelope of <Math>A</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="A, I" Name="MonomorphismIntoInjectiveEnvelopeObjectWithGivenInjectiveEnvelopeObject" Label="for IsCapCategoryObject, IsCapCategoryObject"/>
+ <Returns>a monomorphism
+</Returns>
+ <Description>
+  The argument is an object <Math>A</Math>.
+  The output is a monomorphism into an injective envelope <Math>I</Math> of <Math>A</Math>.
  </Description>
 </ManSection>
 

@@ -23,7 +23,7 @@
 #!  This variable stores the category of categories. Every category object is
 #!  constructed as an object in this category, so Cat is constructed when loading
 #!  the package. 
-DeclareGlobalVariable( "CapCat" );
+DeclareGlobalName( "CapCat" );
 
 ####################################
 ##
@@ -31,7 +31,9 @@ DeclareGlobalVariable( "CapCat" );
 ##
 ####################################
 
-DeclareGlobalFunction( "CAP_INTERNAL_CREATE_Cat" );
+DeclareGlobalName( "CAP_INTERNAL_CREATE_Cat" );
+
+DeclareGlobalName( "INSTALL_CAP_CAT_FUNCTIONS" );
 
 ####################################
 ##

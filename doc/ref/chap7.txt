@@ -484,7 +484,7 @@
   the handler of the first summand is used.[133X
   
   [33X[0;0YThe  file  or  stream  to  which [2XInfo[102X ([14X7.4-6[114X) statements for individual [2XInfo[102X
-  ([14X7.4-6[114X)  classes  print  can be overriden with [2XSetInfoOutput[102X, retrieved with
+  ([14X7.4-6[114X)  classes  print can be overridden with [2XSetInfoOutput[102X, retrieved with
   [2XInfoOutput[102X  and  reset  to  the  default  with [2XUnbindInfoOutput[102X. The initial
   default for all [2XInfo[102X ([14X7.4-6[114X) classes is the string [10X"*Print*"[110X which means the
   current  output  file. The default can be changed with [2XSetDefaultInfoOutput[102X.

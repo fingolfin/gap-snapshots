@@ -267,7 +267,7 @@ gap> if TestPackageAvailability( "TomLib" ) = true then
 >      BrowseData.SetReplay( false );
 >    fi;
 
-##  doc/../app/atlasbrowse.g (528-558)
+##  doc/../app/atlasbrowse.g (535-565)
 gap> d:= [ NCurses.keys.DOWN ];;  r:= [ NCurses.keys.RIGHT ];;
 gap> c:= [ NCurses.keys.ENTER ];;
 gap> BrowseData.SetReplay( Concatenation(
@@ -345,7 +345,7 @@ gap> BrowseData.SetReplay( Concatenation(
 gap> BrowseProfile();
 gap> BrowseData.SetReplay( false );
 
-##  doc/../app/userpref.g (254-270)
+##  doc/../app/userpref.g (260-276)
 gap> d:= [ NCurses.keys.DOWN ];;  
 gap> c:= [ NCurses.keys.ENTER ];; 
 gap> BrowseData.SetReplay( Concatenation(
@@ -490,11 +490,13 @@ gap> Sudoku.SimpleDisplay(sol);
 546|387|192
 379|124|865
 
-##  doc/../app/rldemo.g (57-62)
+##  doc/../app/rldemo.g (57-64)
 gap> dirs := DirectoriesPackageLibrary("Browse");;
 gap> demofile := Filename(dirs, "../app/demo.demo");;
-gap> LoadDemoFile("My first demo", demofile);
-gap> LoadDemoFile("My first demo (single lines)", demofile, true);
+gap> if IsBound(GAPInfo.UseReadline) and GAPInfo.UseReadline = true then
+>   LoadDemoFile("My first demo", demofile);
+>   LoadDemoFile("My first demo (single lines)", demofile, true);
+> fi;
 
 ##  doc/brdbattr.xml (93-99)
 gap> n:= 100;;

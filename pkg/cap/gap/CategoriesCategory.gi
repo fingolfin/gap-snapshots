@@ -3,46 +3,34 @@
 #
 # Implementations
 #
-DeclareRepresentation( "IsCapCategoryAsCatObjectRep",
-                       IsCapCategoryObjectRep and IsCapCategoryAsCatObject,
-                       [ ] );
+# backwards compatibility
+BindGlobal( "IsCapCategoryAsCatObjectRep", IsCapCategoryAsCatObject );
 
-BindGlobal( "TheTypeOfCapCategoriesAsCatObjects",
-        NewType( TheFamilyOfCapCategoryObjects,
-                IsCapCategoryAsCatObjectRep ) );
+# backwards compatibility
+BindGlobal( "IsCapFunctorRep", IsCapFunctor );
 
-DeclareRepresentation( "IsCapFunctorRep",
-                       IsCapCategoryMorphismRep and IsCapFunctor,
-                       [ ] );
-
-BindGlobal( "TheTypeOfCapFunctors",
-        NewType( TheFamilyOfCapCategoryMorphisms,
-                IsCapFunctorRep ) );
-
-DeclareRepresentation( "IsCapNaturalTransformationRep",
-                       IsCapCategoryTwoCellRep and IsCapNaturalTransformation,
-                       [ ] );
+# backwards compatibility
+BindGlobal( "IsCapNaturalTransformationRep", IsCapNaturalTransformation );
 
 BindGlobal( "TheTypeOfCapNaturalTransformations",
         NewType( TheFamilyOfCapCategoryTwoCells,
-                IsCapNaturalTransformationRep ) );
+                IsCapNaturalTransformation ) );
 
 ##
-InstallGlobalFunction( CAP_INTERNAL_CREATE_Cat,
+BindGlobal( "CAP_INTERNAL_CREATE_Cat",
                
   function(  )
+    local obj_rec, cat;
     
-    InstallValue( CapCat, rec( caching_info := rec( ), overhead := true, is_computable := true ) );
+    obj_rec := rec( caching_info := rec( ), overhead := true, is_computable := true );
     
-    CREATE_CAP_CATEGORY_OBJECT( CapCat, [ [ "Name", "Cat" ] ] );
+    cat := CREATE_CAP_CATEGORY_OBJECT( obj_rec, "Cat", IsCapCategory, IsCapCategoryAsCatObject, IsCapFunctor, IsCapNaturalTransformation, fail, fail, fail );
     
-    CREATE_CAP_CATEGORY_FILTERS( CapCat );
+    INSTALL_CAP_CAT_FUNCTIONS( cat );
     
-    return CapCat;
+    return cat;
     
 end );
-
-CAP_INTERNAL_CREATE_Cat( );
 
 ##
 InstallMethod( AsCatObject,
@@ -51,10 +39,8 @@ InstallMethod( AsCatObject,
   function( category )
     local cat_obj;
     
-    cat_obj := ObjectifyWithAttributes( rec( ), TheTypeOfCapCategoriesAsCatObjects,
+    cat_obj := CreateCapCategoryObjectWithAttributes( CapCat,
                                         AsCapCategory, category );
-    
-    Add( CapCat, cat_obj );
     
     SetIsWellDefined( cat_obj, true );
     
@@ -65,23 +51,22 @@ end );
 BindGlobal( "CAP_INTERNAL_NICE_FUNCTOR_INPUT_LIST",
   
   function( list )
-    local i;
     
-    for i in [ 1 .. Length( list ) ] do
+    return List( [ 1 .. Length( list ) ], function ( i )
         
         if IsCapCategory( list[ i ] ) then
-            list[ i ] := [ list[ i ], false ]; ##true means opposite
+            return [ list[ i ], false ]; ##true means opposite
         elif IsCapCategoryAsCatObject( list[ i ] ) then
-            list[ i ] := [ AsCapCategory( list[ i ] ), false ];
+            return [ AsCapCategory( list[ i ] ), false ];
         elif IsList( list[ i ] ) and Length( list[ i ] ) = 2 and IsCapCategory( list[ i ][ 1 ] ) and ( not IsBool( list[i][2] ) ) then
-            list[ i ][ 2 ] := true;
+            return [ list[ i ][1], true ];
         elif IsList( list[ i ] ) and Length( list[ i ] ) = 2 and IsCapCategoryAsCatObject( list[ i ][ 1 ] ) and ( not IsBool( list[i][2] ) ) then
-            list[ i ] := [ AsCapCategory( list[ i ][ 1 ] ), true ];
+            return [ AsCapCategory( list[ i ][ 1 ] ), true ];
+        else
+            return list[i];
         fi;
         
-    od;
-    
-    return list;
+    end );
     
 end );
 
@@ -123,13 +108,11 @@ InstallMethod( CapFunctor,
     
     source := CAP_INTERNAL_CREATE_FUNCTOR_SOURCE( source_list );
     
-    objectified_functor := ObjectifyWithAttributes( functor, TheTypeOfCapFunctors,
+    objectified_functor := ObjectifyMorphismWithSourceAndRangeForCAPWithAttributes( functor, CapCat,
+                                                    AsCatObject( source ),
+                                                    AsCatObject( range ),
                                                     Name, name,
-                                                    Source, AsCatObject( source ),
-                                                    Range, AsCatObject( range ),
                                                     InputSignature, source_list );
-    
-    Add( CapCat, objectified_functor );
     
     return objectified_functor;
     
@@ -239,11 +222,7 @@ BindGlobal( "CAP_INTERNAL_FUNCTOR_CREATE_FILTER_LIST",
     
     filter_list := List( InputSignature( functor ), i -> i[ 1 ] );
     
-    if type = "cell" then
-        
-        filter_list := List( filter_list, CellFilter );
-        
-    elif type = "object" then
+    if type = "object" then
         
         filter_list := List( filter_list, ObjectFilter );
         
@@ -522,13 +501,15 @@ InstallGlobalFunction( ApplyFunctor,
     
 end );
 
+BindGlobal( "INSTALL_CAP_CAT_FUNCTIONS", function ( cat )
+
 ##
-AddPreCompose( CapCat,
+AddPreCompose( cat,
                
   function( left_functor, right_functor )
     local new_functor;
     
-    new_functor := CapFunctor( Concatenation( "Composition of ",
+    new_functor := CapFunctor( Concatenation( "Precomposition of ",
                                                  Name( left_functor ),
                                                  " and ",
                                                  Name( right_functor ) ),
@@ -554,7 +535,7 @@ AddPreCompose( CapCat,
 end );
 
 ##
-AddIdentityMorphism( CapCat,
+AddIdentityMorphism( cat,
                      
   function( category )
     local new_functor;
@@ -575,56 +556,36 @@ AddIdentityMorphism( CapCat,
 end );
 
 ##
-AddTerminalObject( CapCat,
+AddTerminalObject( cat,
                    
   function( )
     
-    return CAP_INTERNAL_TERMINAL_CATEGORY_AS_CAT_OBJECT;
+    return AsCatObject( TerminalCategoryWithSingleObject( ) );
     
 end );
 
 ##
-AddUniversalMorphismIntoTerminalObject( CapCat,
+AddUniversalMorphismIntoTerminalObjectWithGivenTerminalObject( cat,
                                
-  function( category )
+  function( category, terminal_cat )
     local new_functor;
     
-    new_functor := CapFunctor( Concatenation( "The terminal of ", Name( AsCapCategory( category ) ) ), category, CAP_INTERNAL_TERMINAL_CATEGORY_AS_CAT_OBJECT );
+    new_functor := CapFunctor( Concatenation( "The terminal of ", Name( AsCapCategory( category ) ) ), category, terminal_cat );
     
     AddObjectFunction( new_functor,
                        
-                       function( arg ) return UniqueObject( CAP_INTERNAL_TERMINAL_CATEGORY ); end );
+                       function( arg ) return UniqueObject( AsCapCategory( terminal_cat ) ); end );
     
     AddMorphismFunction( new_functor,
                          
-                         function( arg ) return UniqueMorphism( CAP_INTERNAL_TERMINAL_CATEGORY ); end );
+                         function( arg ) return UniqueMorphism( AsCapCategory( terminal_cat ) ); end );
     
     return new_functor;
     
 end );
 
 ##
-AddUniversalMorphismIntoTerminalObjectWithGivenTerminalObject( CapCat,
-                               
-  function( category, cat_obj )
-    local new_functor;
-    
-    new_functor := CapFunctor( Concatenation( "The terminal of ", Name( AsCapCategory( category ) ) ), category, CAP_INTERNAL_TERMINAL_CATEGORY_AS_CAT_OBJECT );
-    
-    AddObjectFunction( new_functor,
-                       
-                       function( arg ) return UniqueObject( CAP_INTERNAL_TERMINAL_CATEGORY ); end );
-    
-    AddMorphismFunction( new_functor,
-                         
-                         function( arg ) return UniqueMorphism( CAP_INTERNAL_TERMINAL_CATEGORY ); end );
-    
-    return new_functor;
-    
-end );
-
-##
-AddDirectProduct( CapCat,
+AddDirectProduct( cat,
                   
   function( object_product_list )
     
@@ -633,7 +594,7 @@ AddDirectProduct( CapCat,
 end );
 
 ##
-AddProjectionInFactorOfDirectProductWithGivenDirectProduct( CapCat,
+AddProjectionInFactorOfDirectProductWithGivenDirectProduct( cat,
                             
   function( object_product_list, projection_number, direct_product )
     local projection_functor;
@@ -665,7 +626,7 @@ AddProjectionInFactorOfDirectProductWithGivenDirectProduct( CapCat,
 end );
 
 ##
-AddUniversalMorphismIntoDirectProductWithGivenDirectProduct( CapCat,
+AddUniversalMorphismIntoDirectProductWithGivenDirectProduct( cat,
                                        
   function( diagram, test_object, sink, direct_product )
     local name_string, universal_functor;
@@ -703,6 +664,59 @@ AddUniversalMorphismIntoDirectProductWithGivenDirectProduct( CapCat,
         
     return universal_functor;
     
+end );
+
+##
+AddVerticalPreCompose( cat,
+               
+  function( above_transformation, below_transformation )
+    local new_natural_transformation;
+    
+    new_natural_transformation := NaturalTransformation( Concatenation( "Vertical composition of ",
+                                                         Name( above_transformation ),
+                                                         " and ",
+                                                         Name( below_transformation ) ),
+                                                         Source( above_transformation ),
+                                                         Range( below_transformation ) );
+    
+    AddNaturalTransformationFunction( new_natural_transformation,
+      
+      function( source_value, object, range_value )
+        
+        return PreCompose( ApplyNaturalTransformation( above_transformation, object ),
+                           ApplyNaturalTransformation( below_transformation, object ) );
+        
+      end );
+    
+    return new_natural_transformation;
+    
+end );
+
+##
+AddHorizontalPreCompose( cat,
+  
+  function( left_natural_transformation, right_natural_transformation )
+    local pre_compose_transfo_functor, pre_compose_functor_transfo;
+    
+    pre_compose_transfo_functor := 
+          HorizontalPreComposeNaturalTransformationWithFunctor( left_natural_transformation, Source( right_natural_transformation ) );
+          
+    pre_compose_functor_transfo :=
+          HorizontalPreComposeFunctorWithNaturalTransformation( Range( left_natural_transformation ), right_natural_transformation );
+    
+    return VerticalPreCompose( pre_compose_transfo_functor, pre_compose_functor_transfo );
+    
+end );
+
+##
+AddIsWellDefinedForObjects( cat,
+
+  IsCapCategoryAsCatObject
+
+);
+
+Finalize( cat );
+
 end );
 
 ####################################
@@ -962,7 +976,7 @@ InstallMethod( NaturalTransformation,
                
   function( source, range )
     
-    return NaturalTransformation( Concatenation( "A Natural transformation from ", Name( source ), " to ", Name( range ) ), source, range );
+    return NaturalTransformation( Concatenation( "A natural transformation from ", Name( source ), " to ", Name( range ) ), source, range );
     
 end );
 
@@ -1144,32 +1158,6 @@ InstallMethod( InstallNaturalTransformation,
 end );
 
 ##
-AddVerticalPreCompose( CapCat,
-               
-  function( above_transformation, below_transformation )
-    local new_natural_transformation;
-    
-    new_natural_transformation := NaturalTransformation( Concatenation( "Vertical composition of ",
-                                                         Name( above_transformation ),
-                                                         " and ",
-                                                         Name( below_transformation ) ),
-                                                         Source( above_transformation ),
-                                                         Range( below_transformation ) );
-    
-    AddNaturalTransformationFunction( new_natural_transformation,
-      
-      function( source_value, object, range_value )
-        
-        return PreCompose( ApplyNaturalTransformation( above_transformation, object ),
-                           ApplyNaturalTransformation( below_transformation, object ) );
-        
-      end );
-    
-    return new_natural_transformation;
-    
-end );
-
-##
 InstallMethodWithCacheFromObject( HorizontalPreComposeNaturalTransformationWithFunctor,
                                   [ IsCapNaturalTransformation, IsCapFunctor ],
                            
@@ -1220,33 +1208,3 @@ InstallMethodWithCacheFromObject( HorizontalPreComposeFunctorWithNaturalTransfor
     return composition;
     
 end );
-
-##
-AddHorizontalPreCompose( CapCat,
-  
-  function( left_natural_transformation, right_natural_transformation )
-    local pre_compose_transfo_functor, pre_compose_functor_transfo;
-    
-    pre_compose_transfo_functor := 
-          HorizontalPreComposeNaturalTransformationWithFunctor( left_natural_transformation, Source( right_natural_transformation ) );
-          
-    pre_compose_functor_transfo :=
-          HorizontalPreComposeFunctorWithNaturalTransformation( Range( left_natural_transformation ), right_natural_transformation );
-    
-    return VerticalPreCompose( pre_compose_transfo_functor, pre_compose_functor_transfo );
-    
-end );
-
-###################################
-##
-## IsWellDefined
-##
-###################################
-
-AddIsWellDefinedForObjects( CapCat,
-
-  IsCapCategoryAsCatObjectRep
-
-);
-
-Finalize( CapCat );

@@ -338,9 +338,8 @@
   representation but not needed by its current number of characters.[133X
   
   [33X[0;0YThese  functions  are  intended  for  saving  some of [5XGAP[105Xs memory in certain
-  situations,  see  the  explanations  and  the  example  for  the  analogeous
-  functions  [2XEmptyPlist[102X  ([14X21.9-1[114X) and [2XShrinkAllocationPlist[102X ([14X21.9-1[114X) for plain
-  lists.[133X
+  situations, see the explanations and the example for the analogous functions
+  [2XEmptyPlist[102X ([14X21.9-1[114X) and [2XShrinkAllocationPlist[102X ([14X21.9-1[114X) for plain lists.[133X
   
   [1X27.4-6 CharsFamily[101X
   
@@ -783,7 +782,7 @@
   which follow special rules, as follows:[133X
   
   [33X[0;0YThe  contents  of  [10X{  }[110X  is split by a [10X![110X into [10X{id!format}[110X, where both [10Xid[110X and
-  [10Xformat[110X  are  optional.  If the [10X![110X is ommitted, the bracket is treated as [10X{id}[110X
+  [10Xformat[110X  are  optional.  If  the [10X![110X is omitted, the bracket is treated as [10X{id}[110X
   with no [10Xformat[110X.[133X
   
   [33X[0;0Y[10Xid[110X is interpreted as follows:[133X
